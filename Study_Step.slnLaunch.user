@@ -1,0 +1,16 @@
+[
+  {
+    "Name": "Новый профиль",
+    "Projects": [
+      {
+        "Path": "Study_Step_Server\\Study_Step_Server.csproj",
+        "Action": "Start",
+        "DebugTarget": "http"
+      },
+      {
+        "Path": "Study_Step\\Study_Step.csproj",
+        "Action": "Start"
+      }
+    ]
+  }
+]

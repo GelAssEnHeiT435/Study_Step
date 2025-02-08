@@ -1,0 +1,183 @@
+﻿<UserControl x:Class="Study_Step.CustomControls.ChatList"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Study_Step.CustomControls" 
+             xmlns:viewmodels="clr-namespace:Study_Step.ViewModels"
+             xmlns:commands="clr-namespace:Study_Step.Commands"
+             mc:Ignorable="d" 
+             MinWidth="406">
+    <UserControl.Resources>
+        <DataTemplate x:Key="ChatButtonItemTemplate">
+            <RadioButton GroupName="ChatButton">
+                <RadioButton.Style>
+                    <Style TargetType="{x:Type ToggleButton}">
+                        <Setter Property="SnapsToDevicePixels" Value="True"/>
+                        <Setter Property="MinHeight" Value="80"/>
+                        <Setter Property="Padding" Value="10"/>
+                        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                        <Setter Property="VerticalAlignment" Value="Center"/>
+                        <Setter Property="Background" Value="Transparent"/>
+                        <Setter Property="BorderThickness" Value="0"/>
+                        <Setter Property="Command" Value="{Binding DataContext.GetSelectedChatCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
+                        <Setter Property="CommandParameter" Value="{Binding}"/>
+                        <Setter Property="Content" Value="{Binding Name}"/>
+                        <!--Setter Property="IsChecked" Value="{Binding IsSelected, Mode=TwoWay,
+                                    UpdateSourceTrigger=PropertyChanged}"/-->
+
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type ToggleButton}">
+                                    <Border x:Name="border"
+                                            Background="{TemplateBinding Background}"
+                                            BorderThickness="{TemplateBinding BorderThickness}"
+                                            BorderBrush="{TemplateBinding BorderBrush}"
+                                            Padding="{TemplateBinding Padding}"
+                                            SnapsToDevicePixels="True"
+                                            CornerRadius="20"
+                                            MinWidth="360">
+                                        <Grid>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="auto"/> <!-- Container for photo, message, message time -->
+                                                <RowDefinition Height="auto"/> <!-- other... -->
+                                            </Grid.RowDefinitions>
+                                            
+                                            <!--#region Contact details-->
+                                            <Grid Grid.Row="0">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="auto"/> <!-- Photo -->
+                                                    <ColumnDefinition /> <!-- Contact name and message -->
+                                                    <ColumnDefinition Width="auto"/> <!-- Time -->
+                                                </Grid.ColumnDefinitions>
+
+                                                <Ellipse Width="50" Height="50">
+                                                    <Ellipse.Fill>
+                                                        <ImageBrush Stretch="UniformToFill"
+                                                                    ImageSource="{Binding bitmapPhoto,
+                                                                                          FallbackValue=D:\my_works\dotnetProjects\Study_Step\Study_Step\Assets\Media\5.jpg,
+                                                                                          TargetNullValue=D:\my_works\dotnetProjects\Study_Step\Study_Step\Assets\Media\5.jpg,
+                                                                                          UpdateSourceTrigger=PropertyChanged}">
+                                                            
+                                                        </ImageBrush>
+                                                    </Ellipse.Fill>
+                                                </Ellipse>
+                                                
+                                                <!--#region Contact Name and Message -->
+                                                <Grid Grid.Column="1"
+                                                      Margin="20,0">
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition /> <!-- Name -->
+                                                        <RowDefinition /> <!-- Message -->
+                                                    </Grid.RowDefinitions>
+
+                                                    <TextBlock Text="{Binding Name}"
+                                                               FontSize="15">
+                                                        <TextBlock.Style>
+                                                            <Style TargetType="{x:Type TextBlock}">
+                                                                <Setter Property="FontWeight" Value="SemiBold" />
+                                                                <Style.Triggers>
+                                                                    <DataTrigger Binding="{Binding IsMouseOver, 
+                                                                                                   RelativeSource={RelativeSource 
+                                                                                                   AncestorType={x:Type ToggleButton}}}"
+                                                                                 Value="True">
+                                                                        <Setter Property="FontWeight" Value="Bold" />
+                                                                    </DataTrigger>
+                                                                </Style.Triggers>
+                                                            </Style>
+                                                        </TextBlock.Style>
+                                                    </TextBlock>
+
+
+                                                    <TextBlock Text="{Binding Message}"
+                                                               Grid.Row="1">
+                                                        <TextBlock.Style>
+                                                            <Style TargetType="{x:Type TextBlock}">
+                                                                <Setter Property="FontWeight" Value="Normal" />
+                                                                <Style.Triggers>
+                                                                    <DataTrigger Binding="{Binding IsMouseOver, 
+                                                                                                   RelativeSource={RelativeSource 
+                                                                                                   AncestorType={x:Type ToggleButton}}}"
+                                                                                 Value="True">
+                                                                        <Setter Property="FontWeight" Value="SemiBold" />
+                                                                    </DataTrigger>
+                                                                </Style.Triggers>
+                                                            </Style>
+                                                        </TextBlock.Style>
+                                                    </TextBlock>
+                                                    <!--#endregion-->
+                                                    
+                                                <!--#region Last Message Time -->
+                                                    <Grid Grid.Column="2">
+                                                        <TextBlock Text="{Binding LastMessageTime}"
+                                                                   HorizontalAlignment="Right">
+                                                            
+                                                        </TextBlock>
+                                                    </Grid>
+                                                <!--#endregion-->
+                                                    <Separator VerticalAlignment="Bottom"
+                                                               BorderBrush="Gray"
+                                                               BorderThickness=".5"
+                                                               Grid.Column="1"
+                                                               Grid.ColumnSpan="2"/>
+                                                    
+                                                </Grid>
+                                            </Grid>
+                                            <!--#endregion-->
+                                            
+                                            <!--#region Options -->
+                                            
+                                            <!-- Options Buttons -->
+                                            <Grid Grid.Row="1"
+                                                  Height="auto">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="50"/>
+                                                    <ColumnDefinition />
+                                                </Grid.ColumnDefinitions>
+                                                <UniformGrid Grid.Column="1"
+                                                             Columns="4">
+                                                    <Button Style="{StaticResource IconButtonStyle}"
+                                                            Content="{StaticResource pinned}"/>
+                                                    <Button Style="{StaticResource IconButtonStyle}"
+                                                            Content="{StaticResource archive}"/>
+                                                    <Button Style="{StaticResource IconButtonStyle}"
+                                                            Content="{StaticResource mute}"/>
+                                                    <Button Style="{StaticResource IconButtonStyle}"
+                                                            Content="{StaticResource trash}"/>
+                                                </UniformGrid>
+                                            </Grid>
+                                            <!--#endregion-->
+                                            
+                                        </Grid>
+                                    </Border>
+                                    
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </RadioButton.Style>
+            </RadioButton>
+        </DataTemplate>
+    </UserControl.Resources>
+    <StackPanel Margin="25,15">
+        <!-- Title -->
+        <StackPanel Orientation="Horizontal">
+            <Path Data="{StaticResource allchats}"
+          Fill="Black" />
+            <TextBlock Text="All Chats"
+               FontWeight="SemiBold"
+               VerticalAlignment="Center"
+               Margin="10,0"/>
+        </StackPanel>
+        <ScrollViewer HorizontalScrollBarVisibility="Disabled">
+            <Grid>
+                <!-- Chats -->
+                <ItemsControl ItemsSource="{Binding Chats}" Padding="0, 15"
+                      ItemTemplate="{StaticResource ChatButtonItemTemplate}">
+
+                </ItemsControl>
+            </Grid>
+        </ScrollViewer>
+    </StackPanel>
+    
+</UserControl>

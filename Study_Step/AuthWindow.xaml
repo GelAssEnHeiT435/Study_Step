@@ -1,0 +1,79 @@
+﻿<Window x:Class="Study_Step.AuthWindow"
+        x:Name="Auth"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Study_Step"
+        mc:Ignorable="d"
+        Title="StudyStep" 
+        AllowsTransparency="True"
+        Background="Transparent"
+        FontSize="15"
+        ResizeMode="NoResize"
+        WindowStyle="None"
+        WindowStartupLocation="CenterScreen"
+        Height="480" Width="320">
+    <Border CornerRadius="20"
+            Background="WhiteSmoke">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <!-- Title Bar -->
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition Width="200"/>
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+
+            <!-- Title Bar -->
+            <Border CornerRadius="20, 20, 0, 0"
+                    Grid.ColumnSpan="3"
+                    Background="#49a078"
+                    MouseDown="Border_MouseDown">
+                <Grid>
+                    <TextBlock Text="{Binding Title, ElementName=Auth}"
+                               HorizontalAlignment="Left"
+                               Margin="15,0"
+                               VerticalAlignment="Center"
+                               Foreground="White"
+                               FontSize="22"
+                               FontWeight="Bold"/>
+                    <!-- Window Buttons -->
+                    <StackPanel Orientation="Horizontal"
+                                HorizontalAlignment="Right"
+                                Margin="10,0">
+                        <Button x:Name="btnMinimize"
+                                Click="btnMinimize_Click"
+                                VerticalContentAlignment="Center"
+                                Content="{StaticResource minimize}"
+                                Style="{StaticResource IconButtonStyle}"/>
+
+                        <Button x:Name="btnMaximize"
+                                Click="btnMaximize_Click"
+                                VerticalContentAlignment="Center"
+                                Content="{StaticResource maximize}"
+                                Style="{StaticResource IconButtonStyle}"/>
+
+                        <Button x:Name="btnClose"
+                                Click="btnClose_Click"
+                                VerticalContentAlignment="Center"
+                                Content="{StaticResource close}"
+                                Style="{StaticResource IconButtonStyle}"/>
+
+                    </StackPanel>
+                </Grid>
+            </Border>
+
+            <Frame Name="MainFrame" 
+                   NavigationUIVisibility="Hidden"
+                   Source="Pages/SignInPage.xaml"
+                   Grid.Column="1"
+                   Grid.Row="1"
+                   VerticalAlignment="Center"/>
+            
+        </Grid>
+    </Border>
+</Window>

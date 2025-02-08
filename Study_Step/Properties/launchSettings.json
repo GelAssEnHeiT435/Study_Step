@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "Study_Step": {
+      "commandName": "Project",
+      "workingDirectory": "D:\\my_works\\dotnetProjects\\Study_Step\\Study_Step",
+      "remoteDebugEnabled": false
+    },
+    "Профиль 1": {
+      "commandName": "Executable"
+    }
+  }
+}

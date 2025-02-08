@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\Study_Step_Server.props" />
+</Project>
