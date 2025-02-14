@@ -6,9 +6,10 @@
  - Платформа .NET и ЯП C#
  - Windows Presentation Foundation (WPF)
  - Entity Framework (EF6)
- - ASP.NET Core
+ - ASP.NET Core and SignalR
  - Model-View-Controller (MVC)
  - Model-View-ViewModel (MVVM)
+ - Dependency Injection (DI)
 
 
 
