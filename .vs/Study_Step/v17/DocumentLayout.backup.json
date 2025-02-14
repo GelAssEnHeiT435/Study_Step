@@ -7,60 +7,40 @@
       "RelativeMoniker": "D:0:0:{5D95692E-1FB1-43F9-9496-9CFE7EA5FEC6}|Study_Step\\Study_Step.csproj|solutionrelative:study_step\\viewmodels\\viewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{5D95692E-1FB1-43F9-9496-9CFE7EA5FEC6}|Study_Step\\Study_Step.csproj|d:\\my_works\\dotnetprojects\\study_step\\study_step\\customcontrols\\dropdownlistsearch.xaml||{8B382828-6202-11D1-8870-0000F87579D2}",
-      "RelativeMoniker": "D:0:0:{5D95692E-1FB1-43F9-9496-9CFE7EA5FEC6}|Study_Step\\Study_Step.csproj|solutionrelative:study_step\\customcontrols\\dropdownlistsearch.xaml||{8B382828-6202-11D1-8870-0000F87579D2}"
+      "AbsoluteMoniker": "D:0:0:{5D95692E-1FB1-43F9-9496-9CFE7EA5FEC6}|Study_Step\\Study_Step.csproj|d:\\my_works\\dotnetprojects\\study_step\\study_step\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{5D95692E-1FB1-43F9-9496-9CFE7EA5FEC6}|Study_Step\\Study_Step.csproj|solutionrelative:study_step\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{5D95692E-1FB1-43F9-9496-9CFE7EA5FEC6}|Study_Step\\Study_Step.csproj|d:\\my_works\\dotnetprojects\\study_step\\study_step\\customcontrols\\dropdownlistsearch.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{5D95692E-1FB1-43F9-9496-9CFE7EA5FEC6}|Study_Step\\Study_Step.csproj|solutionrelative:study_step\\customcontrols\\dropdownlistsearch.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{5D95692E-1FB1-43F9-9496-9CFE7EA5FEC6}|Study_Step\\Study_Step.csproj|d:\\my_works\\dotnetprojects\\study_step\\study_step\\signalrservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5D95692E-1FB1-43F9-9496-9CFE7EA5FEC6}|Study_Step\\Study_Step.csproj|solutionrelative:study_step\\signalrservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{5D95692E-1FB1-43F9-9496-9CFE7EA5FEC6}|Study_Step\\Study_Step.csproj|d:\\my_works\\dotnetprojects\\study_step\\study_step\\profile.xaml||{8B382828-6202-11D1-8870-0000F87579D2}",
-      "RelativeMoniker": "D:0:0:{5D95692E-1FB1-43F9-9496-9CFE7EA5FEC6}|Study_Step\\Study_Step.csproj|solutionrelative:study_step\\profile.xaml||{8B382828-6202-11D1-8870-0000F87579D2}"
+      "AbsoluteMoniker": "D:0:0:{5D95692E-1FB1-43F9-9496-9CFE7EA5FEC6}|Study_Step\\Study_Step.csproj|d:\\my_works\\dotnetprojects\\study_step\\study_step\\viewmodels\\authviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5D95692E-1FB1-43F9-9496-9CFE7EA5FEC6}|Study_Step\\Study_Step.csproj|solutionrelative:study_step\\viewmodels\\authviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{5D95692E-1FB1-43F9-9496-9CFE7EA5FEC6}|Study_Step\\Study_Step.csproj|d:\\my_works\\dotnetprojects\\study_step\\study_step\\viewmodels\\profileviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{5D95692E-1FB1-43F9-9496-9CFE7EA5FEC6}|Study_Step\\Study_Step.csproj|solutionrelative:study_step\\viewmodels\\profileviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{5D95692E-1FB1-43F9-9496-9CFE7EA5FEC6}|Study_Step\\Study_Step.csproj|d:\\my_works\\dotnetprojects\\study_step\\study_step\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5D95692E-1FB1-43F9-9496-9CFE7EA5FEC6}|Study_Step\\Study_Step.csproj|solutionrelative:study_step\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{5D95692E-1FB1-43F9-9496-9CFE7EA5FEC6}|Study_Step\\Study_Step.csproj|d:\\my_works\\dotnetprojects\\study_step\\study_step\\profile.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{5D95692E-1FB1-43F9-9496-9CFE7EA5FEC6}|Study_Step\\Study_Step.csproj|solutionrelative:study_step\\profile.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{5D95692E-1FB1-43F9-9496-9CFE7EA5FEC6}|Study_Step\\Study_Step.csproj|d:\\my_works\\dotnetprojects\\study_step\\study_step\\models\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{5D95692E-1FB1-43F9-9496-9CFE7EA5FEC6}|Study_Step\\Study_Step.csproj|solutionrelative:study_step\\models\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{5D95692E-1FB1-43F9-9496-9CFE7EA5FEC6}|Study_Step\\Study_Step.csproj|d:\\my_works\\dotnetprojects\\study_step\\study_step\\assets\\resources\\styles.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{5D95692E-1FB1-43F9-9496-9CFE7EA5FEC6}|Study_Step\\Study_Step.csproj|solutionrelative:study_step\\assets\\resources\\styles.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+      "AbsoluteMoniker": "D:0:0:{5D95692E-1FB1-43F9-9496-9CFE7EA5FEC6}|Study_Step\\Study_Step.csproj|d:\\my_works\\dotnetprojects\\study_step\\study_step\\pages\\registerpage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{5D95692E-1FB1-43F9-9496-9CFE7EA5FEC6}|Study_Step\\Study_Step.csproj|solutionrelative:study_step\\pages\\registerpage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{02F56035-7DC3-4949-8B54-6F8022BD01B1}|Study_Step_Server\\Study_Step_Server.csproj|d:\\my_works\\dotnetprojects\\study_step\\study_step_server\\controllers\\chatcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{02F56035-7DC3-4949-8B54-6F8022BD01B1}|Study_Step_Server\\Study_Step_Server.csproj|solutionrelative:study_step_server\\controllers\\chatcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{5D95692E-1FB1-43F9-9496-9CFE7EA5FEC6}|Study_Step\\Study_Step.csproj|d:\\my_works\\dotnetprojects\\study_step\\study_step\\customcontrols\\chatlist.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{5D95692E-1FB1-43F9-9496-9CFE7EA5FEC6}|Study_Step\\Study_Step.csproj|solutionrelative:study_step\\customcontrols\\chatlist.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+      "AbsoluteMoniker": "D:0:0:{5D95692E-1FB1-43F9-9496-9CFE7EA5FEC6}|Study_Step\\Study_Step.csproj|d:\\my_works\\dotnetprojects\\study_step\\study_step\\customcontrols\\conversation.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{5D95692E-1FB1-43F9-9496-9CFE7EA5FEC6}|Study_Step\\Study_Step.csproj|solutionrelative:study_step\\customcontrols\\conversation.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{5D95692E-1FB1-43F9-9496-9CFE7EA5FEC6}|Study_Step\\Study_Step.csproj|d:\\my_works\\dotnetprojects\\study_step\\study_step\\profile.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{5D95692E-1FB1-43F9-9496-9CFE7EA5FEC6}|Study_Step\\Study_Step.csproj|solutionrelative:study_step\\profile.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+      "AbsoluteMoniker": "D:0:0:{5D95692E-1FB1-43F9-9496-9CFE7EA5FEC6}|Study_Step\\Study_Step.csproj|d:\\my_works\\dotnetprojects\\study_step\\study_step\\customcontrols\\conversation.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5D95692E-1FB1-43F9-9496-9CFE7EA5FEC6}|Study_Step\\Study_Step.csproj|solutionrelative:study_step\\customcontrols\\conversation.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{5D95692E-1FB1-43F9-9496-9CFE7EA5FEC6}|Study_Step\\Study_Step.csproj|d:\\my_works\\dotnetprojects\\study_step\\study_step\\assets\\resources\\icons.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{5D95692E-1FB1-43F9-9496-9CFE7EA5FEC6}|Study_Step\\Study_Step.csproj|solutionrelative:study_step\\assets\\resources\\icons.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{5D95692E-1FB1-43F9-9496-9CFE7EA5FEC6}|Study_Step\\Study_Step.csproj|d:\\my_works\\dotnetprojects\\study_step\\study_step\\customcontrols\\statusthumbs.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{5D95692E-1FB1-43F9-9496-9CFE7EA5FEC6}|Study_Step\\Study_Step.csproj|solutionrelative:study_step\\customcontrols\\statusthumbs.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{5D95692E-1FB1-43F9-9496-9CFE7EA5FEC6}|Study_Step\\Study_Step.csproj|d:\\my_works\\dotnetprojects\\study_step\\study_step\\customcontrols\\dropdownlistsearch.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{5D95692E-1FB1-43F9-9496-9CFE7EA5FEC6}|Study_Step\\Study_Step.csproj|solutionrelative:study_step\\customcontrols\\dropdownlistsearch.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{5D95692E-1FB1-43F9-9496-9CFE7EA5FEC6}|Study_Step\\Study_Step.csproj|d:\\my_works\\dotnetprojects\\study_step\\study_step\\authwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{5D95692E-1FB1-43F9-9496-9CFE7EA5FEC6}|Study_Step\\Study_Step.csproj|solutionrelative:study_step\\authwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+      "AbsoluteMoniker": "D:0:0:{02F56035-7DC3-4949-8B54-6F8022BD01B1}|Study_Step_Server\\Study_Step_Server.csproj|d:\\my_works\\dotnetprojects\\study_step\\study_step_server\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{02F56035-7DC3-4949-8B54-6F8022BD01B1}|Study_Step_Server\\Study_Step_Server.csproj|solutionrelative:study_step_server\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -70,109 +50,108 @@
       "DocumentGroups": [
         {
           "DockedWidth": 119,
-          "SelectedChildIndex": 3,
+          "SelectedChildIndex": 8,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 13,
-              "Title": "DropDownListSearch.xaml",
-              "DocumentMoniker": "D:\\my_works\\dotnetProjects\\Study_Step\\Study_Step\\CustomControls\\DropDownListSearch.xaml",
-              "RelativeDocumentMoniker": "Study_Step\\CustomControls\\DropDownListSearch.xaml",
-              "ToolTip": "D:\\my_works\\dotnetProjects\\Study_Step\\Study_Step\\CustomControls\\DropDownListSearch.xaml",
-              "RelativeToolTip": "Study_Step\\CustomControls\\DropDownListSearch.xaml",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2024-12-23T09:50:02.837Z",
+              "DocumentIndex": 8,
+              "Title": "Conversation.xaml.cs",
+              "DocumentMoniker": "D:\\my_works\\dotnetProjects\\Study_Step\\Study_Step\\CustomControls\\Conversation.xaml.cs",
+              "RelativeDocumentMoniker": "Study_Step\\CustomControls\\Conversation.xaml.cs",
+              "ToolTip": "D:\\my_works\\dotnetProjects\\Study_Step\\Study_Step\\CustomControls\\Conversation.xaml.cs",
+              "RelativeToolTip": "Study_Step\\CustomControls\\Conversation.xaml.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-14T21:56:59.891Z",
               "EditorCaption": ""
             },
-            {
-              "$type": "Document",
-              "DocumentIndex": 14,
-              "Title": "AuthWindow.xaml",
-              "DocumentMoniker": "D:\\my_works\\dotnetProjects\\Study_Step\\Study_Step\\AuthWindow.xaml",
-              "RelativeDocumentMoniker": "Study_Step\\AuthWindow.xaml",
-              "ToolTip": "D:\\my_works\\dotnetProjects\\Study_Step\\Study_Step\\AuthWindow.xaml",
-              "RelativeToolTip": "Study_Step\\AuthWindow.xaml",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2025-01-31T21:03:59.522Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 12,
-              "Title": "StatusThumbs.xaml",
-              "DocumentMoniker": "D:\\my_works\\dotnetProjects\\Study_Step\\Study_Step\\CustomControls\\StatusThumbs.xaml",
-              "RelativeDocumentMoniker": "Study_Step\\CustomControls\\StatusThumbs.xaml",
-              "ToolTip": "D:\\my_works\\dotnetProjects\\Study_Step\\Study_Step\\CustomControls\\StatusThumbs.xaml",
-              "RelativeToolTip": "Study_Step\\CustomControls\\StatusThumbs.xaml",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2025-01-31T21:17:39.836Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 10,
-              "Title": "Profile.xaml",
-              "DocumentMoniker": "D:\\my_works\\dotnetProjects\\Study_Step\\Study_Step\\Profile.xaml",
-              "RelativeDocumentMoniker": "Study_Step\\Profile.xaml",
-              "ToolTip": "D:\\my_works\\dotnetProjects\\Study_Step\\Study_Step\\Profile.xaml",
-              "RelativeToolTip": "Study_Step\\Profile.xaml",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2025-01-31T21:02:17.199Z",
-              "EditorCaption": ""
-            }
-          ]
-        },
-        {
-          "DockedWidth": 291,
-          "SelectedChildIndex": 4,
-          "Children": [
             {
               "$type": "Document",
               "DocumentIndex": 4,
-              "Title": "ProfileViewModel.cs",
-              "DocumentMoniker": "D:\\my_works\\dotnetProjects\\Study_Step\\Study_Step\\ViewModels\\ProfileViewModel.cs",
-              "RelativeDocumentMoniker": "Study_Step\\ViewModels\\ProfileViewModel.cs",
-              "ToolTip": "D:\\my_works\\dotnetProjects\\Study_Step\\Study_Step\\ViewModels\\ProfileViewModel.cs",
-              "RelativeToolTip": "Study_Step\\ViewModels\\ProfileViewModel.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAFAAAAAAAAAA==",
+              "Title": "MainWindow.xaml.cs",
+              "DocumentMoniker": "D:\\my_works\\dotnetProjects\\Study_Step\\Study_Step\\MainWindow.xaml.cs",
+              "RelativeDocumentMoniker": "Study_Step\\MainWindow.xaml.cs",
+              "ToolTip": "D:\\my_works\\dotnetProjects\\Study_Step\\Study_Step\\MainWindow.xaml.cs",
+              "RelativeToolTip": "Study_Step\\MainWindow.xaml.cs",
+              "ViewState": "AgIAAA0AAAAAAAAAAAAIwBgAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-07T21:58:48.992Z",
+              "WhenOpened": "2025-02-14T21:55:08.365Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
-              "Title": "icons.xaml",
-              "DocumentMoniker": "D:\\my_works\\dotnetProjects\\Study_Step\\Study_Step\\Assets\\Resources\\icons.xaml",
-              "RelativeDocumentMoniker": "Study_Step\\Assets\\Resources\\icons.xaml",
-              "ToolTip": "D:\\my_works\\dotnetProjects\\Study_Step\\Study_Step\\Assets\\Resources\\icons.xaml",
-              "RelativeToolTip": "Study_Step\\Assets\\Resources\\icons.xaml",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2025-02-07T19:40:39.411Z",
+              "DocumentIndex": 2,
+              "Title": "SignalRService.cs",
+              "DocumentMoniker": "D:\\my_works\\dotnetProjects\\Study_Step\\Study_Step\\SignalRService.cs",
+              "RelativeDocumentMoniker": "Study_Step\\SignalRService.cs",
+              "ToolTip": "D:\\my_works\\dotnetProjects\\Study_Step\\Study_Step\\SignalRService.cs",
+              "RelativeToolTip": "Study_Step\\SignalRService.cs",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAAABIAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-14T21:52:46.79Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "ChatList.xaml",
-              "DocumentMoniker": "D:\\my_works\\dotnetProjects\\Study_Step\\Study_Step\\CustomControls\\ChatList.xaml",
-              "RelativeDocumentMoniker": "Study_Step\\CustomControls\\ChatList.xaml",
-              "ToolTip": "D:\\my_works\\dotnetProjects\\Study_Step\\Study_Step\\CustomControls\\ChatList.xaml",
-              "RelativeToolTip": "Study_Step\\CustomControls\\ChatList.xaml",
+              "DocumentIndex": 7,
+              "Title": "Conversation.xaml",
+              "DocumentMoniker": "D:\\my_works\\dotnetProjects\\Study_Step\\Study_Step\\CustomControls\\Conversation.xaml",
+              "RelativeDocumentMoniker": "Study_Step\\CustomControls\\Conversation.xaml",
+              "ToolTip": "D:\\my_works\\dotnetProjects\\Study_Step\\Study_Step\\CustomControls\\Conversation.xaml",
+              "RelativeToolTip": "Study_Step\\CustomControls\\Conversation.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2025-02-05T21:48:48.987Z",
+              "WhenOpened": "2025-02-14T21:47:40.216Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "AuthViewModel.cs",
+              "DocumentMoniker": "D:\\my_works\\dotnetProjects\\Study_Step\\Study_Step\\ViewModels\\AuthViewModel.cs",
+              "RelativeDocumentMoniker": "Study_Step\\ViewModels\\AuthViewModel.cs",
+              "ToolTip": "D:\\my_works\\dotnetProjects\\Study_Step\\Study_Step\\ViewModels\\AuthViewModel.cs",
+              "RelativeToolTip": "Study_Step\\ViewModels\\AuthViewModel.cs",
+              "ViewState": "AgIAAEsAAAAAAAAAAAAAwFcAAAAkAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-14T21:14:58.284Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "RegisterPage.xaml",
+              "DocumentMoniker": "D:\\my_works\\dotnetProjects\\Study_Step\\Study_Step\\Pages\\RegisterPage.xaml",
+              "RelativeDocumentMoniker": "Study_Step\\Pages\\RegisterPage.xaml",
+              "ToolTip": "D:\\my_works\\dotnetProjects\\Study_Step\\Study_Step\\Pages\\RegisterPage.xaml",
+              "RelativeToolTip": "Study_Step\\Pages\\RegisterPage.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2025-02-14T21:13:48.167Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 6,
-              "Title": "User.cs",
-              "DocumentMoniker": "D:\\my_works\\dotnetProjects\\Study_Step\\Study_Step\\Models\\User.cs",
-              "RelativeDocumentMoniker": "Study_Step\\Models\\User.cs",
-              "ToolTip": "D:\\my_works\\dotnetProjects\\Study_Step\\Study_Step\\Models\\User.cs",
-              "RelativeToolTip": "Study_Step\\Models\\User.cs",
-              "ViewState": "AgIAAAMAAAAAAAAAAAAAAAoAAAAhAAAAAAAAAA==",
+              "Title": "ChatController.cs",
+              "DocumentMoniker": "D:\\my_works\\dotnetProjects\\Study_Step\\Study_Step_Server\\Controllers\\ChatController.cs",
+              "RelativeDocumentMoniker": "Study_Step_Server\\Controllers\\ChatController.cs",
+              "ToolTip": "D:\\my_works\\dotnetProjects\\Study_Step\\Study_Step_Server\\Controllers\\ChatController.cs",
+              "RelativeToolTip": "Study_Step_Server\\Controllers\\ChatController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAF8AAAAmAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-05T20:56:47.878Z",
+              "WhenOpened": "2025-02-14T12:40:44.539Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "Program.cs",
+              "DocumentMoniker": "D:\\my_works\\dotnetProjects\\Study_Step\\Study_Step_Server\\Program.cs",
+              "RelativeDocumentMoniker": "Study_Step_Server\\Program.cs",
+              "ToolTip": "D:\\my_works\\dotnetProjects\\Study_Step\\Study_Step_Server\\Program.cs",
+              "RelativeToolTip": "Study_Step_Server\\Program.cs",
+              "ViewState": "AgIAAIIAAAAAAAAAAAAQwJMAAAAUAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-13T22:01:50.418Z",
               "EditorCaption": ""
             },
             {
@@ -181,88 +160,23 @@
               "Title": "ViewModel.cs",
               "DocumentMoniker": "D:\\my_works\\dotnetProjects\\Study_Step\\Study_Step\\ViewModels\\ViewModel.cs",
               "RelativeDocumentMoniker": "Study_Step\\ViewModels\\ViewModel.cs",
-              "ToolTip": "D:\\my_works\\dotnetProjects\\Study_Step\\Study_Step\\ViewModels\\ViewModel.cs",
-              "RelativeToolTip": "Study_Step\\ViewModels\\ViewModel.cs",
-              "ViewState": "AgIAAMUAAAAAAAAAAAAwwBQBAAA3AAAAAAAAAA==",
+              "ToolTip": "D:\\my_works\\dotnetProjects\\Study_Step\\Study_Step\\ViewModels\\ViewModel.cs*",
+              "RelativeToolTip": "Study_Step\\ViewModels\\ViewModel.cs*",
+              "ViewState": "AgIAANgAAAAAAAAAAADwv/MAAAAqAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-05T20:51:19.936Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "Profile.xaml",
-              "DocumentMoniker": "D:\\my_works\\dotnetProjects\\Study_Step\\Study_Step\\Profile.xaml",
-              "RelativeDocumentMoniker": "Study_Step\\Profile.xaml",
-              "ToolTip": "D:\\my_works\\dotnetProjects\\Study_Step\\Study_Step\\Profile.xaml",
-              "RelativeToolTip": "Study_Step\\Profile.xaml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAhAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2025-01-31T21:02:29.801Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "Profile.xaml.cs",
-              "DocumentMoniker": "D:\\my_works\\dotnetProjects\\Study_Step\\Study_Step\\Profile.xaml.cs",
-              "RelativeDocumentMoniker": "Study_Step\\Profile.xaml.cs",
-              "ToolTip": "D:\\my_works\\dotnetProjects\\Study_Step\\Study_Step\\Profile.xaml.cs",
-              "RelativeToolTip": "Study_Step\\Profile.xaml.cs",
-              "ViewState": "AgIAAAkAAAAAAAAAAAAAABcAAAAiAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-01-31T21:12:48.387Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "ChatController.cs",
-              "DocumentMoniker": "D:\\my_works\\dotnetProjects\\Study_Step\\Study_Step_Server\\Controllers\\ChatController.cs",
-              "RelativeDocumentMoniker": "Study_Step_Server\\Controllers\\ChatController.cs",
-              "ToolTip": "D:\\my_works\\dotnetProjects\\Study_Step\\Study_Step_Server\\Controllers\\ChatController.cs",
-              "RelativeToolTip": "Study_Step_Server\\Controllers\\ChatController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAGsAAAAwAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-01-04T22:42:50.688Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "DropDownListSearch.xaml.cs",
-              "DocumentMoniker": "D:\\my_works\\dotnetProjects\\Study_Step\\Study_Step\\CustomControls\\DropDownListSearch.xaml.cs",
-              "RelativeDocumentMoniker": "Study_Step\\CustomControls\\DropDownListSearch.xaml.cs",
-              "ToolTip": "D:\\my_works\\dotnetProjects\\Study_Step\\Study_Step\\CustomControls\\DropDownListSearch.xaml.cs",
-              "RelativeToolTip": "Study_Step\\CustomControls\\DropDownListSearch.xaml.cs",
-              "ViewState": "AgIAADwAAAAAAAAAAAAIwFAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-23T20:27:32.112Z",
+              "WhenOpened": "2025-02-11T12:58:36.525Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "DropDownListSearch.xaml",
-              "DocumentMoniker": "D:\\my_works\\dotnetProjects\\Study_Step\\Study_Step\\CustomControls\\DropDownListSearch.xaml",
-              "RelativeDocumentMoniker": "Study_Step\\CustomControls\\DropDownListSearch.xaml",
-              "ToolTip": "D:\\my_works\\dotnetProjects\\Study_Step\\Study_Step\\CustomControls\\DropDownListSearch.xaml",
-              "RelativeToolTip": "Study_Step\\CustomControls\\DropDownListSearch.xaml",
-              "ViewState": "AgIAAGAAAAAAAAAAAAAAAGQAAAAwAAAAAAAAAA==",
+              "Title": "MainWindow.xaml",
+              "DocumentMoniker": "D:\\my_works\\dotnetProjects\\Study_Step\\Study_Step\\MainWindow.xaml",
+              "RelativeDocumentMoniker": "Study_Step\\MainWindow.xaml",
+              "ToolTip": "D:\\my_works\\dotnetProjects\\Study_Step\\Study_Step\\MainWindow.xaml",
+              "RelativeToolTip": "Study_Step\\MainWindow.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2024-12-23T09:50:35.559Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "Styles.xaml",
-              "DocumentMoniker": "D:\\my_works\\dotnetProjects\\Study_Step\\Study_Step\\Assets\\Resources\\Styles.xaml",
-              "RelativeDocumentMoniker": "Study_Step\\Assets\\Resources\\Styles.xaml",
-              "ToolTip": "D:\\my_works\\dotnetProjects\\Study_Step\\Study_Step\\Assets\\Resources\\Styles.xaml",
-              "RelativeToolTip": "Study_Step\\Assets\\Resources\\Styles.xaml",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2025-02-07T20:41:09.047Z",
+              "WhenOpened": "2025-02-14T21:21:49.657Z",
               "EditorCaption": ""
             }
           ]

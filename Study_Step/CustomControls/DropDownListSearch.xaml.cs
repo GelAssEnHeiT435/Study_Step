@@ -60,37 +60,5 @@ namespace Study_Step.CustomControls
                 viewModel.UserList = new ObservableCollection<User>(filteredUsers);
             }
         }
-
-        private void OpenProfile(object sender, RoutedEventArgs e)
-        {
-            ViewModel viewModel = (ViewModel)DataContext;
-
-            // Получаем кнопку, которая была нажата
-            Button button = sender as Button;
-
-            // Получаем объект User, привязанный к текущему элементу списка
-            User user = button?.DataContext as User;
-
-            if (user != null)
-            {
-                // Создайте новый экземпляр ViewModel для нового окна
-                ProfileViewModel profileViewModel = new ProfileViewModel
-                {
-                    statusThumbsUser = user
-                };
-
-                // Создаем окно профиля
-                Profile profile_window = new Profile();
-
-                // Устанавливаем DataContext для нового окна профиля
-                profile_window.DataContext = profileViewModel; // Привязываем новый ViewModel
-
-                // Теперь MainWindow — главное окно для taskWindow
-                profile_window.Owner = Application.Current.MainWindow;
-
-                // Показываем окно
-                profile_window.Show();
-            }
-        }
     }
 }

@@ -21,11 +21,11 @@ namespace Study_Step
     /// </summary>
     public partial class MainWindow : Window
     {
-        private static readonly HttpClient client = new HttpClient();
-        private const string apiUrl = "http://localhost:5000/api/chat";
-        public MainWindow()
+        public MainWindow(ViewModel viewModel)
         {
             InitializeComponent();
+            viewModel.ScrollToEnd += ScrollTo;
+            DataContext = viewModel;
         }
 
         private void Border_MouseDown(object sender, MouseButtonEventArgs e)
@@ -52,60 +52,11 @@ namespace Study_Step
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {
             ViewModel viewModel = (ViewModel)DataContext;
-
-            // Проверка, если была нажата клавиша Escape
-            if (e.Key == Key.Escape)
-            {
-                viewModel.ChatIsActive = false;
-            }
+            if (e.Key == Key.Escape) { viewModel.ChatIsActive = false; }
         }
 
-        private async void SendMessage(object sender, RoutedEventArgs e)
-        {
-            string? message = MessageBox.Text;
-            ViewModel viewModel = (ViewModel)DataContext;
+        private void ScrollTo() =>
+            chatMesseges.scroll.ScrollToEnd();
 
-            if (message == null || message.Length == 0) return;
-
-            MessageDTO mes = new MessageDTO()
-            {
-                SenderId = (int)Application.Current.Properties["Id"],
-                ChatId = (int)Application.Current.Properties["ChatId"],
-                Text = message,
-                Type = MessageType.Text,
-                FileUrl = null
-            };
-
-            // Преобразуем объект пользователя в JSON строку
-            string json = JsonConvert.SerializeObject(mes);
-
-            // Создаем HTTP запрос
-            var content = new StringContent(json, Encoding.UTF8, "application/json");
-
-            // Отправляем запрос на сервер
-            HttpResponseMessage response = await client.PostAsync("http://localhost:5000/api/chat/newmessage", content);
-            if (response.IsSuccessStatusCode)
-            {
-                Message sentMes = new Message()
-                {
-                    SenderId = (int)Application.Current.Properties["Id"],
-                    ChatId = (int)Application.Current.Properties["ChatId"],
-                    Text = message,
-                    SentAt = DateTime.UtcNow,
-                    Type = MessageType.Text,
-                    IsOutside = false,
-                    FileUrl = null
-                };
-
-                viewModel.Conversations.Add(sentMes);
-                MessageBox.Text = "";
-                MessageBox.Focus();
-            }
-            else
-            {
-                string error = await response.Content.ReadAsStringAsync();
-                Console.WriteLine($"Ошибка: {error}");
-            }
-        }
     }
 }

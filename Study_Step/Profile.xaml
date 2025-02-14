@@ -97,7 +97,9 @@
                     <Button x:Name="btnStartChat"
                             VerticalAlignment="Top"
                             Content="{StaticResource allchats}"
-                            Style="{StaticResource IconButtonStyle}"/>
+                            Style="{StaticResource IconButtonStyle}"
+                            Command="{Binding DataContext.CreateNewChat, RelativeSource={RelativeSource AncestorType={x:Type Window}}}"
+                            CommandParameter="{Binding}"/>
                 </Grid>
 
 

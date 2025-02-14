@@ -17,11 +17,8 @@ namespace Study_Step_Server.Models
 
         public byte[] GetContactPhotoAsBytes()
         {
-            if (string.IsNullOrEmpty(ContactPhoto) || !File.Exists(ContactPhoto))
-            {
-                return null;  // Возвращаем null, если путь пустой или файл не существует
-            }
-
+            // Возвращаем null, если путь пустой или файл не существует
+            if (string.IsNullOrEmpty(ContactPhoto) || !File.Exists(ContactPhoto)) { return null; }
             return File.ReadAllBytes(ContactPhoto);  // Читаем файл в массив байтов
         }
 

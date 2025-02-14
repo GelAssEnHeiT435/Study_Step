@@ -152,7 +152,8 @@
         </Border>
         
         <!-- TODO: Add Auto-Scrolling Chat -->
-        <ScrollViewer HorizontalScrollBarVisibility="Disabled"
+        <ScrollViewer x:Name="scroll"
+                      HorizontalScrollBarVisibility="Disabled"
                       Background="WhiteSmoke"
                       Grid.Row="1">
             <ItemsControl ItemsSource="{Binding Conversations, UpdateSourceTrigger=PropertyChanged}"

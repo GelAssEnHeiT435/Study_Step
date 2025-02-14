@@ -9,7 +9,8 @@
         public MessageType Type { get; set; }  // Тип сообщения (текст, изображение, файл)
         public string? FileUrl { get; set; }  // URL для файлов (если есть)
 
-
+        // True - извне
+        // False - наше
         public bool? IsOutside { get; set; }
         //public User? Sender { get; set; }
         //public Chat? Chat { get; set; }

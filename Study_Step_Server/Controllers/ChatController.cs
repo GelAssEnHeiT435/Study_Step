@@ -22,13 +22,30 @@ namespace Study_Step_Server.Controllers
 
         #region get all chats for user
         [HttpGet("user_chats")]
-        public IEnumerable<Chat> GetChats([FromQuery] int userId)
+        public UserChatsResponse GetChats([FromQuery] int userId)
         {
             // Получение всех чатов, в которых состоит пользователь с данным userId
-            IEnumerable<Chat> userChats = (from uc in _context.User_Chats
+            IEnumerable<ChatDTO> userChats = (from uc in _context.User_Chats
                                            where uc.UserId == userId  // Фильтр по идентификатору пользователя
                                            orderby uc.Chat.LastMessageTime descending //сортировка в порядке убывания
-                                           select uc.Chat).ToList();  // Извлекаем только Chat
+                                           select new ChatDTO
+                                           {
+                                               Id = uc.Chat.Id,
+                                               Name = uc.Chat.Name,
+                                               Message = uc.Chat.Message,
+                                               LastMessageTime = uc.Chat.LastMessageTime,
+                                               Type = uc.Chat.Type
+                                           }).ToList();  // Извлекаем только Chat
+
+            IEnumerable<UserChatDTO> userChatsByChatIds = (from uc in _context.User_Chats
+                                                        where (from chat in userChats select chat.Id).Contains(uc.ChatId)
+                                                        select new UserChatDTO
+                                                        {
+                                                            Id = uc.Id,
+                                                            UserId = uc.UserId,
+                                                            ChatId = uc.ChatId
+                                                        }).ToList();
+
             foreach (var chat in userChats)
             {
                 // Проверяем, что тип чата индивидуальный
@@ -61,8 +78,14 @@ namespace Study_Step_Server.Controllers
                     }
                 }
             }
-            // Возвращаем список чатов
-            return userChats;
+
+            UserChatsResponse response = new UserChatsResponse()
+            {
+                Chats = userChats,
+                UserChats = userChatsByChatIds
+            };
+
+            return response;
         }
         #endregion
 

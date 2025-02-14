@@ -7,9 +7,11 @@
       xmlns:viewmodels="clr-namespace:Study_Step.ViewModels"
       mc:Ignorable="d" 
       Title="SignInPage">
-    <Page.DataContext>
-        <viewmodels:AuthViewModel />
-    </Page.DataContext>
+
+    <Page.InputBindings>
+        <KeyBinding Key="Enter" Command="{Binding LoginCommand}" />
+    </Page.InputBindings>
+
     <StackPanel Width="200">
         <TextBlock Text="Авторизация"
                    HorizontalAlignment="Center"
@@ -33,7 +35,7 @@
                      Padding="12, 0"
                      HorizontalAlignment="Stretch"
                      VerticalContentAlignment="Center"
-                     Text="{Binding Email}"/>
+                     Text="{Binding Email, UpdateSourceTrigger=PropertyChanged}" />
         </Border>
 
         <TextBlock Text="Пароль"
@@ -60,7 +62,7 @@
                 BorderThickness="0"
                 Margin="0, 20, 0, 5"
                 Width="75"
-                Click="UserLogin">
+                Command="{Binding LoginCommand}"> <!-- TODO Command-->
             <Button.Content>
                 <TextBlock Text="Войти"
                            FontSize="16"
@@ -74,7 +76,7 @@
         <Button Background="Transparent"
                 BorderThickness="0"
                 Width="100"
-                Click="ToRegisterPage">
+                Command="{Binding NavigateToRegisterPageCommand}">
             <Button.Content>
                 <TextBlock Text="Регистрация"
                            FontSize="16"

@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Study_Step_Server")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+7183f7dad51a8365bda95c53ff4c4abb290b7719")]
 [assembly: System.Reflection.AssemblyProductAttribute("Study_Step_Server")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Study_Step_Server")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

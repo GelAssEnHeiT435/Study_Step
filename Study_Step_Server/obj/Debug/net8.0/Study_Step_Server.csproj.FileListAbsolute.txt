@@ -143,3 +143,9 @@ D:\my_works\dotnetProjects\Study_Step\Study_Step_Server\bin\Debug\net8.0\System.
 D:\my_works\dotnetProjects\Study_Step\Study_Step_Server\bin\Debug\net8.0\Castle.Core.dll
 D:\my_works\dotnetProjects\Study_Step\Study_Step_Server\bin\Debug\net8.0\Microsoft.EntityFrameworkCore.Proxies.dll
 D:\my_works\dotnetProjects\Study_Step\Study_Step_Server\bin\Debug\net8.0\Newtonsoft.Json.dll
+D:\my_works\dotnetProjects\Study_Step\Study_Step_Server\bin\Debug\net8.0\Microsoft.Extensions.Diagnostics.Abstractions.dll
+D:\my_works\dotnetProjects\Study_Step\Study_Step_Server\bin\Debug\net8.0\Microsoft.Extensions.Hosting.Abstractions.dll
+D:\my_works\dotnetProjects\Study_Step\Study_Step_Server\bin\Debug\net8.0\Microsoft.Extensions.ObjectPool.dll
+D:\my_works\dotnetProjects\Study_Step\Study_Step_Server\bin\Debug\net8.0\System.Net.WebSockets.WebSocketProtocol.dll
+D:\my_works\dotnetProjects\Study_Step\Study_Step_Server\obj\Debug\net8.0\Study_Step_Server.sourcelink.json
+D:\my_works\dotnetProjects\Study_Step\Study_Step_Server\bin\Debug\net8.0\Microsoft.Bcl.Memory.dll

@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Study_Step.Pages;
+using Study_Step.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,9 +22,12 @@ namespace Study_Step
     /// </summary>
     public partial class AuthWindow : Window
     {
-        public AuthWindow()
+
+        public AuthWindow(AuthViewModel viewModel)
         {
             InitializeComponent();
+            viewModel.CurrentPage = App.ServiceProvider.GetRequiredService<SignInPage>();
+            DataContext = viewModel;
         }
         private void Border_MouseDown(object sender, MouseButtonEventArgs e)
         {
@@ -30,7 +36,6 @@ namespace Study_Step
         }
         private void btnMinimize_Click(object sender, RoutedEventArgs e)
         {
-            System.Diagnostics.Debug.WriteLine("Команда GetSelectedChatCommand вызвана.");
             WindowState = WindowState.Minimized;
         }
         private void btnMaximize_Click(object sender, RoutedEventArgs e)

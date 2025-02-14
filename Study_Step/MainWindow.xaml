@@ -17,9 +17,10 @@
         WindowStartupLocation="CenterScreen"
         Height="768" Width="1024"
         KeyDown="Window_KeyDown">
-    <Window.DataContext>
-        <viewmodels:ViewModel />
-    </Window.DataContext>
+    <Window.InputBindings>
+        <KeyBinding Key="Enter" Command="{Binding SendMesCommand}" />
+    </Window.InputBindings>
+    
     <Window.Resources>
         <ControlTemplate x:Key="ContactInfoButtonTemplate"
                          TargetType="{x:Type Button}">
@@ -227,7 +228,8 @@
                 </Grid>
                 
                 <!-- Conversation Message Body-->
-                <customcontrols:Conversation Grid.Row="1"/>
+                <customcontrols:Conversation x:Name="chatMesseges"
+                                             Grid.Row="1"/>
                 
                 <!--region TextBox for Send Message -->
                 <Grid Grid.Row="3">
@@ -249,8 +251,7 @@
                                      Padding="12, 0"
                                      VerticalAlignment="Center"
                                      HorizontalContentAlignment="Stretch"
-                                     Text="{Binding MessageText}">
-                                <!-- TODO: Input Bindings -->
+                                     Text="{Binding MessageText, UpdateSourceTrigger=PropertyChanged}">
                             </TextBox>
                             <!-- Buttons -->
                             <StackPanel Grid.Column="1"
@@ -262,7 +263,7 @@
                                 <Button x:Name="SendMsgButton"
                                         Style="{StaticResource IconButtonStyle}"
                                         Content="{StaticResource send}"
-                                        Click="SendMessage"/>
+                                        Command="{Binding SendMesCommand}"/>
                             </StackPanel>
                         </Grid>
                     </Border>

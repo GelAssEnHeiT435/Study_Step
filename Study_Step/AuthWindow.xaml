@@ -69,10 +69,11 @@
 
             <Frame Name="MainFrame" 
                    NavigationUIVisibility="Hidden"
-                   Source="Pages/SignInPage.xaml"
                    Grid.Column="1"
                    Grid.Row="1"
-                   VerticalAlignment="Center"/>
+                   VerticalAlignment="Center"
+                   Content="{Binding CurrentPage}"
+                   DataContext="{Binding}"/>
             
         </Grid>
     </Border>

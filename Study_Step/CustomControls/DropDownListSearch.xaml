@@ -98,7 +98,9 @@
                 <DataTemplate>
                     <Button BorderThickness="0"
                             HorizontalAlignment="Center"
-                            Click="OpenProfile">
+                            Command="{Binding DataContext.GetUserProfileCommand, RelativeSource={RelativeSource AncestorType={x:Type Window}}}"
+                            CommandParameter="{Binding}">
+                            
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="auto"/> <!-- Фотография пользователя -->

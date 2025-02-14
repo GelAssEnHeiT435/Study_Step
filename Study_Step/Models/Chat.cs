@@ -5,6 +5,7 @@ namespace Study_Step.Models
     public class Chat
     {
         public int Id { get; set; }  // Уникальный идентификатор чата
+        public int? UserId_InChat { get; set; }
         public string? Name { get; set; }  // Название чата (для группового чата)
         public byte[]? ContactPhoto { get; set; }
         public BitmapImage? bitmapPhoto { get; set; }
