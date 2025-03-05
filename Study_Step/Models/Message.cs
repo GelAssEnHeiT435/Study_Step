@@ -2,7 +2,8 @@
 {
     public class Message
     {
-        public int SenderId { get; set; }  // Идентификатор отправителя
+        public int MessageId { get; set; }
+        public int UserId { get; set; }  // Идентификатор отправителя
         public int ChatId { get; set; }  // Идентификатор чата
         public string? Text { get; set; }  // Текст сообщения
         public DateTime SentAt { get; set; }  // Время отправки

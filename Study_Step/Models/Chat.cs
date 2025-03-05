@@ -4,17 +4,14 @@ namespace Study_Step.Models
 {
     public class Chat
     {
-        public int Id { get; set; }  // Уникальный идентификатор чата
-        public int? UserId_InChat { get; set; }
+        public int ChatId { get; set; }  // Уникальный идентификатор чата
         public string? Name { get; set; }  // Название чата (для группового чата)
-        public byte[]? ContactPhoto { get; set; }
         public BitmapImage? bitmapPhoto { get; set; }
-        public string? Message { get; set; }
+        public string? LastMessage { get; set; }
         public DateTime? LastMessageTime { get; set; }
         public ChatType Type { get; set; }  // Тип чата (личный, групповой)
 
-        public ICollection<UserChat>? UserChats { get; set; } // Участники чата
-        public ICollection<Message>? Messages { get; set; } // сообщения, имеющие отношение к конкретному чату
+        public int? UserId_InChat { get; set; }
     }
 
     public enum ChatType

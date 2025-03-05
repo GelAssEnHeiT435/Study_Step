@@ -1,4 +1,4 @@
-﻿namespace Study_Step_Server.Models.DTO
+﻿namespace Study_Step.Models.DTO
 {
     public class UserChatDTO
     {

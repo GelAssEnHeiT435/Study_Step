@@ -1,16 +1,16 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Authentication.OAuth;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Study_Step_Server.Hubs;
 using Study_Step_Server.Models;
 using Study_Step_Server.Services;
-using System;
+using Study_Step_Server.Data;
+using Study_Step_Server.Repositories;
+using Study_Step_Server.Interfaces;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
-using System.Text;
-using System.Text.Json.Serialization;
+using AutoMapper;
 
 namespace Study_Step_Server
 {
@@ -20,15 +20,18 @@ namespace Study_Step_Server
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Получение строки подключения
+            // Connection to Database PostgreSQL
             builder.Services.AddDbContext<ApplicationContext>(options =>
                 options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-            // Сервис регистрации
-            builder.Services.AddScoped<AuthService>();
+            builder.Services.AddScoped<AuthService>(); // Add Service Authorization
+            
 
-            builder.Services.AddSingleton<IUserIdProvider, CustomUserIdProvider>(); // Устанавливаем сервис для получения Id пользователя
+            // Add user provider to convert connectionId to UserId 
+            builder.Services.AddSingleton<IUserIdProvider, CustomUserIdProvider>();
+            
 
+            // Add Service Authorization with JWT-Token
             builder.Services.AddAuthorization();
             builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
@@ -50,11 +53,10 @@ namespace Study_Step_Server
                         {
                             var accessToken = context.Request.Query["access_token"];
 
-                            // если запрос направлен хабу
+                            // Get Path from http request's body
                             var path = context.HttpContext.Request.Path;
                             if (!string.IsNullOrEmpty(accessToken) && path.StartsWithSegments("/chat"))
                             {
-                                // получаем токен из строки запроса
                                 context.Token = accessToken;
                             }
                             return Task.CompletedTask;
@@ -62,20 +64,28 @@ namespace Study_Step_Server
                     };
                 });
 
-            // подключение сервисов SignalR
-            builder.Services.AddSignalR();      
+            // Add SignalR
+            builder.Services.AddSignalR();   
+            
+            builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+            builder.Services.AddScoped<IUserChatRepository, UserChatRepository>();
+            builder.Services.AddScoped<IUoW, UoW>();
+
+            // Add converter models to data transfer object
+            builder.Services.AddAutoMapper(typeof(MapperProfile).Assembly);
+            builder.Services.AddScoped<IImageService, ImageService>();
+            builder.Services.AddScoped<DtoConverterService>();
 
             // Add services to the container.
             builder.Services.AddControllers();
-                
 
             var app = builder.Build();
 
             app.UseDefaultFiles();
             app.UseStaticFiles();
 
-            app.UseAuthentication();   // добавление middleware аутентификации 
-            app.UseAuthorization();   // добавление middleware авторизации 
+            app.UseAuthentication();
+            app.UseAuthorization();
 
             app.MapPost("/login", async (AuthUser loginModel) =>
             {
@@ -83,18 +93,17 @@ namespace Study_Step_Server
                 using (var scope = scopeFactory.CreateScope())
                 {
                     ApplicationContext dbContext = scope.ServiceProvider.GetRequiredService<ApplicationContext>();
-                    AuthService _authService = scope.ServiceProvider.GetRequiredService<AuthService>();
-
-                    // находим пользователя 
+                    AuthService authService = scope.ServiceProvider.GetRequiredService<AuthService>();
+                    
                     AuthUser? user = await dbContext.AuthorizationUsers.FirstOrDefaultAsync(users => users.Email == loginModel.Email);
-                    // если пользователь не найден, отправляем статусный код 401
-                    if (!_authService.VerifyPassword(user?.Password, loginModel.Password)) return Results.Unauthorized();
+
+                    if (!authService.VerifyPassword(user?.Password, loginModel.Password)) return Results.Unauthorized();
 
                     var claims = new List<Claim> 
                     { 
-                        new Claim(ClaimTypes.NameIdentifier, user.Id.ToString())  // TODO - сделать связку ConnectionId и UserId
+                        new Claim(ClaimTypes.NameIdentifier, user.Id.ToString())  // TODO - пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ ConnectionId пїЅ UserId
                     };
-                    // создаем JWT-токен
+                    
                     var jwt = new JwtSecurityToken(
                             issuer: AuthOptions.ISSUER,
                             audience: AuthOptions.AUDIENCE,
@@ -103,8 +112,6 @@ namespace Study_Step_Server
                             signingCredentials: new SigningCredentials(AuthOptions.GetSymmetricSecurityKey(), SecurityAlgorithms.HmacSha256));
                     var encodedJwt = new JwtSecurityTokenHandler().WriteToken(jwt);
 
-                    Console.WriteLine(user.Id);
-                    // формируем ответ
                     var response = new
                     {
                         id = user.Id,
@@ -122,15 +129,12 @@ namespace Study_Step_Server
                 using (var scope = scopeFactory.CreateScope())
                 {
                     ApplicationContext dbContext = scope.ServiceProvider.GetRequiredService<ApplicationContext>();
-                    AuthService _authService = scope.ServiceProvider.GetRequiredService<AuthService>();
-
-                    // находим пользователя 
+                    AuthService authService = scope.ServiceProvider.GetRequiredService<AuthService>();
+                    
                     AuthUser? user = await dbContext.AuthorizationUsers.FirstOrDefaultAsync(users => users.Email == loginModel.Email);
-                    // если пользователь не найден, отправляем статусный код 401
                     if (user != null) return Results.Unauthorized();
-
-                    // Хэширование пароля и добавление пользователя в БД
-                    string password = _authService.HashPassword(loginModel.Password);
+                    
+                    string password = authService.HashPassword(loginModel.Password);
                     AuthUser auser = new AuthUser
                     {
                         Name = loginModel.Name,
@@ -153,7 +157,7 @@ namespace Study_Step_Server
                     {
                         new Claim( ClaimTypes.NameIdentifier, newuser.Id.ToString() )
                     };
-                    // создаем JWT-токен
+
                     var jwt = new JwtSecurityToken(
                             issuer: AuthOptions.ISSUER,
                             audience: AuthOptions.AUDIENCE,
@@ -161,8 +165,7 @@ namespace Study_Step_Server
                             expires: DateTime.UtcNow.Add(TimeSpan.FromMinutes(2)),
                             signingCredentials: new SigningCredentials(AuthOptions.GetSymmetricSecurityKey(), SecurityAlgorithms.HmacSha256));
                     var encodedJwt = new JwtSecurityTokenHandler().WriteToken(jwt);
-
-                    // формируем ответ
+                    
                     var response = new
                     {
                         id = newuser.Id,
@@ -174,8 +177,9 @@ namespace Study_Step_Server
                 }
             });
 
-
-            app.MapHub<ChatHub>("/chathub");   // обработка запросов по пути конкретному пути
+            
+            
+            app.MapHub<ChatHub>("/chathub");
 
             // Configure the HTTP request pipeline.
             app.UseHttpsRedirection();

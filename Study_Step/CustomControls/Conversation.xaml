@@ -7,11 +7,18 @@
              xmlns:viewmodels="clr-namespace:Study_Step.ViewModels"
              mc:Ignorable="d" 
              Height="auto" Width="auto">
-    <!--<UserControl.DataContext>
-        <viewmodels:ViewModel />
-    </UserControl.DataContext>-->
-    
     <UserControl.Resources>
+        <Style x:Key="MessageTextStyle" TargetType="{x:Type TextBlock}">
+            <Setter Property="FontSize" Value="15" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+            <Setter Property="Margin" Value="20" />
+            <Setter Property="Foreground" Value="Black" />
+            <Setter Property="HorizontalAlignment" Value="Center" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="TextWrapping" Value="Wrap" />
+            <Setter Property="Text" Value="{Binding Text}" />
+        </Style>
+        
         <DataTemplate x:Key="ItemTemplate">
             <Button>
                 <Button.Style>
@@ -151,7 +158,6 @@
 
         </Border>
         
-        <!-- TODO: Add Auto-Scrolling Chat -->
         <ScrollViewer x:Name="scroll"
                       HorizontalScrollBarVisibility="Disabled"
                       Background="WhiteSmoke"

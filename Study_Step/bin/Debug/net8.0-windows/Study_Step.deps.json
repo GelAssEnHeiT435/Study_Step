@@ -8,6 +8,7 @@
     ".NETCoreApp,Version=v8.0": {
       "Study_Step/1.0.0": {
         "dependencies": {
+          "AutoMapper": "14.0.0",
           "Microsoft.AspNet.WebApi.Client": "6.0.0",
           "Microsoft.AspNetCore.SignalR.Client": "9.0.0",
           "Microsoft.EntityFrameworkCore.Tools": "9.0.0",
@@ -17,6 +18,17 @@
         },
         "runtime": {
           "Study_Step.dll": {}
+        }
+      },
+      "AutoMapper/14.0.0": {
+        "dependencies": {
+          "Microsoft.Extensions.Options": "9.0.0"
+        },
+        "runtime": {
+          "lib/net8.0/AutoMapper.dll": {
+            "assemblyVersion": "14.0.0.0",
+            "fileVersion": "14.0.0.0"
+          }
         }
       },
       "Humanizer.Core/2.14.1": {
@@ -1172,6 +1184,13 @@
       "type": "project",
       "serviceable": false,
       "sha512": ""
+    },
+    "AutoMapper/14.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-OC+1neAPM4oCCqQj3g2GJ2shziNNhOkxmNB9cVS8jtx4JbgmRzLcUOxB9Tsz6cVPHugdkHgCaCrTjjSI0Z5sCQ==",
+      "path": "automapper/14.0.0",
+      "hashPath": "automapper.14.0.0.nupkg.sha512"
     },
     "Humanizer.Core/2.14.1": {
       "type": "package",

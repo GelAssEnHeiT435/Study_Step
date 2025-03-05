@@ -7,18 +7,16 @@ namespace Study_Step_Server.Models
 {
     public class Message
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }  // Уникальный идентификатор сообщения
-        public int SenderId { get; set; }  // Идентификатор отправителя
-        public int ChatId { get; set; }  // Идентификатор чата
+        public int MessageId { get; set; }  // Уникальный идентификатор сообщения
+        public int? UserId { get; set; }  // Идентификатор отправителя
+        public int? ChatId { get; set; }  // Идентификатор чата
         public string? Text { get; set; }  // Текст сообщения
-        public DateTime SentAt { get; set; }  // Время отправки
+        public DateTime? SentAt { get; set; }  // Время отправки
         public MessageType Type { get; set; }  // Тип сообщения (текст, изображение, файл)
         public string? FileUrl { get; set; }  // URL для файлов (если есть)
 
-        public virtual User Sender { get; set; }
-        public virtual Chat Chat { get; set; }
+        public User Sender { get; set; }
+        public Chat Chat { get; set; }
     }
 
     internal class MessageConfiguration : IEntityTypeConfiguration<Message>

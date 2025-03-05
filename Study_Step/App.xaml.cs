@@ -1,9 +1,14 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using Study_Step.Data;
+using Study_Step.Interfaces;
 using Study_Step.Pages;
+using Study_Step.Services;
 using Study_Step.ViewModels;
+using Study_Step.Services;
 using System.Configuration;
 using System.Data;
 using System.Windows;
+using AutoMapper;
 
 namespace Study_Step
 {
@@ -43,7 +48,12 @@ namespace Study_Step
             services.AddTransient<MainWindow>();
 
             services.AddTransient<RegisterPage>(); 
-            services.AddTransient<SignInPage>(); 
+            services.AddTransient<SignInPage>();
+
+            // Add converter models to data transfer object
+            services.AddAutoMapper(typeof(ClientMapperProfile).Assembly);
+            services.AddScoped<IImageService, ImageService>();
+            services.AddScoped<DtoConverterService>();
         }
     }
 

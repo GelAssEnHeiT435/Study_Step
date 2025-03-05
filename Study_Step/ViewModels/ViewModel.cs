@@ -1,25 +1,18 @@
 ﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using Study_Step.Commands;
+using Study_Step.Interfaces;
 using Study_Step.Models;
 using Study_Step.Models.DTO;
-using Study_Step_Server.Models.DTO;
-using System;
-using System.Collections.Generic;
+using Study_Step.Services;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
-using System.Linq;
 using System.Net.Http;
-using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
-using System.Windows.Threading;
 
 namespace Study_Step.ViewModels
 {
@@ -29,10 +22,18 @@ namespace Study_Step.ViewModels
         public static string apiUrl = "http://localhost:5000/api/chat";
 
         private readonly SignalRService _signalRService;
+        private readonly IImageService _imageService;
+        private readonly DtoConverterService _dtoConverter;
 
-        public ViewModel(SignalRService signalRService)
+        public ViewModel(SignalRService signalRService, 
+                         IImageService imageService,
+                         DtoConverterService dtoConverter)
         {
             _signalRService = signalRService;
+            _imageService = imageService;
+            _dtoConverter = dtoConverter;
+
+            // Add EventsListeners
             _signalRService.OnMessageReceived += MessageReceived;
 
             LoadChats();
@@ -43,7 +44,9 @@ namespace Study_Step.ViewModels
         #region MainWindow
 
         #region Events
+
         public event Action ScrollToEnd;
+
         #endregion
 
         // Параметры для отображения текущего выделенного чата
@@ -57,7 +60,6 @@ namespace Study_Step.ViewModels
                 OnPropertyChanged(nameof(ContactName));
             }
         }
-
         public BitmapImage bitmapPhoto
         {
             get => _bitmapPhoto;
@@ -67,7 +69,6 @@ namespace Study_Step.ViewModels
                 OnPropertyChanged(nameof(bitmapPhoto));
             }
         }
-
         public string LastSeen
         {
             get => _lastSeen;
@@ -77,7 +78,6 @@ namespace Study_Step.ViewModels
                 OnPropertyChanged(nameof(LastSeen));
             }
         }
-
         public bool ChatIsActive 
         {
             get => _ChatIsActive;
@@ -87,6 +87,7 @@ namespace Study_Step.ViewModels
                 OnPropertyChanged(nameof(ChatIsActive));
             }
         }
+
         private string _contactName;
         private BitmapImage _bitmapPhoto;
         private string _lastSeen;
@@ -104,56 +105,27 @@ namespace Study_Step.ViewModels
         #region Logics
         public async void LoadChats()
         {
-            // Преобразуем объект пользователя в JSON строку
-            string json = JsonConvert.SerializeObject(Application.Current.Properties["Id"]);
-
-            // Создаем HTTP запрос
-            var content = new StringContent(json, Encoding.UTF8, "application/json");
-
-
-            // Отправляем запрос на сервер
-            HttpResponseMessage response = await client.GetAsync(apiUrl + $"/user_chats?userId={Application.Current.Properties["Id"]}");
+            string json = JsonConvert.SerializeObject(Application.Current.Properties["Id"]); // Convert User's Id to JSON-Object
+            var content = new StringContent(json, Encoding.UTF8, "application/json"); // Create HTTP-Request
+            HttpResponseMessage response = await client.GetAsync(apiUrl + $"/getallchats?userId={Application.Current.Properties["Id"]}"); // Send Request to Server
 
             if (response.IsSuccessStatusCode)
             {
-                // Если запрос успешен, читаем тело ответа
-                string responseBody = await response.Content.ReadAsStringAsync();
+                string responseBody = await response.Content.ReadAsStringAsync(); // Read body response
+                var jsonResponse = JsonConvert.DeserializeObject<UserChatsResponse>(responseBody); // Deserialize object to collection
 
-                // Десериализуем JSON в коллекцию чатов
-                var jsonResponse = JsonConvert.DeserializeObject<UserChatsResponse>(responseBody);
-
-                Chats = new ObservableCollection<Chat>(); // создаем пустую коллекцию
-
-                // Отображаем полученные чаты
+                Chats = new ObservableCollection<Chat>();
+                
                 foreach (var chat in jsonResponse.Chats)
                 {
-                    Chat thisChat = new Chat()
+                    Chat thisChat = _dtoConverter.GetChat(chat); // convert ChatDTO to Chat
+                    foreach (var uc in jsonResponse.UserChats) // Get User's Id to send messages
                     {
-                        Id = chat.Id,
-                        Name = chat.Name,
-                        Message = chat.Message,
-                        LastMessageTime = chat.LastMessageTime,
-                        Type = chat.Type
-                    };
-
-                    if (chat.ContactPhoto != null)
-                    {
-                        // Преобразуем массив байтов в BitmapImage
-                        BitmapImage bitmapImage = ConvertByteArrayToBitmapImage(chat.ContactPhoto);
-
-                        // Присваиваем BitmapImage в свойство ContactPhoto (или можно использовать в ImageBrush)
-                        thisChat.bitmapPhoto = bitmapImage;
-                    }
-
-                    foreach (var uc in jsonResponse.UserChats)
-                    {
-                        if (uc.UserId != (int)Application.Current.Properties["Id"] && chat.Id == uc.ChatId)
-                        {
+                        if (uc.UserId != (int)Application.Current.Properties["Id"] && chat.ChatId == uc.ChatId) {
                             thisChat.UserId_InChat = uc.UserId;
                         }
-                        
                     }
-                    System.Diagnostics.Debug.WriteLine(thisChat.UserId_InChat);
+                    System.Diagnostics.Debug.WriteLine(thisChat.ChatId);
                     Chats.Add(thisChat);
                 }
             }
@@ -179,9 +151,11 @@ namespace Study_Step.ViewModels
                 bitmapPhoto = chat.bitmapPhoto;
 
                 // загрузка сообщений конкретного чата
-                Application.Current.Properties["ChatId"] = chat.Id;
+                System.Diagnostics.Debug.WriteLine(chat.ChatId);
+
+                Application.Current.Properties["ChatId"] = chat.ChatId;
                 Application.Current.Properties["RecieverId"] = chat.UserId_InChat;
-                LoadChatConversation(chat.Id);
+                LoadChatConversation(chat.ChatId);
             }
         });
         #endregion
@@ -214,32 +188,23 @@ namespace Study_Step.ViewModels
         #endregion
 
         #region Logics
-        async void LoadChatConversation(int Id)
+        private async void LoadChatConversation(int Id)
         {
-            // Преобразуем объект пользователя в JSON строку
-            string json = JsonConvert.SerializeObject(Id);
+            string json = JsonConvert.SerializeObject(Id); // Convert Id to JSON-Object
+            var content = new StringContent(json, Encoding.UTF8, "application/json"); // Create HTTP-Request
+            HttpResponseMessage response = await client.GetAsync(apiUrl + $"/messages?chatId={Id}"); // Send request to server
 
-            // Создаем HTTP запрос
-            var content = new StringContent(json, Encoding.UTF8, "application/json");
+            if (response.IsSuccessStatusCode) {
+                string responseBody = await response.Content.ReadAsStringAsync(); // Read response
+                var jsonResponse = JsonConvert.DeserializeObject<IEnumerable<MessageDTO>>(responseBody); // Deserialize JSON to collection
+                IEnumerable<Message> messages = _dtoConverter.GetMessageList(jsonResponse);
 
-
-            // Отправляем запрос на сервер
-            HttpResponseMessage response = await client.GetAsync(apiUrl + $"/messeges?chatId={Id}");
-
-            if (response.IsSuccessStatusCode)
-            {
-                // Если запрос успешен, читаем тело ответа
-                string responseBody = await response.Content.ReadAsStringAsync();
-
-                // Десериализуем JSON в коллекцию чатов
-                var jsonResponse = JsonConvert.DeserializeObject<IEnumerable<Message>>(responseBody);
-
-                Conversations = new ObservableCollection<Message>(); // создаем пустую коллекцию
+                Conversations = new ObservableCollection<Message>();
 
                 // Отображаем полученные чаты
-                foreach (var mes in jsonResponse)
+                foreach (var mes in messages)
                 {
-                    mes.IsOutside = mes.SenderId != (int)Application.Current.Properties["Id"];
+                    mes.IsOutside = mes.UserId != (int) Application.Current.Properties["Id"];
                     Conversations.Add(mes);
                     ScrollToEnd?.Invoke();
                 }
@@ -252,16 +217,11 @@ namespace Study_Step.ViewModels
 
         private void MessageReceived(string sender, MessageDTO message)
         {
-            Message messageObject = new Message()
-            {
-                SenderId = message.SenderId,
-                ChatId = message.ChatId,
-                Text = message.Text,
-                SentAt = message.SentAt,
-                Type = message.Type,
-                IsOutside = true
-            };
+            Message messageObject = _dtoConverter.GetMessage(message);
+
+            messageObject.IsOutside = true; // changing the sender's side
             Conversations.Add(messageObject);
+
             ScrollToEnd?.Invoke();
         }
         #endregion
@@ -273,29 +233,23 @@ namespace Study_Step.ViewModels
         {
             if (!ChatIsActive) { return; }
 
-            MessageDTO messageObject = new MessageDTO()
+            Message messageChat = new Message()
             {
-                SenderId = (int)Application.Current.Properties["Id"],
+                UserId = (int)Application.Current.Properties["Id"],
                 ChatId = (int)Application.Current.Properties["ChatId"],
                 Text = MessageText,
                 SentAt = DateTime.UtcNow,
                 Type = MessageType.Text,
             };
-            Message messageChat = new Message()
-            {
-                SenderId = messageObject.SenderId,
-                ChatId = messageObject.ChatId,
-                Text = MessageText,
-                SentAt = messageObject.SentAt,
-                Type = MessageType.Text,
-                IsOutside = false
-            };
 
+            MessageDTO messageObject = _dtoConverter.GetMessageDTO(messageChat);
+            await _signalRService.SendMessageAsync(Application.Current.Properties["RecieverId"].ToString(),
+                                                   messageObject);
+
+            messageChat.IsOutside = false;
             Conversations.Add(messageChat);
             ScrollToEnd?.Invoke();
 
-            await _signalRService.SendMessageAsync(Application.Current.Properties["RecieverId"].ToString(),
-                                                   messageObject);
             MessageText = string.Empty;
         });
 
@@ -315,7 +269,7 @@ namespace Study_Step.ViewModels
             set
             {
                 _userList = value;
-                OnPropertyChanged("UserList");
+                OnPropertyChanged(nameof(UserList));
             }
         }
         private ObservableCollection<User> _userList;
@@ -324,32 +278,18 @@ namespace Study_Step.ViewModels
         #region Logics
         public async void LoadUserList()
         {
-            // Отправляем запрос на сервер
-            HttpResponseMessage response = await client.GetAsync(apiUrl + $"/selectuser");
+            HttpResponseMessage response = await client.GetAsync(apiUrl + $"/selectuser"); // Send requers to server
 
-            if (response.IsSuccessStatusCode)
-            {
-                // Если запрос успешен, читаем тело ответа
+            if (response.IsSuccessStatusCode) {
                 string responseBody = await response.Content.ReadAsStringAsync();
+                var jsonResponse = JsonConvert.DeserializeObject<IEnumerable<UserDTO>>(responseBody); // Deseriaize JSON-Object to collection
 
-                // Десериализуем JSON в коллекцию чатов
-                var jsonResponse = JsonConvert.DeserializeObject<IEnumerable<UserDTO>>(responseBody);
-
-                // Отображаем полученных пользователей
-                foreach (var user in jsonResponse) 
+                foreach (var user in jsonResponse) // Show users
                 {
                     if (user.Username.Equals( Application.Current.Properties["Username"] )) continue;
-                    users.Add(new User()
-                    {
-                        Id = user.Id,
-                        Username = user.Username,
-                        Photo = ConvertByteArrayToBitmapImage(user.ContactPhoto),
-                        Email = user.Email,
-                        Status = user.Status,
-                        LastLogin = user.LastLogin
-                    });
+                    User userForList = _dtoConverter.GetUser(user);
+                    users.Add(userForList);
                 }
-
                 UserList = new ObservableCollection<User>(users); // создаем пустую коллекцию
             }
             else
@@ -367,26 +307,17 @@ namespace Study_Step.ViewModels
         private ICommand _getUserProfileCommand;
         public ICommand GetUserProfileCommand => _getUserProfileCommand ??= new RelayCommand(parameter =>
         {
-            if (parameter is User user) // получение имени и фото пользователя при выборе чата
+            if (parameter is User user) // Get user
             {
                 if (user != null)
                 {
-                    // Создайте новый экземпляр ViewModel для нового окна
-                    ProfileViewModel profileViewModel = new ProfileViewModel
-                    {
+                    ProfileViewModel profileViewModel = new ProfileViewModel {
                         statusThumbsUser = user
                     };
+                    UserProfile profile_window = new UserProfile(); // Create User's profile
 
-                    // Создаем окно профиля
-                    Profile profile_window = new Profile();
-
-                    // Устанавливаем DataContext для нового окна профиля
-                    profile_window.DataContext = profileViewModel; // Привязываем новый ViewModel
-
-                    // Теперь MainWindow — главное окно для taskWindow
+                    profile_window.DataContext = profileViewModel; // Set DataContext
                     profile_window.Owner = Application.Current.MainWindow;
-
-                    // Показываем окно
                     profile_window.Show();
                 }
             }
@@ -394,31 +325,6 @@ namespace Study_Step.ViewModels
         #endregion
 
         #endregion
-
-        // Метод для преобразования массива байт в BitmapImage
-        private BitmapImage ConvertByteArrayToBitmapImage(byte[] byteArray)
-        {
-            if (byteArray is null) return null;
-
-            BitmapImage bitmapImage = new BitmapImage();
-            using (var stream = new MemoryStream(byteArray))
-            {
-                bitmapImage.BeginInit();
-                bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
-                bitmapImage.StreamSource = stream;
-                bitmapImage.EndInit();
-            }
-            return bitmapImage;
-        }
-
-        private BitmapImage LoadImage(string imagePath)
-        {
-            BitmapImage bitmap = new BitmapImage();
-            bitmap.BeginInit();
-            bitmap.UriSource = new Uri(imagePath, UriKind.Absolute);  // Путь к файлу
-            bitmap.EndInit();
-            return bitmap;
-        }
 
         public event PropertyChangedEventHandler? PropertyChanged;
         protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null) =>

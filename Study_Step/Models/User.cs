@@ -4,16 +4,12 @@ namespace Study_Step.Models
 {
     public class User
     {
-        public int Id { get; set; }
+        public int UserId { get; set; }
         public string Username { get; set; }
         public BitmapImage Photo { get; set; }
         public string Email { get; set; }
         public UserStatus? Status { get; set; }  // Статус пользователя (онлайн, оффлайн)
         public DateTime? LastLogin { get; set; }  // Время последнего входа
-
-        public ICollection<UserChat>? UserChats { get; set; }
-        public ICollection<Message>? Messages { get; set; }
-        
     }
 
     public enum UserStatus

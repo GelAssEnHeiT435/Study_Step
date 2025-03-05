@@ -3,44 +3,52 @@
   "WorkspaceRootPath": "D:\\my_works\\dotnetProjects\\Study_Step\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{5D95692E-1FB1-43F9-9496-9CFE7EA5FEC6}|Study_Step\\Study_Step.csproj|d:\\my_works\\dotnetprojects\\study_step\\study_step\\viewmodels\\viewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{5D95692E-1FB1-43F9-9496-9CFE7EA5FEC6}|Study_Step\\Study_Step.csproj|solutionrelative:study_step\\viewmodels\\viewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{02F56035-7DC3-4949-8B54-6F8022BD01B1}|Study_Step_Server\\Study_Step_Server.csproj|d:\\my_works\\dotnetprojects\\study_step\\study_step_server\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{02F56035-7DC3-4949-8B54-6F8022BD01B1}|Study_Step_Server\\Study_Step_Server.csproj|solutionrelative:study_step_server\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{5D95692E-1FB1-43F9-9496-9CFE7EA5FEC6}|Study_Step\\Study_Step.csproj|d:\\my_works\\dotnetprojects\\study_step\\study_step\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{5D95692E-1FB1-43F9-9496-9CFE7EA5FEC6}|Study_Step\\Study_Step.csproj|solutionrelative:study_step\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+      "AbsoluteMoniker": "D:0:0:{5D95692E-1FB1-43F9-9496-9CFE7EA5FEC6}|Study_Step\\Study_Step.csproj|d:\\my_works\\dotnetprojects\\study_step\\study_step\\app.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5D95692E-1FB1-43F9-9496-9CFE7EA5FEC6}|Study_Step\\Study_Step.csproj|solutionrelative:study_step\\app.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{5D95692E-1FB1-43F9-9496-9CFE7EA5FEC6}|Study_Step\\Study_Step.csproj|d:\\my_works\\dotnetprojects\\study_step\\study_step\\signalrservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{5D95692E-1FB1-43F9-9496-9CFE7EA5FEC6}|Study_Step\\Study_Step.csproj|solutionrelative:study_step\\signalrservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{02F56035-7DC3-4949-8B54-6F8022BD01B1}|Study_Step_Server\\Study_Step_Server.csproj|d:\\my_works\\dotnetprojects\\study_step\\study_step_server\\data\\mapperprofile.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{02F56035-7DC3-4949-8B54-6F8022BD01B1}|Study_Step_Server\\Study_Step_Server.csproj|solutionrelative:study_step_server\\data\\mapperprofile.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{5D95692E-1FB1-43F9-9496-9CFE7EA5FEC6}|Study_Step\\Study_Step.csproj|d:\\my_works\\dotnetprojects\\study_step\\study_step\\viewmodels\\authviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{5D95692E-1FB1-43F9-9496-9CFE7EA5FEC6}|Study_Step\\Study_Step.csproj|solutionrelative:study_step\\viewmodels\\authviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{02F56035-7DC3-4949-8B54-6F8022BD01B1}|Study_Step_Server\\Study_Step_Server.csproj|d:\\my_works\\dotnetprojects\\study_step\\study_step_server\\data\\resolvers\\imageconvertresolver.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{02F56035-7DC3-4949-8B54-6F8022BD01B1}|Study_Step_Server\\Study_Step_Server.csproj|solutionrelative:study_step_server\\data\\resolvers\\imageconvertresolver.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{5D95692E-1FB1-43F9-9496-9CFE7EA5FEC6}|Study_Step\\Study_Step.csproj|d:\\my_works\\dotnetprojects\\study_step\\study_step\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{5D95692E-1FB1-43F9-9496-9CFE7EA5FEC6}|Study_Step\\Study_Step.csproj|solutionrelative:study_step\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{5D95692E-1FB1-43F9-9496-9CFE7EA5FEC6}|Study_Step\\Study_Step.csproj|d:\\my_works\\dotnetprojects\\study_step\\study_step\\pages\\registerpage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{5D95692E-1FB1-43F9-9496-9CFE7EA5FEC6}|Study_Step\\Study_Step.csproj|solutionrelative:study_step\\pages\\registerpage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+      "AbsoluteMoniker": "D:0:0:{5D95692E-1FB1-43F9-9496-9CFE7EA5FEC6}|Study_Step\\Study_Step.csproj|d:\\my_works\\dotnetprojects\\study_step\\study_step\\data\\resolvers\\imageconvertresolver.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5D95692E-1FB1-43F9-9496-9CFE7EA5FEC6}|Study_Step\\Study_Step.csproj|solutionrelative:study_step\\data\\resolvers\\imageconvertresolver.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{02F56035-7DC3-4949-8B54-6F8022BD01B1}|Study_Step_Server\\Study_Step_Server.csproj|d:\\my_works\\dotnetprojects\\study_step\\study_step_server\\controllers\\chatcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{02F56035-7DC3-4949-8B54-6F8022BD01B1}|Study_Step_Server\\Study_Step_Server.csproj|solutionrelative:study_step_server\\controllers\\chatcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{5D95692E-1FB1-43F9-9496-9CFE7EA5FEC6}|Study_Step\\Study_Step.csproj|d:\\my_works\\dotnetprojects\\study_step\\study_step\\viewmodels\\viewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5D95692E-1FB1-43F9-9496-9CFE7EA5FEC6}|Study_Step\\Study_Step.csproj|solutionrelative:study_step\\viewmodels\\viewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5D95692E-1FB1-43F9-9496-9CFE7EA5FEC6}|Study_Step\\Study_Step.csproj|d:\\my_works\\dotnetprojects\\study_step\\study_step\\customcontrols\\dropdownlistsearch.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{5D95692E-1FB1-43F9-9496-9CFE7EA5FEC6}|Study_Step\\Study_Step.csproj|solutionrelative:study_step\\customcontrols\\dropdownlistsearch.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5D95692E-1FB1-43F9-9496-9CFE7EA5FEC6}|Study_Step\\Study_Step.csproj|d:\\my_works\\dotnetprojects\\study_step\\study_step\\models\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5D95692E-1FB1-43F9-9496-9CFE7EA5FEC6}|Study_Step\\Study_Step.csproj|solutionrelative:study_step\\models\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{5D95692E-1FB1-43F9-9496-9CFE7EA5FEC6}|Study_Step\\Study_Step.csproj|d:\\my_works\\dotnetprojects\\study_step\\study_step\\customcontrols\\conversation.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
       "RelativeMoniker": "D:0:0:{5D95692E-1FB1-43F9-9496-9CFE7EA5FEC6}|Study_Step\\Study_Step.csproj|solutionrelative:study_step\\customcontrols\\conversation.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{5D95692E-1FB1-43F9-9496-9CFE7EA5FEC6}|Study_Step\\Study_Step.csproj|d:\\my_works\\dotnetprojects\\study_step\\study_step\\customcontrols\\conversation.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{5D95692E-1FB1-43F9-9496-9CFE7EA5FEC6}|Study_Step\\Study_Step.csproj|solutionrelative:study_step\\customcontrols\\conversation.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{5D95692E-1FB1-43F9-9496-9CFE7EA5FEC6}|Study_Step\\Study_Step.csproj|d:\\my_works\\dotnetprojects\\study_step\\study_step\\signalrservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5D95692E-1FB1-43F9-9496-9CFE7EA5FEC6}|Study_Step\\Study_Step.csproj|solutionrelative:study_step\\signalrservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{02F56035-7DC3-4949-8B54-6F8022BD01B1}|Study_Step_Server\\Study_Step_Server.csproj|d:\\my_works\\dotnetprojects\\study_step\\study_step_server\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{02F56035-7DC3-4949-8B54-6F8022BD01B1}|Study_Step_Server\\Study_Step_Server.csproj|solutionrelative:study_step_server\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{5D95692E-1FB1-43F9-9496-9CFE7EA5FEC6}|Study_Step\\Study_Step.csproj|d:\\my_works\\dotnetprojects\\study_step\\study_step\\assets\\resources\\styles.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{5D95692E-1FB1-43F9-9496-9CFE7EA5FEC6}|Study_Step\\Study_Step.csproj|solutionrelative:study_step\\assets\\resources\\styles.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     }
   ],
   "DocumentGroupContainers": [
@@ -50,133 +58,159 @@
       "DocumentGroups": [
         {
           "DockedWidth": 119,
-          "SelectedChildIndex": 8,
+          "SelectedChildIndex": 0,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "Conversation.xaml.cs",
-              "DocumentMoniker": "D:\\my_works\\dotnetProjects\\Study_Step\\Study_Step\\CustomControls\\Conversation.xaml.cs",
-              "RelativeDocumentMoniker": "Study_Step\\CustomControls\\Conversation.xaml.cs",
-              "ToolTip": "D:\\my_works\\dotnetProjects\\Study_Step\\Study_Step\\CustomControls\\Conversation.xaml.cs",
-              "RelativeToolTip": "Study_Step\\CustomControls\\Conversation.xaml.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "DocumentIndex": 0,
+              "Title": "Program.cs",
+              "DocumentMoniker": "D:\\my_works\\dotnetProjects\\Study_Step\\Study_Step_Server\\Program.cs",
+              "RelativeDocumentMoniker": "Study_Step_Server\\Program.cs",
+              "ToolTip": "D:\\my_works\\dotnetProjects\\Study_Step\\Study_Step_Server\\Program.cs",
+              "RelativeToolTip": "Study_Step_Server\\Program.cs",
+              "ViewState": "AgIAAEAAAAAAAAAAAAAQwEwAAAA+AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-14T21:56:59.891Z",
+              "WhenOpened": "2025-03-05T09:45:06.423Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "App.xaml.cs",
+              "DocumentMoniker": "D:\\my_works\\dotnetProjects\\Study_Step\\Study_Step\\App.xaml.cs",
+              "RelativeDocumentMoniker": "Study_Step\\App.xaml.cs",
+              "ToolTip": "D:\\my_works\\dotnetProjects\\Study_Step\\Study_Step\\App.xaml.cs",
+              "RelativeToolTip": "Study_Step\\App.xaml.cs",
+              "ViewState": "AgIAABsAAAAAAAAAAAAYwDUAAAAMAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-05T09:44:51.475Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 4,
-              "Title": "MainWindow.xaml.cs",
-              "DocumentMoniker": "D:\\my_works\\dotnetProjects\\Study_Step\\Study_Step\\MainWindow.xaml.cs",
-              "RelativeDocumentMoniker": "Study_Step\\MainWindow.xaml.cs",
-              "ToolTip": "D:\\my_works\\dotnetProjects\\Study_Step\\Study_Step\\MainWindow.xaml.cs",
-              "RelativeToolTip": "Study_Step\\MainWindow.xaml.cs",
-              "ViewState": "AgIAAA0AAAAAAAAAAAAIwBgAAAAJAAAAAAAAAA==",
+              "Title": "ImageConvertResolver.cs",
+              "DocumentMoniker": "D:\\my_works\\dotnetProjects\\Study_Step\\Study_Step\\Data\\Resolvers\\ImageConvertResolver.cs",
+              "RelativeDocumentMoniker": "Study_Step\\Data\\Resolvers\\ImageConvertResolver.cs",
+              "ToolTip": "D:\\my_works\\dotnetProjects\\Study_Step\\Study_Step\\Data\\Resolvers\\ImageConvertResolver.cs",
+              "RelativeToolTip": "Study_Step\\Data\\Resolvers\\ImageConvertResolver.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-14T21:55:08.365Z",
+              "WhenOpened": "2025-03-05T09:41:34.3Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "ImageConvertResolver.cs",
+              "DocumentMoniker": "D:\\my_works\\dotnetProjects\\Study_Step\\Study_Step_Server\\Data\\Resolvers\\ImageConvertResolver.cs",
+              "RelativeDocumentMoniker": "Study_Step_Server\\Data\\Resolvers\\ImageConvertResolver.cs",
+              "ToolTip": "D:\\my_works\\dotnetProjects\\Study_Step\\Study_Step_Server\\Data\\Resolvers\\ImageConvertResolver.cs",
+              "RelativeToolTip": "Study_Step_Server\\Data\\Resolvers\\ImageConvertResolver.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-05T09:21:49.215Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "SignalRService.cs",
-              "DocumentMoniker": "D:\\my_works\\dotnetProjects\\Study_Step\\Study_Step\\SignalRService.cs",
-              "RelativeDocumentMoniker": "Study_Step\\SignalRService.cs",
-              "ToolTip": "D:\\my_works\\dotnetProjects\\Study_Step\\Study_Step\\SignalRService.cs",
-              "RelativeToolTip": "Study_Step\\SignalRService.cs",
-              "ViewState": "AgIAAAkAAAAAAAAAAAAAABIAAAAAAAAAAAAAAA==",
+              "Title": "MapperProfile.cs",
+              "DocumentMoniker": "D:\\my_works\\dotnetProjects\\Study_Step\\Study_Step_Server\\Data\\MapperProfile.cs",
+              "RelativeDocumentMoniker": "Study_Step_Server\\Data\\MapperProfile.cs",
+              "ToolTip": "D:\\my_works\\dotnetProjects\\Study_Step\\Study_Step_Server\\Data\\MapperProfile.cs",
+              "RelativeToolTip": "Study_Step_Server\\Data\\MapperProfile.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAABQAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-14T21:52:46.79Z",
+              "WhenOpened": "2025-03-05T09:21:28.228Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "User.cs",
+              "DocumentMoniker": "D:\\my_works\\dotnetProjects\\Study_Step\\Study_Step\\Models\\User.cs",
+              "RelativeDocumentMoniker": "Study_Step\\Models\\User.cs",
+              "ToolTip": "D:\\my_works\\dotnetProjects\\Study_Step\\Study_Step\\Models\\User.cs",
+              "RelativeToolTip": "Study_Step\\Models\\User.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAZAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-05T09:10:36.186Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 7,
+              "Title": "DropDownListSearch.xaml",
+              "DocumentMoniker": "D:\\my_works\\dotnetProjects\\Study_Step\\Study_Step\\CustomControls\\DropDownListSearch.xaml",
+              "RelativeDocumentMoniker": "Study_Step\\CustomControls\\DropDownListSearch.xaml",
+              "ToolTip": "D:\\my_works\\dotnetProjects\\Study_Step\\Study_Step\\CustomControls\\DropDownListSearch.xaml",
+              "RelativeToolTip": "Study_Step\\CustomControls\\DropDownListSearch.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2025-03-05T09:10:20.682Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "Styles.xaml",
+              "DocumentMoniker": "D:\\my_works\\dotnetProjects\\Study_Step\\Study_Step\\Assets\\Resources\\Styles.xaml",
+              "RelativeDocumentMoniker": "Study_Step\\Assets\\Resources\\Styles.xaml",
+              "ToolTip": "D:\\my_works\\dotnetProjects\\Study_Step\\Study_Step\\Assets\\Resources\\Styles.xaml",
+              "RelativeToolTip": "Study_Step\\Assets\\Resources\\Styles.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2025-03-05T08:51:08.597Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
               "Title": "Conversation.xaml",
               "DocumentMoniker": "D:\\my_works\\dotnetProjects\\Study_Step\\Study_Step\\CustomControls\\Conversation.xaml",
               "RelativeDocumentMoniker": "Study_Step\\CustomControls\\Conversation.xaml",
               "ToolTip": "D:\\my_works\\dotnetProjects\\Study_Step\\Study_Step\\CustomControls\\Conversation.xaml",
               "RelativeToolTip": "Study_Step\\CustomControls\\Conversation.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2025-02-14T21:47:40.216Z",
+              "WhenOpened": "2025-03-05T08:27:37.168Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "AuthViewModel.cs",
-              "DocumentMoniker": "D:\\my_works\\dotnetProjects\\Study_Step\\Study_Step\\ViewModels\\AuthViewModel.cs",
-              "RelativeDocumentMoniker": "Study_Step\\ViewModels\\AuthViewModel.cs",
-              "ToolTip": "D:\\my_works\\dotnetProjects\\Study_Step\\Study_Step\\ViewModels\\AuthViewModel.cs",
-              "RelativeToolTip": "Study_Step\\ViewModels\\AuthViewModel.cs",
-              "ViewState": "AgIAAEsAAAAAAAAAAAAAwFcAAAAkAAAAAAAAAA==",
+              "DocumentIndex": 10,
+              "Title": "SignalRService.cs",
+              "DocumentMoniker": "D:\\my_works\\dotnetProjects\\Study_Step\\Study_Step\\SignalRService.cs",
+              "RelativeDocumentMoniker": "Study_Step\\SignalRService.cs",
+              "ToolTip": "D:\\my_works\\dotnetProjects\\Study_Step\\Study_Step\\SignalRService.cs",
+              "RelativeToolTip": "Study_Step\\SignalRService.cs",
+              "ViewState": "AgIAAA4AAAAAAAAAAAAmwDUAAAAMAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-14T21:14:58.284Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "RegisterPage.xaml",
-              "DocumentMoniker": "D:\\my_works\\dotnetProjects\\Study_Step\\Study_Step\\Pages\\RegisterPage.xaml",
-              "RelativeDocumentMoniker": "Study_Step\\Pages\\RegisterPage.xaml",
-              "ToolTip": "D:\\my_works\\dotnetProjects\\Study_Step\\Study_Step\\Pages\\RegisterPage.xaml",
-              "RelativeToolTip": "Study_Step\\Pages\\RegisterPage.xaml",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2025-02-14T21:13:48.167Z",
+              "WhenOpened": "2025-03-04T11:15:20.025Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 6,
+              "Title": "ViewModel.cs",
+              "DocumentMoniker": "D:\\my_works\\dotnetProjects\\Study_Step\\Study_Step\\ViewModels\\ViewModel.cs",
+              "RelativeDocumentMoniker": "Study_Step\\ViewModels\\ViewModel.cs",
+              "ToolTip": "D:\\my_works\\dotnetProjects\\Study_Step\\Study_Step\\ViewModels\\ViewModel.cs",
+              "RelativeToolTip": "Study_Step\\ViewModels\\ViewModel.cs",
+              "ViewState": "AgIAACsAAAAAAAAAAAAQwC8BAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-26T13:50:25.561Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
               "Title": "ChatController.cs",
               "DocumentMoniker": "D:\\my_works\\dotnetProjects\\Study_Step\\Study_Step_Server\\Controllers\\ChatController.cs",
               "RelativeDocumentMoniker": "Study_Step_Server\\Controllers\\ChatController.cs",
               "ToolTip": "D:\\my_works\\dotnetProjects\\Study_Step\\Study_Step_Server\\Controllers\\ChatController.cs",
               "RelativeToolTip": "Study_Step_Server\\Controllers\\ChatController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAF8AAAAmAAAAAAAAAA==",
+              "ViewState": "AgIAABkAAAAAAAAAAAAQwFUAAAAIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-14T12:40:44.539Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "Program.cs",
-              "DocumentMoniker": "D:\\my_works\\dotnetProjects\\Study_Step\\Study_Step_Server\\Program.cs",
-              "RelativeDocumentMoniker": "Study_Step_Server\\Program.cs",
-              "ToolTip": "D:\\my_works\\dotnetProjects\\Study_Step\\Study_Step_Server\\Program.cs",
-              "RelativeToolTip": "Study_Step_Server\\Program.cs",
-              "ViewState": "AgIAAIIAAAAAAAAAAAAQwJMAAAAUAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-13T22:01:50.418Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "ViewModel.cs",
-              "DocumentMoniker": "D:\\my_works\\dotnetProjects\\Study_Step\\Study_Step\\ViewModels\\ViewModel.cs",
-              "RelativeDocumentMoniker": "Study_Step\\ViewModels\\ViewModel.cs",
-              "ToolTip": "D:\\my_works\\dotnetProjects\\Study_Step\\Study_Step\\ViewModels\\ViewModel.cs*",
-              "RelativeToolTip": "Study_Step\\ViewModels\\ViewModel.cs*",
-              "ViewState": "AgIAANgAAAAAAAAAAADwv/MAAAAqAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-11T12:58:36.525Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "MainWindow.xaml",
-              "DocumentMoniker": "D:\\my_works\\dotnetProjects\\Study_Step\\Study_Step\\MainWindow.xaml",
-              "RelativeDocumentMoniker": "Study_Step\\MainWindow.xaml",
-              "ToolTip": "D:\\my_works\\dotnetProjects\\Study_Step\\Study_Step\\MainWindow.xaml",
-              "RelativeToolTip": "Study_Step\\MainWindow.xaml",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2025-02-14T21:21:49.657Z",
+              "WhenOpened": "2025-02-22T19:41:41.266Z",
               "EditorCaption": ""
             }
           ]

@@ -1,9 +1,9 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Newtonsoft.Json;
 using Study_Step_Server.Models;
 using Study_Step_Server.Models.DTO;
+using Study_Step_Server.Data;
+using Study_Step_Server.Interfaces;
 using Study_Step_Server.Services;
 
 namespace Study_Step_Server.Controllers
@@ -12,77 +12,48 @@ namespace Study_Step_Server.Controllers
     [ApiController]
     public class ChatController : ControllerBase
     {
-        private readonly ApplicationContext _context;
-        //private byte[] fileBytes;
+        private readonly IUoW _unitOfWork;
+        private readonly DtoConverterService _dtoConverter;
+        private readonly IImageService _imageService;
 
-        public ChatController(ApplicationContext context)
+        public ChatController(IUoW unitOfWork, 
+                              DtoConverterService converter,
+                              IImageService imageService)
         {
-            _context = context; ;
+            _unitOfWork = unitOfWork;
+            _dtoConverter = converter;
+            _imageService = imageService;
         }
 
         #region get all chats for user
-        [HttpGet("user_chats")]
-        public UserChatsResponse GetChats([FromQuery] int userId)
+        [HttpGet("getallchats")]
+        public async Task<UserChatsResponse> GetChats([FromQuery] int userId)
         {
-            // Получение всех чатов, в которых состоит пользователь с данным userId
-            IEnumerable<ChatDTO> userChats = (from uc in _context.User_Chats
-                                           where uc.UserId == userId  // Фильтр по идентификатору пользователя
-                                           orderby uc.Chat.LastMessageTime descending //сортировка в порядке убывания
-                                           select new ChatDTO
-                                           {
-                                               Id = uc.Chat.Id,
-                                               Name = uc.Chat.Name,
-                                               Message = uc.Chat.Message,
-                                               LastMessageTime = uc.Chat.LastMessageTime,
-                                               Type = uc.Chat.Type
-                                           }).ToList();  // Извлекаем только Chat
+            Console.WriteLine("этап 1");
+            IEnumerable<Chat> users_chats = await _unitOfWork.UserChats.GetChatsByUserIdAsync(userId);
+            IEnumerable<ChatDTO> dtoChats = _dtoConverter.GetChatListDTO(users_chats);
+            Console.WriteLine("этап 2");
+            IEnumerable<UserChat?> userChatsByChatIds = await _unitOfWork.UserChats.GetLinksByChatIdsAsync(dtoChats);
+            IEnumerable<UserChatDTO> ucDto = _dtoConverter.GetUserChatListDTO(userChatsByChatIds);
 
-            IEnumerable<UserChatDTO> userChatsByChatIds = (from uc in _context.User_Chats
-                                                        where (from chat in userChats select chat.Id).Contains(uc.ChatId)
-                                                        select new UserChatDTO
-                                                        {
-                                                            Id = uc.Id,
-                                                            UserId = uc.UserId,
-                                                            ChatId = uc.ChatId
-                                                        }).ToList();
-
-            foreach (var chat in userChats)
+            foreach (var chat in dtoChats)
             {
-                // Проверяем, что тип чата индивидуальный
+                // check type is Individual
                 if (chat.Type == ChatType.Individual)
                 {
-                    // Находим второго пользователя в чате
-                    User? secondUser = (from uc in _context.User_Chats
-                                        where uc.ChatId == chat.Id && uc.UserId != userId
-                                        select uc.User).FirstOrDefault();  // Берем первого (единственного) второго пользователя
-
-                    // Если второй пользователь найден, устанавливаем его имя как название чата
+                    User? secondUser = await _unitOfWork.UserChats.FindSecondUserAsync(chat.ChatId, userId); // find second user in chat
                     if (secondUser != null)
                     {
-                        string? photoPath;
-                        if (secondUser.ContactPhoto != null)
-                            photoPath = Path.Combine(Directory.GetCurrentDirectory(), "UploadedFiles", secondUser.ContactPhoto);
-                        else
-                            photoPath = null;
-
-                        // Проверяем, существует ли файл
-                        if (System.IO.File.Exists(photoPath))  // Возвращаем ошибку, если файл не найден
-                        {
-                            byte[] fileBytes = System.IO.File.ReadAllBytes(photoPath); // Читаем файл в массив байтов
-
-                            // Преобразуем массив байтов в строку base64 и сохраняем в ContactPhoto
-                            chat.ContactPhoto = fileBytes;
-                        }
-
+                        chat.ContactPhoto = _imageService.ConvertImageToByteArray(secondUser.ContactPhoto);
                         chat.Name = secondUser.Username;  // Устанавливаем имя второго пользователя как название чата
                     }
                 }
             }
-
+            Console.WriteLine("этап 3");
             UserChatsResponse response = new UserChatsResponse()
             {
-                Chats = userChats,
-                UserChats = userChatsByChatIds
+                Chats = dtoChats,
+                UserChats = ucDto
             };
 
             return response;
@@ -90,57 +61,32 @@ namespace Study_Step_Server.Controllers
         #endregion
 
         #region get all messages
-        [HttpGet("messeges")]
-        public IEnumerable<Message> GetMessage([FromQuery] int chatId)
+        [HttpGet("messages")]
+        public async Task<IEnumerable<MessageDTO>> GetMessage([FromQuery] int chatId)
         {
-            Console.WriteLine(chatId);
-            // Получение всех сообщений, принадлежащих определенному чату
-            IEnumerable<Message> messages = (from mes in _context.Messages
-                                             where mes.ChatId == chatId  // Фильтруем по UserId
-                                             orderby mes.SentAt // сортировка по дате
-                                             select mes).ToList();
-            return messages;
+            var messages = await _unitOfWork.Messages.GetMessagesByChatIdAsync(chatId);
+            return _dtoConverter.GetMessageListDTO(messages);
         }
         #endregion
 
         #region add new message
         [HttpPost("newmessage")]
-        public async Task<ActionResult> PostMessage(MessageDTO messageDTO)
+        public async Task<ActionResult> PostMessage(MessageDTO messageDto)
         {
-            // Создание нового сообщения
-            var message = new Message
-            {
-                SenderId = messageDTO.SenderId,
-                ChatId = messageDTO.ChatId,
-                Text = messageDTO.Text,
-                SentAt = DateTime.UtcNow,
-                Type = messageDTO.Type,
-                FileUrl = messageDTO.FileUrl,
-            };
+            Message message = _dtoConverter.GetMessage(messageDto);
 
             // Сохранение сообщения в базе данных
-            _context.Entry(message).State = EntityState.Added;
-            await _context.SaveChangesAsync();
-
+            await _unitOfWork.Messages.AddAsync(message);
             return Ok();
         }
         #endregion
 
         #region get all users
         [HttpGet("selectuser")]
-        public IEnumerable<UserDTO> SelectUser()
+        public async Task<IEnumerable<UserDTO>> SelectUser()
         {
-            IEnumerable<UserDTO> users = (from user in _context.Users
-                                          select new UserDTO
-                                          {
-                                              Id = user.Id,
-                                              Username = user.Username,
-                                              ContactPhoto = user.GetContactPhotoAsBytes(),
-                                              Email = user.Email,
-                                              Status = user.Status,
-                                              LastLogin = user.LastLogin,
-                                          }).ToList();
-            return users;
+            IEnumerable<User> users = await _unitOfWork.Users.GetAllAsync();
+            return _dtoConverter.GetUserListDTO(users);
         }
         #endregion
     }

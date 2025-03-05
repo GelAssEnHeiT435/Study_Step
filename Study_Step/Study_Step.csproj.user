@@ -28,7 +28,7 @@
     <Compile Update="Pages\SignInPage.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Profile.xaml.cs">
+    <Compile Update="UserProfile.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
@@ -63,7 +63,7 @@
     <Page Update="Pages\SignInPage.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Profile.xaml">
+    <Page Update="UserProfile.xaml">
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>

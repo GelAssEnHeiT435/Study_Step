@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "9n2FxGHBKAQ=",
+  "dgSpecHash": "kG8vyhSUdh4=",
   "success": true,
   "projectFilePath": "D:\\my_works\\dotnetProjects\\Study_Step\\Study_Step\\Study_Step.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\ACER\\.nuget\\packages\\automapper\\14.0.0\\automapper.14.0.0.nupkg.sha512",
     "C:\\Users\\ACER\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
     "C:\\Users\\ACER\\.nuget\\packages\\microsoft.aspnet.webapi.client\\6.0.0\\microsoft.aspnet.webapi.client.6.0.0.nupkg.sha512",
     "C:\\Users\\ACER\\.nuget\\packages\\microsoft.aspnetcore.connections.abstractions\\9.0.0\\microsoft.aspnetcore.connections.abstractions.9.0.0.nupkg.sha512",

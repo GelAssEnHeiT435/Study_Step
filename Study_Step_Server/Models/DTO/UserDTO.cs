@@ -2,7 +2,7 @@
 {
     public class UserDTO
     {
-        public int Id { get; set; }
+        public int UserId { get; set; }
         public string Username { get; set; }
         public byte[]? ContactPhoto { get; set; }
         public string Email { get; set; }

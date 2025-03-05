@@ -10,11 +10,11 @@ none
 false
 TRACE;DEBUG;NET;NET8_0;NETCOREAPP
 D:\my_works\dotnetProjects\Study_Step\Study_Step\App.xaml
-11860734169
+11162997351
 
-301994053990
-219-324046713
-Assets\Resources\icons.xaml;Assets\Resources\Styles.xaml;AuthWindow.xaml;CustomControls\ChatList.xaml;CustomControls\Conversation.xaml;CustomControls\DropDownListSearch.xaml;CustomControls\StatusThumbs.xaml;MainWindow.xaml;Pages\RegisterPage.xaml;Pages\SignInPage.xaml;Profile.xaml;
+35-673831968
+220-1608365303
+Assets\Resources\icons.xaml;Assets\Resources\Styles.xaml;AuthWindow.xaml;CustomControls\ChatList.xaml;CustomControls\Conversation.xaml;CustomControls\DropDownListSearch.xaml;CustomControls\StatusThumbs.xaml;MainWindow.xaml;Pages\RegisterPage.xaml;Pages\SignInPage.xaml;UserProfile.xaml;
 
 False
 

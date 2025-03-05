@@ -166,8 +166,7 @@
                         CornerRadius="15"
                         Margin="20"
                         Height="50"
-                        Grid.Row="1"
-                        FocusManager.FocusedElement="{Binding ElementName=SearchUser}">
+                        Grid.Row="1">
 
                     <customcontrols:DropDownListSearch Height="50"/>
 

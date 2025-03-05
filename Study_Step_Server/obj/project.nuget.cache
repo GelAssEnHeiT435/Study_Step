@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "I3rvct2bikk=",
+  "dgSpecHash": "dQAtxvHXSSw=",
   "success": true,
   "projectFilePath": "D:\\my_works\\dotnetProjects\\Study_Step\\Study_Step_Server\\Study_Step_Server.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\ACER\\.nuget\\packages\\automapper\\14.0.0\\automapper.14.0.0.nupkg.sha512",
     "C:\\Users\\ACER\\.nuget\\packages\\bcrypt.net-next\\4.0.3\\bcrypt.net-next.4.0.3.nupkg.sha512",
     "C:\\Users\\ACER\\.nuget\\packages\\castle.core\\5.1.1\\castle.core.5.1.1.nupkg.sha512",
     "C:\\Users\\ACER\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",

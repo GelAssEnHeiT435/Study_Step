@@ -23,7 +23,7 @@ namespace Study_Step_Server
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            app.UseCors("AllowAll");  // Включение CORS
+            app.UseCors("AllowAll");  // On CORS
 
             app.UseRouting();
 

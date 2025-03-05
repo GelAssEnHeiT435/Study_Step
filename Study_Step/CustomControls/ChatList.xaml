@@ -89,7 +89,7 @@
                                                     </TextBlock>
 
 
-                                                    <TextBlock Text="{Binding Message}"
+                                                    <TextBlock Text="{Binding LastMessage}"
                                                                Grid.Row="1">
                                                         <TextBlock.Style>
                                                             <Style TargetType="{x:Type TextBlock}">

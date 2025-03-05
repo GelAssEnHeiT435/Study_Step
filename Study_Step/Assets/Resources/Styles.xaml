@@ -23,7 +23,8 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
-                    <Border Background="{TemplateBinding Background}">
+                    <Border Background="{TemplateBinding Background}"
+                            CornerRadius="10">
                         <Path Data="{TemplateBinding Content}"
                               Fill="{TemplateBinding Foreground}"
                               HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
@@ -33,6 +34,12 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+        <!-- Убираем MultiTrigger, используем Trigger для IsMouseOver -->
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="#E0DFDE"/>
+            </Trigger>
+        </Style.Triggers>
     </Style>
 
     <!-- Button for More Options -->
@@ -55,24 +62,5 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-    </Style>
-
-    <Style x:Key="MessageTextStyle" TargetType="{x:Type TextBlock}">
-        <Setter Property="FontSize" Value="15" />
-        <Setter Property="FontWeight" Value="SemiBold" />
-        <Setter Property="Margin" Value="20" />
-        <Setter Property="Foreground" Value="Black" />
-        <Setter Property="HorizontalAlignment" Value="Center" />
-        <Setter Property="VerticalAlignment" Value="Center" />
-        <Setter Property="TextWrapping" Value="Wrap" />
-        <Style.Triggers>
-            <DataTrigger Binding="{Binding IsOutside}" Value="True">
-                <Setter Property="Text" Value="{Binding Text}" />
-            </DataTrigger>
-
-            <DataTrigger Binding="{Binding IsOutside}" Value="False">
-                <Setter Property="Text" Value="{Binding Text}" />
-            </DataTrigger>
-        </Style.Triggers>
     </Style>
 </ResourceDictionary>
