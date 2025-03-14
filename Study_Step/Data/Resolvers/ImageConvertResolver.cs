@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Study_Step.Interfaces;
+using System.Collections;
 using System.Windows.Media.Imaging;
 
 namespace Study_Step.Data.Resolvers
@@ -8,16 +9,19 @@ namespace Study_Step.Data.Resolvers
         where TSource : class
         where TDestination : class
     {
-        private readonly IImageService _imageService;
-        public ImageConvertResolver(IImageService imageService)
+        private readonly IFileService _fileService;
+        public ImageConvertResolver(IFileService fileService)
         {
-            _imageService = imageService;
+            _fileService = fileService;
         }
 
         public BitmapImage? Resolve(TSource source, TDestination destination, BitmapImage? destMember, ResolutionContext context)
         {
             byte[]? imageByte = source.GetType().GetProperty("ContactPhoto")?.GetValue(source) as byte[];
-            return _imageService.ConvertByteArrayToBitmapImage(imageByte);
+            
+            if (imageByte != null && imageByte.Length == 0) { return null; }
+
+            return _fileService.ConvertByteArrayToBitmapImage(imageByte);
         }
     }
 }

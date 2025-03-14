@@ -14,25 +14,24 @@ namespace Study_Step_Server.Controllers
     {
         private readonly IUoW _unitOfWork;
         private readonly DtoConverterService _dtoConverter;
-        private readonly IImageService _imageService;
+        private readonly IFileService _fileService;
 
         public ChatController(IUoW unitOfWork, 
                               DtoConverterService converter,
-                              IImageService imageService)
+                              IFileService fileService)
         {
             _unitOfWork = unitOfWork;
             _dtoConverter = converter;
-            _imageService = imageService;
+            _fileService = fileService;
         }
 
         #region get all chats for user
         [HttpGet("getallchats")]
         public async Task<UserChatsResponse> GetChats([FromQuery] int userId)
         {
-            Console.WriteLine("этап 1");
             IEnumerable<Chat> users_chats = await _unitOfWork.UserChats.GetChatsByUserIdAsync(userId);
             IEnumerable<ChatDTO> dtoChats = _dtoConverter.GetChatListDTO(users_chats);
-            Console.WriteLine("этап 2");
+
             IEnumerable<UserChat?> userChatsByChatIds = await _unitOfWork.UserChats.GetLinksByChatIdsAsync(dtoChats);
             IEnumerable<UserChatDTO> ucDto = _dtoConverter.GetUserChatListDTO(userChatsByChatIds);
 
@@ -44,12 +43,11 @@ namespace Study_Step_Server.Controllers
                     User? secondUser = await _unitOfWork.UserChats.FindSecondUserAsync(chat.ChatId, userId); // find second user in chat
                     if (secondUser != null)
                     {
-                        chat.ContactPhoto = _imageService.ConvertImageToByteArray(secondUser.ContactPhoto);
+                        chat.ContactPhoto = _fileService.ConvertFileToByteArray(secondUser.ContactPhoto);
                         chat.Name = secondUser.Username;  // Устанавливаем имя второго пользователя как название чата
                     }
                 }
             }
-            Console.WriteLine("этап 3");
             UserChatsResponse response = new UserChatsResponse()
             {
                 Chats = dtoChats,

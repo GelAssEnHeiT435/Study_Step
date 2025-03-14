@@ -11,11 +11,23 @@ namespace Study_Step_Server.Data
     {
         public MapperProfile() 
         {
+            #region File
+
+            // TODO: Converting file to bytes and forth
+            CreateMap<FileModel, FileModelDTO>()
+                .ForMember(dest => dest.FileBytes, opt => opt.MapFrom<FileConvertResolver<FileModel, FileModelDTO>>());
+            CreateMap<FileModelDTO, FileModel>()
+                .ForMember(dest => dest.Path, opt => opt.MapFrom<FileModelPathResolver<FileModelDTO, FileModel>>());
+
+            #endregion
+
             #region Converter Messages
 
             // TODO: Add converting files
-            CreateMap<Message, MessageDTO>();
-            CreateMap<MessageDTO, Message>();
+            CreateMap<Message, MessageDTO>()
+                .ForMember(dest => dest.Files, opt => opt.MapFrom(src => src.Files));
+            CreateMap<MessageDTO, Message>()
+                .ForMember(dest => dest.Files, opt => opt.MapFrom(src => src.Files));
 
             #endregion
 

@@ -9,10 +9,19 @@ namespace Study_Step.Data
     {
         public ClientMapperProfile() 
         {
+            #region Converter Files
+
+            CreateMap<FileModel, FileModelDTO>()
+                .ForMember(dest => dest.FileBytes, opt => opt.MapFrom<FileConvertResolver<FileModel, FileModelDTO>>());
+            CreateMap<FileModelDTO, FileModel>();
+
+            #endregion
+
             #region Converter Messages
 
             // TODO: Add converting files
-            CreateMap<Message, MessageDTO>();
+            CreateMap<Message, MessageDTO>()
+                .ForMember(dest => dest.Files, opt => opt.MapFrom(src => src.Files));
             CreateMap<MessageDTO, Message>();
 
             #endregion
@@ -20,20 +29,20 @@ namespace Study_Step.Data
             #region Converter Users
 
             CreateMap<User, UserDTO>();
-            
-            CreateMap<UserDTO, User>()
+
+            _ = CreateMap<UserDTO, User>()
                 .ForMember(dest => dest.Photo, opt => opt.MapFrom<ImageConvertResolver<UserDTO, User>>());
 
             #endregion
 
-            #region UserChat
+            #region Converter UserChat
 
             CreateMap<UserChat, UserChatDTO>();
             CreateMap<UserChatDTO, UserChat>();
 
             #endregion
 
-            #region Chat
+            #region Converter Chat
 
             CreateMap<Chat, ChatDTO>();
             CreateMap<ChatDTO, Chat>()

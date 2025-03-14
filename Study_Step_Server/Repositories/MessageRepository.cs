@@ -11,7 +11,8 @@ namespace Study_Step_Server.Repositories
 
         public async Task<IEnumerable<Message>> GetMessagesByChatIdAsync(int chatId)
         {
-            return await _dbSet.Where(m => m.ChatId == chatId)
+            return await _dbSet.Include(m => m.Files)
+                               .Where(m => m.ChatId == chatId)
                                .ToListAsync();
         }
     }

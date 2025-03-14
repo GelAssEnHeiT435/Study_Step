@@ -1305,6 +1305,19 @@
           }
         }
       },
+      "MimeMapping/3.1.0": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.0/MimeMapping.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.0/MimeMapping.dll": {
+            "related": ".xml"
+          }
+        }
+      },
       "Mono.TextTemplating/3.0.0": {
         "type": "package",
         "dependencies": {
@@ -3821,6 +3834,22 @@
         "microsoft.net.http.headers.nuspec"
       ]
     },
+    "MimeMapping/3.1.0": {
+      "sha512": "lzlkORXotto0rOGxhXceYOjgXLCeJAFDLRiQki0EiXtWFH6yFwWuW9vzwvjDCdkXZu39z5+I03ntlNBMoQKH3g==",
+      "type": "package",
+      "path": "mimemapping/3.1.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "README.md",
+        "lib/net462/MimeMapping.dll",
+        "lib/net462/MimeMapping.xml",
+        "lib/netstandard2.0/MimeMapping.dll",
+        "lib/netstandard2.0/MimeMapping.xml",
+        "mimemapping.3.1.0.nupkg.sha512",
+        "mimemapping.nuspec"
+      ]
+    },
     "Mono.TextTemplating/3.0.0": {
       "sha512": "YqueG52R/Xej4VVbKuRIodjiAhV0HR/XVbLbNrJhCZnzjnSjgMJ/dCdV0akQQxavX6hp/LC6rqLGLcXeQYU7XA==",
       "type": "package",
@@ -4517,6 +4546,7 @@
       "Microsoft.AspNetCore.SignalR >= 1.2.0",
       "Microsoft.EntityFrameworkCore.Proxies >= 9.0.0",
       "Microsoft.EntityFrameworkCore.Tools >= 9.0.0",
+      "MimeMapping >= 3.1.0",
       "Newtonsoft.Json >= 13.0.3",
       "Npgsql.EntityFrameworkCore.PostgreSQL >= 9.0.3",
       "System.IdentityModel.Tokens.Jwt >= 8.4.0"
@@ -4597,6 +4627,10 @@
             "suppressParent": "All",
             "target": "Package",
             "version": "[9.0.0, )"
+          },
+          "MimeMapping": {
+            "target": "Package",
+            "version": "[3.1.0, )"
           },
           "Newtonsoft.Json": {
             "target": "Package",

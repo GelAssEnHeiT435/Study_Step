@@ -15,6 +15,8 @@ namespace Study_Step_Server.Data
             Set<Message>();
         public DbSet<UserChat> UserChats =>
             Set<UserChat>();
+        public DbSet<FileModel> Files =>
+            Set<FileModel>();
 
         public ApplicationContext(DbContextOptions<ApplicationContext> options) : base(options) =>
             Database.EnsureCreated();
@@ -47,6 +49,11 @@ namespace Study_Step_Server.Data
                 .HasOne(uc => uc.Chat)
                 .WithMany(c => c.UserChats)  // Один чат может содержать несколько пользователей
                 .HasForeignKey(uc => uc.ChatId);
+
+            modelBuilder.Entity<Message>()
+            .HasMany(p => p.Files) // Один родитель может иметь много детей
+            .WithOne(c => c.Message)   // Каждый ребенок принадлежит одному родителю
+            .HasForeignKey(c => c.MessageId); // Указываем внешний ключ в модели Child
         }
     }
 }

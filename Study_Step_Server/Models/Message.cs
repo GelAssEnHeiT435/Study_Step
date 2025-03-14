@@ -12,11 +12,10 @@ namespace Study_Step_Server.Models
         public int? ChatId { get; set; }  // Идентификатор чата
         public string? Text { get; set; }  // Текст сообщения
         public DateTime? SentAt { get; set; }  // Время отправки
-        public MessageType Type { get; set; }  // Тип сообщения (текст, изображение, файл)
-        public string? FileUrl { get; set; }  // URL для файлов (если есть)
 
         public User Sender { get; set; }
         public Chat Chat { get; set; }
+        public ICollection<FileModel>? Files { get; set; }
     }
 
     internal class MessageConfiguration : IEntityTypeConfiguration<Message>
@@ -25,13 +24,5 @@ namespace Study_Step_Server.Models
         {
 
         }
-    }
-
-    public enum MessageType
-    {
-        Text,       // Текстовое сообщение
-        Image,      // Сообщение с изображением
-        File,       // Сообщение с файлом
-        Sticker     // Сообщение с стикером
     }
 }

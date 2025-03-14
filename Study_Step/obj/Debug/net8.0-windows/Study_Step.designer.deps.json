@@ -622,6 +622,14 @@
       },
       "Microsoft.NETCore.Platforms/1.1.1": {},
       "Microsoft.NETCore.Targets/1.1.0": {},
+      "MimeMapping/3.1.0": {
+        "runtime": {
+          "lib/netstandard2.0/MimeMapping.dll": {
+            "assemblyVersion": "3.0.0.0",
+            "fileVersion": "3.1.0.0"
+          }
+        }
+      },
       "Mono.TextTemplating/3.0.0": {
         "dependencies": {
           "System.CodeDom": "6.0.0"
@@ -1707,6 +1715,13 @@
       "sha512": "sha512-aOZA3BWfz9RXjpzt0sRJJMjAscAUm3Hoa4UWAfceV9UTYxgwZ1lZt5nO2myFf+/jetYQo4uTP7zS8sJY67BBxg==",
       "path": "microsoft.netcore.targets/1.1.0",
       "hashPath": "microsoft.netcore.targets.1.1.0.nupkg.sha512"
+    },
+    "MimeMapping/3.1.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-lzlkORXotto0rOGxhXceYOjgXLCeJAFDLRiQki0EiXtWFH6yFwWuW9vzwvjDCdkXZu39z5+I03ntlNBMoQKH3g==",
+      "path": "mimemapping/3.1.0",
+      "hashPath": "mimemapping.3.1.0.nupkg.sha512"
     },
     "Mono.TextTemplating/3.0.0": {
       "type": "package",

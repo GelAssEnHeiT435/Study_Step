@@ -11,6 +11,7 @@ using Study_Step_Server.Interfaces;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using AutoMapper;
+using Microsoft.AspNetCore.Http.Features;
 
 namespace Study_Step_Server
 {
@@ -25,7 +26,6 @@ namespace Study_Step_Server
                 options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
             builder.Services.AddScoped<AuthService>(); // Add Service Authorization
-            
 
             // Add user provider to convert connectionId to UserId 
             builder.Services.AddSingleton<IUserIdProvider, CustomUserIdProvider>();
@@ -73,8 +73,14 @@ namespace Study_Step_Server
 
             // Add converter models to data transfer object
             builder.Services.AddAutoMapper(typeof(MapperProfile).Assembly);
-            builder.Services.AddScoped<IImageService, ImageService>();
+            builder.Services.AddSingleton<IFileService, FileService>(provider =>
+                                            new FileService("D:/my_works/dotnetProjects/Study_Step/Study_Step_Server/Media"));
             builder.Services.AddScoped<DtoConverterService>();
+
+            builder.Services.Configure<FormOptions>(options =>
+            {
+                options.MultipartBodyLengthLimit = 100 * 1024 * 1024; // 100 МБ
+            });
 
             // Add services to the container.
             builder.Services.AddControllers();
@@ -176,8 +182,6 @@ namespace Study_Step_Server
                     return Results.Json(response);
                 }
             });
-
-            
             
             app.MapHub<ChatHub>("/chathub");
 

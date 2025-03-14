@@ -4,7 +4,6 @@ using Study_Step.Interfaces;
 using Study_Step.Pages;
 using Study_Step.Services;
 using Study_Step.ViewModels;
-using Study_Step.Services;
 using System.Configuration;
 using System.Data;
 using System.Windows;
@@ -52,7 +51,7 @@ namespace Study_Step
 
             // Add converter models to data transfer object
             services.AddAutoMapper(typeof(ClientMapperProfile).Assembly);
-            services.AddScoped<IImageService, ImageService>();
+            services.AddScoped<IFileService, FileService>();
             services.AddScoped<DtoConverterService>();
         }
     }

@@ -1,12 +1,13 @@
 ﻿
 FD:\my_works\dotnetProjects\Study_Step\Study_Step\App.xaml;;
-FD:\my_works\dotnetProjects\Study_Step\Study_Step\AuthWindow.xaml;;
-FD:\my_works\dotnetProjects\Study_Step\Study_Step\CustomControls\ChatList.xaml;;
-FD:\my_works\dotnetProjects\Study_Step\Study_Step\CustomControls\Conversation.xaml;;
-FD:\my_works\dotnetProjects\Study_Step\Study_Step\CustomControls\DropDownListSearch.xaml;;
-FD:\my_works\dotnetProjects\Study_Step\Study_Step\CustomControls\StatusThumbs.xaml;;
-FD:\my_works\dotnetProjects\Study_Step\Study_Step\MainWindow.xaml;;
-FD:\my_works\dotnetProjects\Study_Step\Study_Step\Pages\RegisterPage.xaml;;
-FD:\my_works\dotnetProjects\Study_Step\Study_Step\Pages\SignInPage.xaml;;
-FD:\my_works\dotnetProjects\Study_Step\Study_Step\UserProfile.xaml;;
+FD:\my_works\dotnetProjects\Study_Step\Study_Step\UI\CustomControls\ChatList.xaml;;
+FD:\my_works\dotnetProjects\Study_Step\Study_Step\UI\CustomControls\Conversation.xaml;;
+FD:\my_works\dotnetProjects\Study_Step\Study_Step\UI\CustomControls\DropDownListSearch.xaml;;
+FD:\my_works\dotnetProjects\Study_Step\Study_Step\UI\CustomControls\FilesList.xaml;;
+FD:\my_works\dotnetProjects\Study_Step\Study_Step\UI\CustomControls\StatusThumbs.xaml;;
+FD:\my_works\dotnetProjects\Study_Step\Study_Step\UI\Pages\RegisterPage.xaml;;
+FD:\my_works\dotnetProjects\Study_Step\Study_Step\UI\Pages\SignInPage.xaml;;
+FD:\my_works\dotnetProjects\Study_Step\Study_Step\UI\Windows\AuthWindow.xaml;;
+FD:\my_works\dotnetProjects\Study_Step\Study_Step\UI\Windows\MainWindow.xaml;;
+FD:\my_works\dotnetProjects\Study_Step\Study_Step\UI\Windows\UserProfile.xaml;;
 

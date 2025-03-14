@@ -8,12 +8,12 @@ namespace Study_Step.Services
     public class DtoConverterService
     {
         private readonly IMapper _mapper;
-        private readonly IImageService _imageService;
+        private readonly IFileService _fileService;
 
-        public DtoConverterService(IMapper mapper, IImageService imageService)
+        public DtoConverterService(IMapper mapper, IFileService fileService)
         {
             _mapper = mapper;
-            _imageService = imageService;
+            _fileService = fileService;
         }
 
         #region Messages
@@ -71,6 +71,21 @@ namespace Study_Step.Services
 
         public IEnumerable<Chat> GetChatList( IEnumerable<ChatDTO> chats ) =>
             _mapper.Map<IEnumerable<Chat>>(chats);
+
+        #endregion
+
+        #region Files
+        public FileModelDTO GetFileDTO(FileModel chat) =>
+            _mapper.Map<FileModelDTO>(chat);
+
+        public IEnumerable<FileModelDTO> GetFileListDTO(IEnumerable<FileModel> chats) =>
+            _mapper.Map<IEnumerable<FileModelDTO>>(chats);
+
+        public FileModel GetFile(FileModelDTO chat) =>
+            _mapper.Map<FileModel>(chat);
+
+        public IEnumerable<FileModel> GetFileList(IEnumerable<FileModelDTO> chats) =>
+            _mapper.Map<IEnumerable<FileModel>>(chats);
 
         #endregion
     }

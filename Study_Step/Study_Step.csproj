@@ -9,7 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="CustomControls\ChatList.xaml~RF51bd5a.TMP" />
+    <None Remove="UI\CustomControls\ChatList.xaml~RF51bd5a.TMP" />
   </ItemGroup>
 
   <ItemGroup>
@@ -21,6 +21,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.Extensions.Features" Version="9.0.0" />
+    <PackageReference Include="MimeMapping" Version="3.1.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="System.Net.Http" Version="4.3.4" />
   </ItemGroup>

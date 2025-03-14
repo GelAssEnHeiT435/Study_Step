@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Microsoft.Win32;
+using Newtonsoft.Json;
 using Study_Step.Commands;
 using Study_Step.Interfaces;
 using Study_Step.Models;
@@ -13,6 +14,7 @@ using System.Text;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
+using static System.Net.WebRequestMethods;
 
 namespace Study_Step.ViewModels
 {
@@ -22,15 +24,15 @@ namespace Study_Step.ViewModels
         public static string apiUrl = "http://localhost:5000/api/chat";
 
         private readonly SignalRService _signalRService;
-        private readonly IImageService _imageService;
+        private readonly IFileService _fileService;
         private readonly DtoConverterService _dtoConverter;
 
         public ViewModel(SignalRService signalRService, 
-                         IImageService imageService,
+                         IFileService fileService,
                          DtoConverterService dtoConverter)
         {
             _signalRService = signalRService;
-            _imageService = imageService;
+            _fileService = fileService;
             _dtoConverter = dtoConverter;
 
             // Add EventsListeners
@@ -125,7 +127,6 @@ namespace Study_Step.ViewModels
                             thisChat.UserId_InChat = uc.UserId;
                         }
                     }
-                    System.Diagnostics.Debug.WriteLine(thisChat.ChatId);
                     Chats.Add(thisChat);
                 }
             }
@@ -151,10 +152,10 @@ namespace Study_Step.ViewModels
                 bitmapPhoto = chat.bitmapPhoto;
 
                 // загрузка сообщений конкретного чата
-                System.Diagnostics.Debug.WriteLine(chat.ChatId);
-
                 Application.Current.Properties["ChatId"] = chat.ChatId;
                 Application.Current.Properties["RecieverId"] = chat.UserId_InChat;
+                FilesListObject = new ObservableCollection<FileModel>();
+
                 LoadChatConversation(chat.ChatId);
             }
         });
@@ -166,12 +167,22 @@ namespace Study_Step.ViewModels
         #region ChatConversation
 
         #region Properties
+
         public ObservableCollection<Message> Conversations 
         {   get => mConversations;
             set
             {
                 mConversations = value;
                 OnPropertyChanged(nameof(Conversations));
+            }
+        }
+        public ObservableCollection<FileModel> FilesListObject
+        {
+            get => _filesList;
+            set
+            {
+                _filesList = value;
+                OnPropertyChanged(nameof(FilesListObject));
             }
         }
         public string MessageText
@@ -183,8 +194,11 @@ namespace Study_Step.ViewModels
                 OnPropertyChanged(nameof(MessageText));
             }
         }
+
         private ObservableCollection<Message> mConversations;
+        private ObservableCollection<FileModel> _filesList;
         private string _messageText { get; set; }
+
         #endregion
 
         #region Logics
@@ -214,7 +228,6 @@ namespace Study_Step.ViewModels
                 Console.WriteLine("Ошибка при получении чатов");
             }
         }
-
         private void MessageReceived(string sender, MessageDTO message)
         {
             Message messageObject = _dtoConverter.GetMessage(message);
@@ -224,11 +237,10 @@ namespace Study_Step.ViewModels
 
             ScrollToEnd?.Invoke();
         }
+
         #endregion
 
         #region Commands
-
-        private ICommand _sendMesCommand;
         public ICommand SendMesCommand => _sendMesCommand ??= new RelayCommand(async parameter =>
         {
             if (!ChatIsActive) { return; }
@@ -239,8 +251,9 @@ namespace Study_Step.ViewModels
                 ChatId = (int)Application.Current.Properties["ChatId"],
                 Text = MessageText,
                 SentAt = DateTime.UtcNow,
-                Type = MessageType.Text,
+                Files = FilesListObject.ToList()
             };
+
 
             MessageDTO messageObject = _dtoConverter.GetMessageDTO(messageChat);
             await _signalRService.SendMessageAsync(Application.Current.Properties["RecieverId"].ToString(),
@@ -250,11 +263,67 @@ namespace Study_Step.ViewModels
             Conversations.Add(messageChat);
             ScrollToEnd?.Invoke();
 
+            FilesListObject.Clear();
             MessageText = string.Empty;
         });
+        public ICommand ChooseFile => _chooseFile ??= new RelayCommand(parameter =>
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog(); // Create Fialog Window to choose file
+            openFileDialog.Filter = "All files (*.*)|*.*"; // Set filter .txt
+
+            // Показываем диалоговое окно и проверяем, был ли выбран файл
+            if (openFileDialog.ShowDialog() == true)
+            {
+                string filePath = openFileDialog.FileName; // Get file's path
+                var file = new FileInfo(filePath);
+
+                FileModel newFile = new FileModel()
+                {
+                    Name = file.Name,
+                    Extension = file.Extension,
+                    Size = file.Length,
+                    MimeType = MimeMapping.MimeUtility.GetMimeMapping(filePath),
+                    Path = filePath,
+                };
+
+                FilesListObject.Add(newFile);
+            }
+        });
+
+        public ICommand DeleteFile => _deleteFile ??= new RelayCommand(parameter =>
+        {
+            if (parameter is FileModel file) {
+                if (FilesListObject.Contains(file)) { FilesListObject.Remove(file); }
+            }
+        });
+         
+        public ICommand DownloadFile => _downloadFile ??= new RelayCommand(async parameter =>
+        {
+            if (parameter is FileModel file)
+            {
+                string json = JsonConvert.SerializeObject(file.FileModelId); // Convert Id to JSON-Object
+                var content = new StringContent(json, Encoding.UTF8, "application/json"); // Create HTTP-Request
+                HttpResponseMessage response = await client.GetAsync($"http://localhost:5000/api/fileupload/download?Id={file.FileModelId}"); // Send request to server
+
+                if (response.IsSuccessStatusCode)
+                {
+                    string responseBody = await response.Content.ReadAsStringAsync(); // Read response
+                    var jsonResponse = JsonConvert.DeserializeObject<FileModelDTO>(responseBody); // Deserialize JSON to collection
+                    _fileService.SaveFile(jsonResponse);
+                }
+                else
+                {
+                    Console.WriteLine("Ошибка при получении чатов");
+                }
+            }
+        });
+
+        private ICommand _downloadFile;
+        private ICommand _deleteFile;
+        private ICommand _chooseFile;
+        private ICommand _sendMesCommand;
 
         #endregion
-
 
         #endregion
 
@@ -284,9 +353,11 @@ namespace Study_Step.ViewModels
                 string responseBody = await response.Content.ReadAsStringAsync();
                 var jsonResponse = JsonConvert.DeserializeObject<IEnumerable<UserDTO>>(responseBody); // Deseriaize JSON-Object to collection
 
+                if (jsonResponse is null) { return; }
+
                 foreach (var user in jsonResponse) // Show users
                 {
-                    if (user.Username.Equals( Application.Current.Properties["Username"] )) continue;
+                    if (user.UserId == (int)Application.Current.Properties["Id"]) continue;
                     User userForList = _dtoConverter.GetUser(user);
                     users.Add(userForList);
                 }

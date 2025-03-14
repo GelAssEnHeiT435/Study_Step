@@ -8,16 +8,19 @@ namespace Study_Step_Server.Data.Resolvers
         where TSource : class
         where TDestination : class
     {
-        private readonly IImageService _imageService;
-        public ImageConvertResolver(IImageService imageService)
+        private readonly IFileService _fileService;
+        public ImageConvertResolver(IFileService fileService)
         {
-            _imageService = imageService;
+            _fileService = fileService;
         }
 
         public byte[]? Resolve(TSource source, TDestination destination, byte[]? destMember, ResolutionContext context)
         {
             string? imagePath = source.GetType().GetProperty("ContactPhoto")?.GetValue(source) as string;
-            return _imageService.ConvertImageToByteArray(imagePath);
+
+            if (imagePath == null) { return null; }
+
+            return _fileService.ConvertFileToByteArray(imagePath);
         }
     }
 }

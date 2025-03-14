@@ -14,6 +14,7 @@
           "Microsoft.AspNetCore.SignalR": "1.2.0",
           "Microsoft.EntityFrameworkCore.Proxies": "9.0.0",
           "Microsoft.EntityFrameworkCore.Tools": "9.0.0",
+          "MimeMapping": "3.1.0",
           "Newtonsoft.Json": "13.0.3",
           "Npgsql.EntityFrameworkCore.PostgreSQL": "9.0.3",
           "System.IdentityModel.Tokens.Jwt": "8.4.0"
@@ -828,6 +829,14 @@
           "System.Buffers": "4.6.0"
         }
       },
+      "MimeMapping/3.1.0": {
+        "runtime": {
+          "lib/netstandard2.0/MimeMapping.dll": {
+            "assemblyVersion": "3.0.0.0",
+            "fileVersion": "3.1.0.0"
+          }
+        }
+      },
       "Mono.TextTemplating/3.0.0": {
         "dependencies": {
           "System.CodeDom": "6.0.0"
@@ -1462,6 +1471,13 @@
       "sha512": "sha512-/M0wVg6tJUOHutWD3BMOUVZAioJVXe0tCpFiovzv0T9T12TBf4MnaHP0efO8TCr1a6O9RZgQeZ9Gdark8L9XdA==",
       "path": "microsoft.net.http.headers/2.3.0",
       "hashPath": "microsoft.net.http.headers.2.3.0.nupkg.sha512"
+    },
+    "MimeMapping/3.1.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-lzlkORXotto0rOGxhXceYOjgXLCeJAFDLRiQki0EiXtWFH6yFwWuW9vzwvjDCdkXZu39z5+I03ntlNBMoQKH3g==",
+      "path": "mimemapping/3.1.0",
+      "hashPath": "mimemapping.3.1.0.nupkg.sha512"
     },
     "Mono.TextTemplating/3.0.0": {
       "type": "package",

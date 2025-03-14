@@ -30,7 +30,6 @@ namespace Study_Step_Server.Hubs
             {
                 await Clients.Users(receiver).SendAsync("ReceiveMessage", userName, message);
             }
-
         }
 
         // Метод обработки подключений к хабу

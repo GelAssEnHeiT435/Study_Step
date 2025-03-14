@@ -150,3 +150,4 @@ D:\my_works\dotnetProjects\Study_Step\Study_Step_Server\obj\Debug\net8.0\refint\
 D:\my_works\dotnetProjects\Study_Step\Study_Step_Server\obj\Debug\net8.0\Study_Step_Server.pdb
 D:\my_works\dotnetProjects\Study_Step\Study_Step_Server\obj\Debug\net8.0\Study_Step_Server.genruntimeconfig.cache
 D:\my_works\dotnetProjects\Study_Step\Study_Step_Server\obj\Debug\net8.0\ref\Study_Step_Server.dll
+D:\my_works\dotnetProjects\Study_Step\Study_Step_Server\bin\Debug\net8.0\MimeMapping.dll

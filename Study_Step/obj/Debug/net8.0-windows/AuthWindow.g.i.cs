@@ -93,7 +93,7 @@ namespace Study_Step {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/Study_Step;component/authwindow.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/Study_Step;V1.0.0.0;component/authwindow.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\AuthWindow.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);

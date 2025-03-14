@@ -7,48 +7,54 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
-    <Compile Update="AuthWindow.xaml.cs">
+    <Compile Update="UI\Windows\AuthWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="CustomControls\ChatList.xaml.cs">
+    <Compile Update="UI\CustomControls\ChatList.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="CustomControls\Conversation.xaml.cs">
+    <Compile Update="UI\CustomControls\Conversation.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="CustomControls\DropDownListSearch.xaml.cs">
+    <Compile Update="UI\CustomControls\DropDownListSearch.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="CustomControls\StatusThumbs.xaml.cs">
+    <Compile Update="UI\CustomControls\FilesList.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Pages\RegisterPage.xaml.cs">
+    <Compile Update="UI\CustomControls\StatusThumbs.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Pages\SignInPage.xaml.cs">
+    <Compile Update="UI\Pages\RegisterPage.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="UserProfile.xaml.cs">
+    <Compile Update="UI\Pages\SignInPage.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="UI\Windows\UserProfile.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Page Update="AuthWindow.xaml">
+    <Page Update="UI\Windows\AuthWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="CustomControls\ChatList.xaml">
+    <Page Update="UI\CustomControls\ChatList.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="CustomControls\Conversation.xaml">
+    <Page Update="UI\CustomControls\Conversation.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="CustomControls\DropDownListSearch.xaml">
+    <Page Update="UI\CustomControls\DropDownListSearch.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="CustomControls\StatusThumbs.xaml">
+    <Page Update="UI\CustomControls\FilesList.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="MainWindow.xaml">
+    <Page Update="UI\CustomControls\StatusThumbs.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="UI\Windows\MainWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Assets\Resources\icons.xaml">
@@ -57,13 +63,13 @@
     <Page Update="Assets\Resources\Styles.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Pages\RegisterPage.xaml">
+    <Page Update="UI\Pages\RegisterPage.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Pages\SignInPage.xaml">
+    <Page Update="UI\Pages\SignInPage.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="UserProfile.xaml">
+    <Page Update="UI\Windows\UserProfile.xaml">
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>

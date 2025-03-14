@@ -95,7 +95,7 @@ namespace Study_Step {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/Study_Step;component/userprofile.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/Study_Step;V1.0.0.0;component/userprofile.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\UserProfile.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);

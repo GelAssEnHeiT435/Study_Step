@@ -7,7 +7,6 @@
         public int ChatId { get; set; }
         public string? Text { get; set; }
         public DateTime SentAt { get; set; }
-        public MessageType Type { get; set; }
-        public string? FileUrl { get; set; }
+        public List<FileModelDTO>? Files { get; set; }
     }
 }

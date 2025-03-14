@@ -88,8 +88,50 @@
     ]
   },
   {
+    "ContainingType": "Study_Step_Server.Controllers.FileUploadController",
+    "Method": "GetFile",
+    "RelativePath": "api/FileUpload/download",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "Id",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "Study_Step_Server.Models.DTO.FileModelDTO",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "Study_Step_Server.Controllers.FileUploadController",
+    "Method": "UploadFile",
+    "RelativePath": "api/FileUpload/upload",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "file",
+        "Type": "Microsoft.AspNetCore.Http.IFormFile",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "Study_Step_Server.Program\u002B\u003C\u003Ec__DisplayClass0_0",
-    "Method": "\u003CMain\u003Eb__2",
+    "Method": "\u003CMain\u003Eb__4",
     "RelativePath": "login",
     "HttpMethod": "POST",
     "IsController": false,
@@ -111,7 +153,7 @@
   },
   {
     "ContainingType": "Study_Step_Server.Program\u002B\u003C\u003Ec__DisplayClass0_0",
-    "Method": "\u003CMain\u003Eb__3",
+    "Method": "\u003CMain\u003Eb__5",
     "RelativePath": "register",
     "HttpMethod": "POST",
     "IsController": false,
