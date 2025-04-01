@@ -1,4 +1,5 @@
-﻿using Microsoft.Win32;
+﻿using Microsoft.AspNetCore.SignalR;
+using Microsoft.Win32;
 using Newtonsoft.Json;
 using Study_Step.Commands;
 using Study_Step.Interfaces;
@@ -7,13 +8,16 @@ using Study_Step.Models.DTO;
 using Study_Step.Services;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
+using System.Windows.Shell;
 using static System.Net.WebRequestMethods;
 
 namespace Study_Step.ViewModels
@@ -40,9 +44,13 @@ namespace Study_Step.ViewModels
 
             LoadChats();
             LoadUserList();
+            LoadDownloadedArea();
 
             ChatIsActive = false;
+            DownloadAreaIsActive = false;
         }
+
+        // General settings of application
         #region MainWindow
 
         #region Events
@@ -51,8 +59,8 @@ namespace Study_Step.ViewModels
 
         #endregion
 
-        // Параметры для отображения текущего выделенного чата
         #region Properties
+
         public string ContactName
         {
             get => _contactName;
@@ -94,11 +102,12 @@ namespace Study_Step.ViewModels
         private BitmapImage _bitmapPhoto;
         private string _lastSeen;
         private bool _ChatIsActive;
+
         #endregion
 
         #endregion   
 
-        // Отображение списка чатов пользователя
+        // Show chat list
         #region Chat List
         #region Properties
         public ObservableCollection<Chat> Chats { get; set; }
@@ -163,7 +172,7 @@ namespace Study_Step.ViewModels
 
         #endregion
 
-        // Отображение истории сообщений при открытии чата
+        // Functions for chats
         #region ChatConversation
 
         #region Properties
@@ -245,26 +254,72 @@ namespace Study_Step.ViewModels
         {
             if (!ChatIsActive) { return; }
 
+            var content = new MultipartFormDataContent();
+
+            // add file to response
+            foreach (var file in FilesListObject)
+            {
+                var fileStream = System.IO.File.OpenRead(file.Path);
+                var fileName = Path.GetFileName(file.Path);
+                content.Add(new StreamContent(fileStream), "files", fileName);
+
+                // Serialize FileModel to JSON-object
+                string json = JsonConvert.SerializeObject(file);
+                var fileModelStream = new MemoryStream(Encoding.UTF8.GetBytes(json));
+                content.Add(new StreamContent(fileModelStream), "fileModels"); // Используем уникальное имя поля
+            }
+
+            List<FileModel> uploadedFiles = new List<FileModel>();
+
+            try 
+            {
+                var response = await client.PostAsync($"http://localhost:5000/api/fileupload/upload", content);
+
+                if (response.IsSuccessStatusCode) {
+                    var responseJson = await response.Content.ReadAsStringAsync();
+                    uploadedFiles = JsonConvert.DeserializeObject<List<FileModel>>(responseJson);
+                }
+            } 
+            catch (HttpRequestException ex) 
+            {
+                Debug.WriteLine(ex.Message);
+            }
+            finally
+            {
+                foreach (var streamContent in content.OfType<StreamContent>()) {
+                    streamContent.Dispose(); // close streams
+                }
+            }
+
             Message messageChat = new Message()
             {
                 UserId = (int)Application.Current.Properties["Id"],
                 ChatId = (int)Application.Current.Properties["ChatId"],
                 Text = MessageText,
                 SentAt = DateTime.UtcNow,
-                Files = FilesListObject.ToList()
+                Files = uploadedFiles
             };
 
-
-            MessageDTO messageObject = _dtoConverter.GetMessageDTO(messageChat);
-            await _signalRService.SendMessageAsync(Application.Current.Properties["RecieverId"].ToString(),
+            try
+            {
+                MessageDTO messageObject = _dtoConverter.GetMessageDTO(messageChat);
+                await _signalRService.SendMessageAsync(Application.Current.Properties["RecieverId"].ToString(),
                                                    messageObject);
+                messageChat.IsOutside = false;
+                Conversations.Add(messageChat);
 
-            messageChat.IsOutside = false;
-            Conversations.Add(messageChat);
-            ScrollToEnd?.Invoke();
+            }
+            catch (HubException hex)
+            {
+                Debug.WriteLine($"{hex.Message}");
+            }
+            finally 
+            {
+                ScrollToEnd?.Invoke();
 
-            FilesListObject.Clear();
-            MessageText = string.Empty;
+                FilesListObject.Clear();
+                MessageText = string.Empty;
+            }
         });
         public ICommand ChooseFile => _chooseFile ??= new RelayCommand(parameter =>
         {
@@ -284,6 +339,7 @@ namespace Study_Step.ViewModels
                     Size = file.Length,
                     MimeType = MimeMapping.MimeUtility.GetMimeMapping(filePath),
                     Path = filePath,
+                    CreatedAt = file.CreationTime.ToUniversalTime()
                 };
 
                 FilesListObject.Add(newFile);
@@ -296,24 +352,111 @@ namespace Study_Step.ViewModels
                 if (FilesListObject.Contains(file)) { FilesListObject.Remove(file); }
             }
         });
-         
+
         public ICommand DownloadFile => _downloadFile ??= new RelayCommand(async parameter =>
         {
-            if (parameter is FileModel file)
+            DownloadItem item;
+            if (parameter is FileModel file) // Situation starting download
             {
-                string json = JsonConvert.SerializeObject(file.FileModelId); // Convert Id to JSON-Object
-                var content = new StringContent(json, Encoding.UTF8, "application/json"); // Create HTTP-Request
-                HttpResponseMessage response = await client.GetAsync($"http://localhost:5000/api/fileupload/download?Id={file.FileModelId}"); // Send request to server
+                item = _dtoConverter.GetDownloadItem(file);
+                DownloadAreaIsActive = !DownloadAreaIsActive; // Open popup
+                ActiveDownloads.Add(item);
+            }
+            else if (parameter is DownloadItem fileItem) // sutuation resume download
+            {
+                item = fileItem;
+            }
+            else return;
 
-                if (response.IsSuccessStatusCode)
+            await _parallelLimiter.WaitAsync();
+            try
+            {
+                if (item.Status == DownloadStatus.Cancelled)
                 {
-                    string responseBody = await response.Content.ReadAsStringAsync(); // Read response
-                    var jsonResponse = JsonConvert.DeserializeObject<FileModelDTO>(responseBody); // Deserialize JSON to collection
-                    _fileService.SaveFile(jsonResponse);
+                    throw new OperationCanceledException("The download has already been stopped");
                 }
-                else
+                item.Status = DownloadStatus.Downloading;
+                using (item.CancellationTokenSource = new CancellationTokenSource())
                 {
-                    Console.WriteLine("Ошибка при получении чатов");
+                    string? savePath = ((App)Application.Current).Configuration["AppSettings:SavePath"];
+                    string tempPath = item.GetTempFile();
+                    if (System.IO.File.Exists(item.tempPath))
+                    {
+                        item.BytesDownloaded = new FileInfo(tempPath).Length;
+                    }
+                        
+                    string json = JsonConvert.SerializeObject(item.Id); // Convert Id to JSON-Object
+                    var content = new StringContent(json, Encoding.UTF8, "application/json"); // Create HTTP-Request
+                    var request = new HttpRequestMessage( HttpMethod.Get,
+                                                          $"http://localhost:5000/api/fileupload/download?Id={item.Id}");
+                    if (item.BytesDownloaded > 0)
+                    {
+                        request.Headers.Range = new RangeHeaderValue(item.BytesDownloaded, null);
+                    }
+
+                    item.CancellationTokenSource.Token.ThrowIfCancellationRequested();
+                    HttpResponseMessage response = await client.SendAsync(request,
+                                                                          HttpCompletionOption.ResponseHeadersRead,
+                                                                          item.CancellationTokenSource.Token); // Send request to server
+                    response.EnsureSuccessStatusCode();
+
+                    string? fileName = response.Content.Headers.ContentDisposition?.FileName;
+                    if (fileName != null)
+                    {
+                        fileName = Uri.UnescapeDataString(fileName);
+                    }
+                    string path = Path.Combine(savePath, fileName);
+                    item.SavePath = path;
+
+                    await using (var fileStream = new FileStream(tempPath, FileMode.OpenOrCreate, 
+                                                                 FileAccess.Write, FileShare.Read,
+                                                                 8192, FileOptions.Asynchronous))
+                    await using (var stream = await response.Content.ReadAsStreamAsync())
+                    {
+                        fileStream.Seek(item.BytesDownloaded, SeekOrigin.Begin);
+                        var buffer = new byte[8192];
+                        int bytesRead;
+
+                        while (true)
+                        {
+                            // Проверка на отмену перед чтением
+                            item.CancellationTokenSource.Token.ThrowIfCancellationRequested();
+
+                            bytesRead = await stream.ReadAsync(buffer, 0, buffer.Length, item.CancellationTokenSource.Token);
+                            if (bytesRead == 0) break; // Завершение чтения, если ничего не прочитано
+
+                            await fileStream.WriteAsync(buffer, 0, bytesRead);
+                            item.BytesDownloaded += bytesRead;
+
+                            if (item.BytesDownloaded > 0)
+                                item.Progress = (item.BytesDownloaded * 100d) / item.Size;
+                        }
+                    }
+
+                    Debug.WriteLine(tempPath, item.SavePath);
+                    System.IO.File.Move(tempPath, item.SavePath, overwrite: true);
+                        
+                    item.Status = DownloadStatus.Completed;
+                    item.DownloadTime = DateTime.Now;
+                    SaveToHistory(item);
+                }
+            }
+            catch (OperationCanceledException)
+            {
+                try { System.IO.File.Delete(item.GetTempFile()); } catch { }
+            }
+            catch (Exception)
+            {
+                item.Status = DownloadStatus.Failed;
+                try { System.IO.File.Delete(item.GetTempFile()); } catch { }
+            }
+            finally
+            {
+                if (item.Status != DownloadStatus.Paused)
+                {
+                    Debug.WriteLine(item.Status);
+                    ActiveDownloads.Remove(item);
+                    _parallelLimiter.Release();
                 }
             }
         });
@@ -327,7 +470,7 @@ namespace Study_Step.ViewModels
 
         #endregion
 
-        // Логика поиска пользователей в системе
+        // Logic for search users
         #region DropDownListSearch
 
         #region Properties
@@ -393,6 +536,166 @@ namespace Study_Step.ViewModels
                 }
             }
         });
+        #endregion
+
+        #endregion
+
+        #region DownloadArea
+
+        #region Properties
+
+        public bool DownloadAreaIsActive
+        {
+            get => _downloadAreaIsActive;
+            set
+            {
+                _downloadAreaIsActive = value;
+                OnPropertyChanged(nameof(DownloadAreaIsActive));
+            }
+        }
+        private bool _downloadAreaIsActive;
+
+        public ObservableCollection<DownloadItem> ActiveDownloads
+        {
+            get => _activeDownloads;
+            set
+            {
+                _activeDownloads = value;
+                OnPropertyChanged(nameof(ActiveDownloads));
+            }
+        }
+        public ObservableCollection<DownloadItem> DownloadHistory
+        {
+            get => _downloadHistory;
+            set
+            {
+                _downloadHistory = value;
+                OnPropertyChanged(nameof(DownloadHistory));
+            }
+        }
+
+        private ObservableCollection<DownloadItem> _activeDownloads = new();
+        private ObservableCollection<DownloadItem> _downloadHistory = new();
+        private SemaphoreSlim _parallelLimiter = new SemaphoreSlim(5); // Limit parallel download
+
+        #endregion
+
+        #region Logics
+        private void LoadDownloadedArea()
+        {
+            if (System.IO.File.Exists("Properties/downloadHistory.json"))
+            {
+                var json = System.IO.File.ReadAllText("Properties/downloadHistory.json");
+                if (!(json.Contains("{}") || json.Contains("[]")))
+                {
+                    List<DownloadItem> history = JsonConvert.DeserializeObject<List<DownloadItem>>(json);
+
+                    foreach (DownloadItem item in history)
+                    {
+                        if (System.IO.File.Exists(item.SavePath)) {
+                            DownloadHistory.Add(item);
+                        }
+                        else {
+                            DeleteFileCommand.Execute(item);
+                        } 
+                    }
+                }
+            }
+            else
+            {
+                System.IO.File.WriteAllText("Properties/downloadHistory.json", "{}");
+            }
+        }
+
+        private void SaveToHistory(DownloadItem item)
+        {
+            DownloadHistory.Insert(0, item);
+
+            var history = DownloadHistory.Take(100).ToList();
+            var json = JsonConvert.SerializeObject(history);
+            System.IO.File.WriteAllText("Properties/downloadHistory.json", json);
+        }
+
+        #endregion
+
+        #region Commands
+
+        public ICommand OpenDownloadedAreaCommand => _openDownloadedAreaCommand ??= new RelayCommand( _ =>
+            { DownloadAreaIsActive = true; }
+        );
+        public ICommand CancelDownloadCommand => _cancelDownloadCommand ??= new RelayCommand(parameter => {
+            if (parameter is DownloadItem item) {
+                if (item.Status == DownloadStatus.Paused) {
+                    item.Status = DownloadStatus.Cancelled;
+                    DownloadFile.Execute(item);
+                    return;
+                }
+                item.Status = DownloadStatus.Cancelled;
+                item.CancellationTokenSource.Cancel();
+            }
+        });
+        public ICommand OpenFileCommand => _openFileCommand ??= new RelayCommand(parameter => {
+            if (parameter is DownloadItem item) {
+                Process.Start(new ProcessStartInfo(item.SavePath) { UseShellExecute = true });
+            }
+        });
+        public ICommand ShowInFolderCommand => _showInFolderCommand ??= new RelayCommand(parameter => {
+            if (parameter is DownloadItem item) {
+                if (System.IO.File.Exists(item.SavePath)) {
+                    Process.Start("explorer.exe", $"/select, \"{item.SavePath}\"");
+                }
+            }
+        });
+        public ICommand DeleteFileCommand => _deleteFileCommand ??= new RelayCommand(async parameter =>
+        {
+            if (parameter is DownloadItem item) {
+                try {
+                    DownloadHistory.Remove(item);
+                    var json = JsonConvert.SerializeObject(DownloadHistory);
+                    await System.IO.File.WriteAllTextAsync("Properties/downloadHistory.json", json);
+                }
+                catch (Exception ex) {
+                    Debug.WriteLine($"Error deleting file: {ex.Message}");
+                }
+            }
+        });
+        public ICommand OpenDownloadFolder => _openDownloadFolder ??= new RelayCommand(parameter =>
+        {
+            string? savePath = ((App)Application.Current).Configuration["AppSettings:SavePath"];
+            
+            if (System.IO.Directory.Exists(savePath)) {
+                Debug.WriteLine(savePath);
+                Process.Start("explorer.exe", savePath);
+            }
+        });
+        public ICommand PauseDownloadCommand => _pauseDownloadCommand ??= new RelayCommand(parameter =>
+        {
+            if (parameter is DownloadItem item && item.Status == DownloadStatus.Downloading)
+            {
+                item.Status = DownloadStatus.Paused;
+                item.CancellationTokenSource?.Cancel();
+            }
+        });
+        public ICommand ResumeDownloadCommand => _resumeDownloadCommand ??= new RelayCommand(parameter =>
+        {
+            if (parameter is DownloadItem item && item.Status == DownloadStatus.Paused)
+            {
+                item.Status = DownloadStatus.Downloading;
+                item.CancellationTokenSource = new CancellationTokenSource();
+                DownloadFile.Execute(item);
+            }
+        });
+
+
+        private ICommand _pauseDownloadCommand;
+        private ICommand _resumeDownloadCommand;
+        private ICommand _openDownloadFolder;
+        private ICommand _deleteFileCommand;
+        private ICommand _showInFolderCommand;
+        private ICommand _openFileCommand;
+        private ICommand _cancelDownloadCommand;
+        private ICommand _openDownloadedAreaCommand;
+
         #endregion
 
         #endregion

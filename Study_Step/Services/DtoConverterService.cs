@@ -87,6 +87,9 @@ namespace Study_Step.Services
         public IEnumerable<FileModel> GetFileList(IEnumerable<FileModelDTO> chats) =>
             _mapper.Map<IEnumerable<FileModel>>(chats);
 
+        public DownloadItem GetDownloadItem(FileModel file) =>
+            _mapper.Map<DownloadItem>(file);
+
         #endregion
     }
 }

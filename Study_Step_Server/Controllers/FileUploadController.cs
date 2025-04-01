@@ -1,7 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using Study_Step_Server.Interfaces;
+using Study_Step_Server.Models;
 using Study_Step_Server.Models.DTO;
 using Study_Step_Server.Services;
+using System.Text;
+using System.Text.Json;
 
 namespace Study_Step_Server.Controllers
 {
@@ -23,37 +27,55 @@ namespace Study_Step_Server.Controllers
         }
 
         [HttpPost("upload")]
-        public async Task<IActionResult> UploadFile(IFormFile file)
+        public async Task<IActionResult> UploadFile([FromForm] List<IFormFile> files, [FromForm] List<string> fileModels)
         {
-            if (file == null || file.Length == 0)  { return BadRequest("Файл не был загружен."); }
-
-            // Сохраняем файл на сервере
-            var filePath = Path.Combine("Uploads", file.FileName);
-            using (var stream = new FileStream(filePath, FileMode.Create))
+            if (files == null || files.Count == 0 || fileModels == null || fileModels.Count == 0)
             {
-                await file.CopyToAsync(stream);
+                return BadRequest("No files or metadata provided.");
             }
 
-            // Возвращаем информацию о файле
-            var fileInfo = new
+            if (files.Count != fileModels.Count)
             {
-                Name = file.FileName,
-                Size = file.Length,
-                MimeType = file.ContentType,
-                Path = filePath
-            };
+                return BadRequest("The number of files and metadata entries must match.");
+            }
 
-            // Уведомляем всех клиентов через SignalR
-            //await _hubContext.Clients.All.SendAsync("ReceiveFile", fileInfo);
+            List<FileModel> uploadedFiles = new List<FileModel>();
 
-            return Ok(fileInfo);
+            for (int i = 0; i < files.Count; i++)
+            {
+                var file = files[i];
+                var fileModelJson = fileModels[i];
+
+                var fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
+                var filePath = Path.Combine("D:/my_works/dotnetProjects/Study_Step/Study_Step_Server/Media/", fileName);
+
+                // Сохраняем файл на сервере
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    await file.CopyToAsync(stream);
+                }
+
+                var fileModel = System.Text.Json.JsonSerializer.Deserialize<FileModel>(fileModelJson);
+                uploadedFiles.Add(fileModel);
+            }
+
+            return Ok(uploadedFiles);
         }
 
         [HttpGet("download")]
-        public async Task<FileModelDTO?> GetFile(int Id) 
+        public async Task<IActionResult> GetFile(int Id) 
         {
             var file = await _unitOfWork.Files.GetByIdAsync(Id);
-            return _dtoConverter.GetFileDTO(file);
+            if (!System.IO.File.Exists(file.Path))
+            {
+                return NotFound("File not found.");
+            }
+            var fileStream = System.IO.File.OpenRead(file.Path);
+
+            return new FileStreamResult(fileStream, "application/octet-stream")
+            {
+                FileDownloadName = Uri.EscapeDataString(file.Name) // Кодируем имя файла
+            };
         }
     }
 

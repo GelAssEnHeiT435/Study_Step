@@ -7,6 +7,9 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
+    <Compile Update="UI\CustomControls\DownloadArea.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="UI\Windows\AuthWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -36,6 +39,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Page Update="UI\CustomControls\DownloadArea.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="UI\Windows\AuthWindow.xaml">
       <SubType>Designer</SubType>
     </Page>

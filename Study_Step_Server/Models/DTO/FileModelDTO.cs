@@ -7,7 +7,7 @@
         public string Extension { get; set; } // For example .jpg
         public long Size { get; set; } // size (byte)
         public string MimeType { get; set; }
-        public byte[] FileBytes { get; set; }
+        public string Path { get; set; }
         public DateTime CreatedAt { get; set; }
 
         public int MessageId { get; set; }

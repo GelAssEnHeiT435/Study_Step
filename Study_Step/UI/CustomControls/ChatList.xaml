@@ -137,13 +137,29 @@
                                                 <UniformGrid Grid.Column="1"
                                                              Columns="4">
                                                     <Button Style="{StaticResource IconButtonStyle}"
-                                                            Content="{StaticResource pinned}"/>
+                                                            Content="{StaticResource pinned}">
+                                                        <Button.Tag>
+                                                            <Size Width="20" Height="20" />
+                                                        </Button.Tag>
+                                                    </Button>
                                                     <Button Style="{StaticResource IconButtonStyle}"
-                                                            Content="{StaticResource archive}"/>
+                                                            Content="{StaticResource archive}">
+                                                        <Button.Tag>
+                                                            <Size Width="20" Height="20" />
+                                                        </Button.Tag>
+                                                    </Button>
                                                     <Button Style="{StaticResource IconButtonStyle}"
-                                                            Content="{StaticResource mute}"/>
+                                                            Content="{StaticResource mute}">
+                                                        <Button.Tag>
+                                                            <Size Width="20" Height="20" />
+                                                        </Button.Tag>
+                                                    </Button>
                                                     <Button Style="{StaticResource IconButtonStyle}"
-                                                            Content="{StaticResource trash}"/>
+                                                            Content="{StaticResource trash}">
+                                                        <Button.Tag>
+                                                            <Size Width="20" Height="20" />
+                                                        </Button.Tag>
+                                                    </Button>
                                                 </UniformGrid>
                                             </Grid>
                                             <!--#endregion-->

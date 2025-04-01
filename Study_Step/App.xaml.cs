@@ -8,6 +8,8 @@ using System.Configuration;
 using System.Data;
 using System.Windows;
 using AutoMapper;
+using Microsoft.Extensions.Configuration;
+using System.IO;
 
 namespace Study_Step
 {
@@ -16,20 +18,23 @@ namespace Study_Step
     /// </summary>
     public partial class App : Application
     {
-        public static IServiceProvider ServiceProvider { get; private set; } // DI-контейнер
+        public static IServiceProvider? ServiceProvider { get; private set; } // DI-контейнер
+        public IConfiguration? Configuration { get; private set; }
 
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
 
-            // Настройка DI-контейнера
+            var builder = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("Properties\\appsettings.json", optional: false, reloadOnChange: true);
+
+            Configuration = builder.Build();
+
             var serviceCollection = new ServiceCollection();
             ConfigureServices(serviceCollection);
-
-            // Создание DI-контейнера
             ServiceProvider = serviceCollection.BuildServiceProvider();
 
-            // Запуск главного окна
             var loginWindow = ServiceProvider.GetRequiredService<AuthWindow>();
             loginWindow.Show();
         }

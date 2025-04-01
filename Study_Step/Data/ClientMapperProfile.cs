@@ -11,9 +11,12 @@ namespace Study_Step.Data
         {
             #region Converter Files
 
-            CreateMap<FileModel, FileModelDTO>()
-                .ForMember(dest => dest.FileBytes, opt => opt.MapFrom<FileConvertResolver<FileModel, FileModelDTO>>());
+            CreateMap<FileModel, FileModelDTO>();
             CreateMap<FileModelDTO, FileModel>();
+
+            CreateMap<FileModel, DownloadItem>()
+                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.FileModelId))
+                .ForMember(dest => dest.SavePath, opt => opt.MapFrom(src => src.Path));
 
             #endregion
 

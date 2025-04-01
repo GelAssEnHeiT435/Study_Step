@@ -7,6 +7,7 @@
         xmlns:local="clr-namespace:Study_Step" 
         xmlns:customcontrols="clr-namespace:Study_Step.CustomControls" 
         xmlns:viewmodels="clr-namespace:Study_Step.ViewModels"
+        xmlns:icons="clr-namespace:Study_Step.Data.UIConverters"
         mc:Ignorable="d"
         Title="StudyStep" 
         AllowsTransparency="True"
@@ -22,6 +23,8 @@
     </Window.InputBindings>
     
     <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="BoolToVis" />
+        
         <ControlTemplate x:Key="ContactInfoButtonTemplate"
                          TargetType="{x:Type Button}">
             <Border Background="{TemplateBinding Background}"
@@ -63,7 +66,6 @@
                     </Grid>
                 </Grid>
             </Border>
-
         </ControlTemplate>
     </Window.Resources>
     
@@ -93,30 +95,102 @@
                                VerticalAlignment="Center"
                                Foreground="White"
                                FontSize="22"
-                               FontWeight="Bold"
-                               />
+                               FontWeight="Bold" />
+                    
                     <!-- Window Buttons -->
                     <StackPanel Orientation="Horizontal"
                                 HorizontalAlignment="Right"
-                                
                                 Margin="10,0">
+
+                        <Button x:Name="btnDownload"
+                                VerticalContentAlignment="Center"
+                                Command="{Binding OpenDownloadedAreaCommand}"
+                                Content="{StaticResource download}"
+                                Style="{StaticResource IconButtonStyle}">
+                            <Button.Tag>
+                                <Size Width="20" Height="20" />
+                            </Button.Tag>
+                        </Button>
+                        
+                        <customcontrols:DownloadArea/>
+                        
+                        <!--#region profile button -->
+                        <Button x:Name="ProfileButton"
+                                Width="40" Height="40"
+                                Margin="5, 0">
+                            <Button.Template>
+                                <ControlTemplate TargetType="{x:Type Button}">
+                                    <Border CornerRadius="15">
+                                        <Grid>
+                                            <Ellipse Name="InnerEllipse"
+                                                     Width="30"
+                                                     Height="30"
+                                                     Stretch="Uniform"
+                                                     VerticalAlignment="Center"
+                                                     HorizontalAlignment="Center">
+                                                <Ellipse.Fill>
+                                                    <ImageBrush Stretch="UniformToFill"
+                                                                ImageSource="{Binding Path=bitmapPhoto,
+                                                                                      FallbackValue='D:/my_works/dotnetProjects/Study_Step/Study_Step/Assets/Media/5.jpg',
+                                                                                      TargetNullValue='D:/my_works/dotnetProjects/Study_Step/Study_Step/Assets/Media/5.jpg',
+                                                                                      UpdateSourceTrigger=PropertyChanged}"/>
+                                                </Ellipse.Fill>
+                                            </Ellipse>
+                                        </Grid>
+                                        <Border.Style>
+                                            <Style TargetType="{x:Type Border}">
+                                                <Setter Property="Background" Value="Transparent" />
+                                                <Style.Triggers>
+                                                    <Trigger Property="IsMouseOver" Value="True">
+                                                        <Setter Property="Background" Value="#E0DFDE"/>
+                                                    </Trigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Border.Style>
+                                    </Border>
+                                    
+                                </ControlTemplate>
+                            </Button.Template>
+                        </Button>
+                        <!--#endregion-->
+
                         <Button x:Name="btnMinimize"
                                 Click="btnMinimize_Click"
                                 VerticalContentAlignment="Center"
                                 Content="{StaticResource minimize}"
-                                Style="{StaticResource IconButtonStyle}"/>
-                        
+                                Style="{StaticResource IconButtonStyle}">
+                            <Button.Tag>
+                                <Size Width="20" Height="20" />
+                            </Button.Tag>
+                        </Button>
+
                         <Button x:Name="btnMaximize"
                                 Click="btnMaximize_Click"
                                 VerticalContentAlignment="Center"
                                 Content="{StaticResource maximize}"
-                                Style="{StaticResource IconButtonStyle}"/>
-                        
+                                Style="{StaticResource IconButtonStyle}">
+                            <Button.Tag>
+                                <Size Width="20" Height="20" />
+                            </Button.Tag>
+                        </Button>
+
                         <Button x:Name="btnClose"
                                 Click="btnClose_Click"
                                 VerticalContentAlignment="Center"
-                                Content="{StaticResource close}"
-                                Style="{StaticResource IconButtonStyle}"/>
+                                Content="{StaticResource close}">
+                            <Button.Tag>
+                                <Size Width="20" Height="20" />
+                            </Button.Tag>
+                            <Button.Style>
+                                <Style TargetType="Button" BasedOn="{StaticResource IconButtonStyle}">
+                                    <Style.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="Background" Value="#FF7373"/>
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Button.Style>
+                        </Button>
 
                     </StackPanel>
                 </Grid>
@@ -149,14 +223,20 @@
                     <Button x:Name="ChatSearchButton"
                             Content="{StaticResource search}"
                             Style="{StaticResource IconButtonStyle}"
-                            Grid.Column="2"/>
+                            Grid.Column="2">
+                        <Button.Tag>
+                            <Size Width="20" Height="20" />
+                        </Button.Tag>
+                    </Button>
                     
                     <!-- Option Popup Menu -->
                     <ToggleButton x:Name="bntMoreOptions"
                                   Content="{StaticResource more}"
                                   Style="{StaticResource ToggleIconButtonStyle}"
                                   Grid.Column="3">
-                        
+                        <ToggleButton.Tag>
+                            <Size Width="20" Height="20" />
+                        </ToggleButton.Tag>
                     </ToggleButton>
                 </Grid>
                 
@@ -208,22 +288,38 @@
                     <!-- Video Call Button -->
                     <Button Grid.Column="1"
                             Style="{StaticResource IconButtonStyle}"
-                            Content="{StaticResource videocall}"/>
+                            Content="{StaticResource videocall}">
+                        <Button.Tag>
+                            <Size Width="20" Height="20" />
+                        </Button.Tag>
+                    </Button>
 
                     <!-- Call Button -->
                     <Button Grid.Column="2"
                             Style="{StaticResource IconButtonStyle}"
-                            Content="{StaticResource call}"/>
+                            Content="{StaticResource call}">
+                        <Button.Tag>
+                            <Size Width="20" Height="20" />
+                        </Button.Tag>
+                    </Button>
 
                     <!-- Search Message Button -->
                     <Button Grid.Column="3"
                             Style="{StaticResource IconButtonStyle}"
-                            Content="{StaticResource search}"/>
+                            Content="{StaticResource search}">
+                        <Button.Tag>
+                            <Size Width="20" Height="20" />
+                        </Button.Tag>
+                    </Button>
 
                     <!-- More Options -->
                     <ToggleButton Grid.Column="4"
                                   Style="{StaticResource ToggleIconButtonStyle}"
-                                  Content="{StaticResource more}"/>
+                                  Content="{StaticResource more}">
+                        <ToggleButton.Tag>
+                            <Size Width="20" Height="20" />
+                        </ToggleButton.Tag>
+                    </ToggleButton>
                 </Grid>
                 
                 <!-- Conversation Message Body-->
@@ -276,15 +372,22 @@
                                 <!-- Кнопки -->
                                 <StackPanel Grid.Column="1"
                                             Orientation="Horizontal">
-                                    <!-- TODO Commands -->
                                     <Button x:Name="AttachButton"
                                             Style="{StaticResource IconButtonStyle}"
                                             Content="{StaticResource attach}"
-                                            Command="{Binding ChooseFile}"/>
+                                            Command="{Binding ChooseFile}">
+                                        <Button.Tag>
+                                            <Size Width="20" Height="20" />
+                                        </Button.Tag>
+                                    </Button>
                                     <Button x:Name="SendMsgButton"
                                             Style="{StaticResource IconButtonStyle}"
                                             Content="{StaticResource send}"
-                                            Command="{Binding SendMesCommand}"/>
+                                            Command="{Binding SendMesCommand}">
+                                        <Button.Tag>
+                                            <Size Width="20" Height="20" />
+                                        </Button.Tag>
+                                    </Button>
                                 </StackPanel>
                             </Grid>
                         </Grid>

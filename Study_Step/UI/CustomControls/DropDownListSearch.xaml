@@ -36,6 +36,9 @@
                                       VerticalAlignment="Center"
                                       Content="{StaticResource search}"
                                       Style="{StaticResource ToggleIconButtonStyle}">
+                            <ToggleButton.Tag>
+                                <Size Width="20" Height="20" />
+                            </ToggleButton.Tag>
                         </ToggleButton>
 
                         <!-- Поле для ввода текста -->

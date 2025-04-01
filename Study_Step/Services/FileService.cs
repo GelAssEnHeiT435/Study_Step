@@ -1,10 +1,13 @@
-﻿using Study_Step.Interfaces;
+﻿using Newtonsoft.Json;
+using Study_Step.Interfaces;
 using Study_Step.Models;
 using Study_Step.Models.DTO;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
@@ -13,7 +16,7 @@ namespace Study_Step.Services
 {
     public class FileService : IFileService
     {
-        private readonly string _baseDirectory = "D:/Downloads";
+
         public byte[]? ConvertFileToByteArray(string? imagePath)
         {
             // Возвращаем null, если путь пустой или файл не существует
@@ -50,14 +53,14 @@ namespace Study_Step.Services
 
         public void SaveFile(FileModelDTO file)
         {
-            try
-            {
-                string uniqueFileName = $"{file.Name}"; 
-                string filePath = Path.Combine(_baseDirectory, uniqueFileName); // Create path
+            //try
+            //{
+            //    string uniqueFileName = $"{file.Name}"; 
+            //    string filePath = Path.Combine(_baseDirectory, uniqueFileName); // Create path
 
-                File.WriteAllBytes(filePath, file.FileBytes); // Save File
-            }
-            catch (Exception ex) { }
+            //    File.WriteAllBytes(filePath, file.FileBytes); // Save File
+            //}
+            //catch (Exception ex) { }
         }
     }
 }

@@ -10,7 +10,6 @@ using Study_Step_Server.Repositories;
 using Study_Step_Server.Interfaces;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
-using AutoMapper;
 using Microsoft.AspNetCore.Http.Features;
 
 namespace Study_Step_Server

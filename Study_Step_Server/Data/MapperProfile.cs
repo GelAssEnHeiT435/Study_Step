@@ -14,10 +14,8 @@ namespace Study_Step_Server.Data
             #region File
 
             // TODO: Converting file to bytes and forth
-            CreateMap<FileModel, FileModelDTO>()
-                .ForMember(dest => dest.FileBytes, opt => opt.MapFrom<FileConvertResolver<FileModel, FileModelDTO>>());
-            CreateMap<FileModelDTO, FileModel>()
-                .ForMember(dest => dest.Path, opt => opt.MapFrom<FileModelPathResolver<FileModelDTO, FileModel>>());
+            CreateMap<FileModel, FileModelDTO>();
+            CreateMap<FileModelDTO, FileModel>();
 
             #endregion
 

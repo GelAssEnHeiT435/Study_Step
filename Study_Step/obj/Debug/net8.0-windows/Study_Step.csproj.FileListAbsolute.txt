@@ -158,3 +158,11 @@ D:\my_works\dotnetProjects\Study_Step\Study_Step\obj\Debug\net8.0-windows\UI\Win
 D:\my_works\dotnetProjects\Study_Step\Study_Step\obj\Debug\net8.0-windows\UI\Windows\MainWindow.baml
 D:\my_works\dotnetProjects\Study_Step\Study_Step\obj\Debug\net8.0-windows\UI\Windows\UserProfile.baml
 D:\my_works\dotnetProjects\Study_Step\Study_Step\bin\Debug\net8.0-windows\MimeMapping.dll
+D:\my_works\dotnetProjects\Study_Step\Study_Step\bin\Debug\net8.0-windows\Microsoft.Extensions.Configuration.dll
+D:\my_works\dotnetProjects\Study_Step\Study_Step\bin\Debug\net8.0-windows\Microsoft.Extensions.Configuration.FileExtensions.dll
+D:\my_works\dotnetProjects\Study_Step\Study_Step\bin\Debug\net8.0-windows\Microsoft.Extensions.Configuration.Json.dll
+D:\my_works\dotnetProjects\Study_Step\Study_Step\bin\Debug\net8.0-windows\Microsoft.Extensions.FileProviders.Abstractions.dll
+D:\my_works\dotnetProjects\Study_Step\Study_Step\bin\Debug\net8.0-windows\Microsoft.Extensions.FileProviders.Physical.dll
+D:\my_works\dotnetProjects\Study_Step\Study_Step\bin\Debug\net8.0-windows\Microsoft.Extensions.FileSystemGlobbing.dll
+D:\my_works\dotnetProjects\Study_Step\Study_Step\obj\Debug\net8.0-windows\UI\CustomControls\DownloadArea.g.cs
+D:\my_works\dotnetProjects\Study_Step\Study_Step\obj\Debug\net8.0-windows\UI\CustomControls\DownloadArea.baml

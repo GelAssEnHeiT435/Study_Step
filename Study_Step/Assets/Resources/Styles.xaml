@@ -9,8 +9,7 @@
 
     <!-- Default Style for Path's -->
     <Style TargetType="{x:Type Path}">
-        <Setter Property="Height" Value="20"/>
-        <Setter Property="Width" Value="20"/>
+
         <Setter Property="Stretch" Value="Uniform"/>
     </Style>
 
@@ -18,18 +17,24 @@
     <Style x:Key="IconButtonStyle" TargetType="{x:Type Button}">
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="BorderThickness" Value="0"/>
-        <Setter Property="Height" Value="40"/>
         <Setter Property="Width" Value="40"/>
+        <Setter Property="Height" Value="40"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
                     <Border Background="{TemplateBinding Background}"
+                            Width="{TemplateBinding Width}"
+                            Height="{TemplateBinding Height}"
                             CornerRadius="10">
-                        <Path Data="{TemplateBinding Content}"
-                              Fill="{TemplateBinding Foreground}"
-                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}" 
-                              Style="{StaticResource {x:Type Path}}"/>
+                        <Viewbox Stretch="Uniform"
+                                 Width="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Tag.Width}"
+                                 Height="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Tag.Height}">
+                            <Path Data="{TemplateBinding Content}"
+                                  Fill="{TemplateBinding Foreground}"
+                                  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}" 
+                                  Style="{StaticResource {x:Type Path}}"/>
+                        </Viewbox>
                     </Border>
                 </ControlTemplate>
             </Setter.Value>
@@ -51,13 +56,40 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ToggleButton}">
-                    <Border Background="{TemplateBinding Background}">
-                        <Path Data="{TemplateBinding Content}"
-                              Fill="{TemplateBinding Foreground}"
-                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}" 
-                              Style="{StaticResource {x:Type Path}}"/>
+                    <Border Background="{TemplateBinding Background}"
+                            Width="{TemplateBinding Width}"
+                            Height="{TemplateBinding Height}"
+                            CornerRadius="10">
+                        <Viewbox Stretch="Uniform"
+                                 Width="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Tag.Width}"
+                                 Height="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Tag.Height}">
+                            <Path Data="{TemplateBinding Content}"
+                                  Fill="{TemplateBinding Foreground}"
+                                  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}" 
+                                  Style="{StaticResource {x:Type Path}}"/>  
+                        </Viewbox>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="#E0DFDE"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
 
+    <Style x:Key="TransparentListItem"
+           TargetType="{x:Type ListBoxItem}">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ListBoxItem">
+                    <Border Background="{TemplateBinding Background}" 
+                        BorderThickness="{TemplateBinding BorderThickness}">
+                        <ContentPresenter />
                     </Border>
                 </ControlTemplate>
             </Setter.Value>
