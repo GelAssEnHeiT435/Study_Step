@@ -84,6 +84,10 @@
               "target": "Package",
               "version": "[13.0.3, )"
             },
+            "Syncfusion.SfProgressBar.WPF": {
+              "target": "Package",
+              "version": "[29.1.33, )"
+            },
             "System.Net.Http": {
               "target": "Package",
               "version": "[4.3.4, )"

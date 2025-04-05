@@ -10,6 +10,9 @@ using System.Windows;
 using AutoMapper;
 using Microsoft.Extensions.Configuration;
 using System.IO;
+using System.Diagnostics;
+using System.Windows.Interop;
+using System.Windows.Media;
 
 namespace Study_Step
 {
@@ -30,6 +33,9 @@ namespace Study_Step
                 .AddJsonFile("Properties\\appsettings.json", optional: false, reloadOnChange: true);
 
             Configuration = builder.Build();
+            PresentationTraceSources.DataBindingSource.Switch.Level = SourceLevels.Warning;
+            Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("Ngo9BigBOggjHTQxAR8/V1NNaF5cXmBCekx3RHxbf1x1ZFZMYFxbQXFPIiBoS35Rc0VnWXtfdXRVQ2dYUUR+VEBU");
+            RenderOptions.ProcessRenderMode = RenderMode.SoftwareOnly;
 
             var serviceCollection = new ServiceCollection();
             ConfigureServices(serviceCollection);

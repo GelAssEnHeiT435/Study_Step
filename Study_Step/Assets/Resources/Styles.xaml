@@ -1,5 +1,6 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:icons="clr-namespace:Study_Step.Data.UIConverters">
 
     <Style x:Key="ContactInfoButtonStyle" TargetType="{x:Type Button}">
         <Setter Property="Background" Value="Transparent"/>
@@ -8,8 +9,7 @@
     </Style>
 
     <!-- Default Style for Path's -->
-    <Style TargetType="{x:Type Path}">
-
+    <Style x:Key="defaultPath" TargetType="{x:Type Path}">
         <Setter Property="Stretch" Value="Uniform"/>
     </Style>
 
@@ -33,7 +33,7 @@
                                   Fill="{TemplateBinding Foreground}"
                                   HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                   VerticalAlignment="{TemplateBinding VerticalContentAlignment}" 
-                                  Style="{StaticResource {x:Type Path}}"/>
+                                  Style="{StaticResource defaultPath}"/>
                         </Viewbox>
                     </Border>
                 </ControlTemplate>
@@ -67,7 +67,7 @@
                                   Fill="{TemplateBinding Foreground}"
                                   HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                   VerticalAlignment="{TemplateBinding VerticalContentAlignment}" 
-                                  Style="{StaticResource {x:Type Path}}"/>  
+                                  Style="{StaticResource defaultPath}"/>  
                         </Viewbox>
                     </Border>
                 </ControlTemplate>

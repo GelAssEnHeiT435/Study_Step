@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Study_Step.CustomControls" 
+             xmlns:Syncfusion="http://schemas.syncfusion.com/wpf"
              xmlns:viewmodels="clr-namespace:Study_Step.ViewModels"
              xmlns:icons="clr-namespace:Study_Step.Data.UIConverters"
              mc:Ignorable="d" 
@@ -12,7 +13,7 @@
         <icons:WordExtensionConverter x:Key="WordExtensionConverter"/>
         <icons:ExcelExtensionConverter x:Key="ExcelExtensionConverter"/>
         <icons:PowerPointExtensionConverter x:Key="PowerPointExtensionConverter"/>
-        
+
         <Style x:Key="MessageTextStyle" TargetType="{x:Type TextBlock}">
             <Setter Property="FontSize" Value="15" />
             <Setter Property="FontWeight" Value="SemiBold" />
@@ -42,8 +43,6 @@
                         <Setter Property="VerticalAlignment" Value="Center"/>
                         <Setter Property="Background" Value="Transparent"/>
                         <Setter Property="BorderThickness" Value="0"/>
-                        <!--Setter Property="IsChecked" Value="{Binding IsSelected, Mode=TwoWay,
-                UpdateSourceTrigger=PropertyChanged}"/-->
 
                         <Setter Property="Template">
                             <Setter.Value>
@@ -107,7 +106,7 @@
 
                                                         <ListBox ItemsSource="{Binding Files}"
                                                                  ItemContainerStyle="{StaticResource TransparentListItem}"
-                                                                 HorizontalAlignment="Stretch"
+                                                                 HorizontalAlignment="Left"
                                                                  Background="Transparent" 
                                                                  BorderThickness="0" 
                                                                  Grid.Row="1">
@@ -131,8 +130,10 @@
                                                                                                     <ColumnDefinition Width="auto"/>
                                                                                                     <ColumnDefinition Width="*"/>
                                                                                                 </Grid.ColumnDefinitions>
-                                                                                                
+
                                                                                                 <Viewbox Stretch="Uniform" Grid.Column="0"
+                                                                                                         HorizontalAlignment="Center"
+                                                                                                         VerticalAlignment="Center"
                                                                                                          Width="25" Height="25">
                                                                                                     <Path>
                                                                                                         <Path.Style>
@@ -155,8 +156,83 @@
                                                                                                             </Style>
                                                                                                         </Path.Style>
                                                                                                     </Path>
+                                                                                                    <Viewbox.Style>
+                                                                                                        <Style TargetType="{x:Type Viewbox}">
+                                                                                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                                                                                            <Style.Triggers>
+                                                                                                                <DataTrigger Binding="{Binding Status}" Value="0">
+                                                                                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                                                                                </DataTrigger>
+                                                                                                                <DataTrigger Binding="{Binding Status}" Value="1">
+                                                                                                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                                                                                                </DataTrigger>
+                                                                                                            </Style.Triggers>
+                                                                                                        </Style>
+                                                                                                    </Viewbox.Style>
                                                                                                 </Viewbox>
-                                                                                                
+
+                                                                                                <Grid Grid.Column="0" Width="50" Height="50"
+                                                                                                      VerticalAlignment="Center"
+                                                                                                      HorizontalAlignment="Center">
+
+                                                                                                    <Syncfusion:SfCircularProgressBar IndicatorOuterRadius="0.75" IndicatorInnerRadius="0.6" 
+                                                                                                                                      TrackOuterRadius="0.7" TrackInnerRadius="0.65"
+                                                                                                                                      Width="50" Height="50" Progress="{Binding Progress}"  
+                                                                                                                                      ShowProgressValue="False" IndicatorCornerRadius="10"
+                                                                                                                                      VerticalAlignment="Center">
+                                                                                                        <Syncfusion:SfCircularProgressBar.RangeColors>
+                                                                                                            <Syncfusion:RangeColorCollection>
+                                                                                                                <Syncfusion:RangeColor IsGradient="True" Color="#6CD861" Start="10" End="30"/>
+                                                                                                                <Syncfusion:RangeColor IsGradient="True" Color="#11B000" Start="30" End="60"/>
+                                                                                                                <Syncfusion:RangeColor IsGradient="True" Color="#2A8421" Start="60" End="100"/>
+                                                                                                            </Syncfusion:RangeColorCollection>
+                                                                                                        </Syncfusion:SfCircularProgressBar.RangeColors>
+                                                                                                        <Syncfusion:SfCircularProgressBar.ProgressContent>
+                                                                                                            <Button x:Name="btnDeleteSendFile"
+                                                                                                                    Width="20" Height="20" Panel.ZIndex="999"
+                                                                                                                    HorizontalAlignment="Center"
+                                                                                                                    VerticalAlignment="Center"
+                                                                                                                    Command="{Binding DataContext.CancelSendFileCommand, 
+                                                                                                                                      RelativeSource={RelativeSource AncestorType={x:Type Window}}}"
+                                                                                                                    CommandParameter="{Binding}"
+                                                                                                                    Content="{StaticResource close}">
+                                                                                                                <Button.Tag>
+                                                                                                                    <Size Width="12" Height="12"/>
+                                                                                                                </Button.Tag>
+                                                                                                                <Button.Style>
+                                                                                                                    <Style TargetType="Button" BasedOn="{StaticResource IconButtonStyle}">
+                                                                                                                        <Style.Triggers>
+                                                                                                                            <Trigger Property="IsMouseOver" Value="True">
+                                                                                                                                <Setter Property="RenderTransformOrigin" Value="0.5,0.5"/>
+                                                                                                                                <Setter Property="RenderTransform">
+                                                                                                                                    <Setter.Value>
+                                                                                                                                        <ScaleTransform ScaleX="1.35" ScaleY="1.35"/>
+                                                                                                                                    </Setter.Value>
+                                                                                                                                </Setter>
+                                                                                                                                <Setter Property="Background" Value="Transparent"/>
+                                                                                                                            </Trigger>
+                                                                                                                        </Style.Triggers>
+                                                                                                                    </Style>
+                                                                                                                </Button.Style>
+                                                                                                            </Button>
+                                                                                                        </Syncfusion:SfCircularProgressBar.ProgressContent>
+                                                                                                    </Syncfusion:SfCircularProgressBar>
+
+                                                                                                    <Grid.Style>
+                                                                                                        <Style TargetType="{x:Type Grid}">
+                                                                                                            <Setter Property="Visibility" Value="Visible"/>
+                                                                                                            <Style.Triggers>
+                                                                                                                <DataTrigger Binding="{Binding Status}" Value="1">
+                                                                                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                                                                                </DataTrigger>
+                                                                                                                <DataTrigger Binding="{Binding Status}" Value="0">
+                                                                                                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                                                                                                </DataTrigger>
+                                                                                                            </Style.Triggers>
+                                                                                                        </Style>
+                                                                                                    </Grid.Style>
+                                                                                                </Grid>
+
                                                                                                 <TextBlock x:Name="FileName"
                                                                                                            Text="{Binding Name}" 
                                                                                                            VerticalAlignment="Center" 

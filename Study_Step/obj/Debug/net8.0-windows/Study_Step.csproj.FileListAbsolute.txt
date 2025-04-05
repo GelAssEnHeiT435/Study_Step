@@ -166,3 +166,6 @@ D:\my_works\dotnetProjects\Study_Step\Study_Step\bin\Debug\net8.0-windows\Micros
 D:\my_works\dotnetProjects\Study_Step\Study_Step\bin\Debug\net8.0-windows\Microsoft.Extensions.FileSystemGlobbing.dll
 D:\my_works\dotnetProjects\Study_Step\Study_Step\obj\Debug\net8.0-windows\UI\CustomControls\DownloadArea.g.cs
 D:\my_works\dotnetProjects\Study_Step\Study_Step\obj\Debug\net8.0-windows\UI\CustomControls\DownloadArea.baml
+D:\my_works\dotnetProjects\Study_Step\Study_Step\bin\Debug\net8.0-windows\Syncfusion.Licensing.dll
+D:\my_works\dotnetProjects\Study_Step\Study_Step\bin\Debug\net8.0-windows\Syncfusion.SfProgressBar.WPF.dll
+D:\my_works\dotnetProjects\Study_Step\Study_Step\bin\Debug\net8.0-windows\Syncfusion.Shared.WPF.dll

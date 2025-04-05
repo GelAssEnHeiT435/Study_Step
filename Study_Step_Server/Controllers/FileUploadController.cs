@@ -4,6 +4,7 @@ using Study_Step_Server.Interfaces;
 using Study_Step_Server.Models;
 using Study_Step_Server.Models.DTO;
 using Study_Step_Server.Services;
+using System.Net;
 using System.Text;
 using System.Text.Json;
 
@@ -16,56 +17,55 @@ namespace Study_Step_Server.Controllers
         private readonly IUoW _unitOfWork;
         private readonly DtoConverterService _dtoConverter;
         private readonly IFileService _fileService;
+        private readonly IConfiguration _config;
 
         public FileUploadController( IUoW unitOfWork,
                                      DtoConverterService converter,
-                                     IFileService fileService )
+                                     IFileService fileService,
+                                     IConfiguration config)
         {
             _unitOfWork = unitOfWork;
             _dtoConverter = converter;
             _fileService = fileService;
+            _config = config;
         }
 
         [HttpPost("upload")]
-        public async Task<IActionResult> UploadFile([FromForm] List<IFormFile> files, [FromForm] List<string> fileModels)
+        [DisableRequestSizeLimit]
+        public async Task<IActionResult> UploadFile()
         {
-            if (files == null || files.Count == 0 || fileModels == null || fileModels.Count == 0)
+            // read info from headers
+            var fileName = WebUtility.UrlDecode(Request.Headers["X-FileName"]);
+            var fileSize = long.Parse(Request.Headers["X-FileSize"]);
+            string? savePath = _config["Paths:MediaPath"];
+            var tempFilePath = Path.Combine(savePath, Guid.NewGuid() + ".tmp");
+
+            try
             {
-                return BadRequest("No files or metadata provided.");
-            }
-
-            if (files.Count != fileModels.Count)
-            {
-                return BadRequest("The number of files and metadata entries must match.");
-            }
-
-            List<FileModel> uploadedFiles = new List<FileModel>();
-
-            for (int i = 0; i < files.Count; i++)
-            {
-                var file = files[i];
-                var fileModelJson = fileModels[i];
-
-                var fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
-                var filePath = Path.Combine("D:/my_works/dotnetProjects/Study_Step/Study_Step_Server/Media/", fileName);
-
-                // Сохраняем файл на сервере
-                using (var stream = new FileStream(filePath, FileMode.Create))
+                // reading file in parts
+                await using (var tempFileStream = new FileStream(tempFilePath, FileMode.Create, FileAccess.Write))
                 {
-                    await file.CopyToAsync(stream);
+                    await Request.Body.CopyToAsync(tempFileStream);
                 }
 
-                var fileModel = System.Text.Json.JsonSerializer.Deserialize<FileModel>(fileModelJson);
-                uploadedFiles.Add(fileModel);
-            }
+                var finalPath = Path.Combine(savePath, $"{Guid.NewGuid()}_{fileName}");
+                System.IO.File.Move(tempFilePath, finalPath); // replace .tmp to our file
 
-            return Ok(uploadedFiles);
+                Console.WriteLine(finalPath);
+
+                return Ok(new { Path = finalPath, Size = fileSize });
+            }
+            finally
+            {
+                // delete .tmp in case of error
+                if (System.IO.File.Exists(tempFilePath)) System.IO.File.Delete(tempFilePath);
+            }
         }
 
         [HttpGet("download")]
         public async Task<IActionResult> GetFile(int Id) 
         {
-            var file = await _unitOfWork.Files.GetByIdAsync(Id);
+            var file = await _unitOfWork.Files.GetByIdAsync(Id); // get file's info from db
             if (!System.IO.File.Exists(file.Path))
             {
                 return NotFound("File not found.");

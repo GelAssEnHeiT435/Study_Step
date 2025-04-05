@@ -30,7 +30,7 @@
                         </Grid.RowDefinitions>
 
                         <Viewbox Stretch="Uniform" Grid.Row="0"
-                                 Width="25" Height="25">
+                                 Width="24" Height="24">
                             <Path>
                                 <Path.Style>
                                     <Style TargetType="Path">

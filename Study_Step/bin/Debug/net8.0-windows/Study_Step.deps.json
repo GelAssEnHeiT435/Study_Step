@@ -16,6 +16,7 @@
           "Microsoft.Extensions.Features": "9.0.0",
           "MimeMapping": "3.1.0",
           "Newtonsoft.Json": "13.0.3",
+          "Syncfusion.SfProgressBar.WPF": "29.1.33",
           "System.Net.Http": "4.3.4"
         },
         "runtime": {
@@ -792,6 +793,37 @@
       "runtime.ubuntu.14.04-x64.runtime.native.System.Security.Cryptography.OpenSsl/4.3.2": {},
       "runtime.ubuntu.16.04-x64.runtime.native.System.Security.Cryptography.OpenSsl/4.3.2": {},
       "runtime.ubuntu.16.10-x64.runtime.native.System.Security.Cryptography.OpenSsl/4.3.2": {},
+      "Syncfusion.Licensing/29.1.33": {
+        "runtime": {
+          "lib/net8.0/Syncfusion.Licensing.dll": {
+            "assemblyVersion": "29.1.33.0",
+            "fileVersion": "29.1.33.0"
+          }
+        }
+      },
+      "Syncfusion.SfProgressBar.WPF/29.1.33": {
+        "dependencies": {
+          "Syncfusion.Licensing": "29.1.33",
+          "Syncfusion.Shared.WPF": "29.1.33"
+        },
+        "runtime": {
+          "lib/net8.0-windows7.0/Syncfusion.SfProgressBar.WPF.dll": {
+            "assemblyVersion": "29.1.33.0",
+            "fileVersion": "29.1.33.0"
+          }
+        }
+      },
+      "Syncfusion.Shared.WPF/29.1.33": {
+        "dependencies": {
+          "Syncfusion.Licensing": "29.1.33"
+        },
+        "runtime": {
+          "lib/net8.0-windows7.0/Syncfusion.Shared.WPF.dll": {
+            "assemblyVersion": "29.1.33.0",
+            "fileVersion": "29.1.33.0"
+          }
+        }
+      },
       "System.CodeDom/6.0.0": {},
       "System.Collections/4.3.0": {
         "dependencies": {
@@ -1716,6 +1748,27 @@
       "sha512": "sha512-leXiwfiIkW7Gmn7cgnNcdtNAU70SjmKW3jxGj1iKHOvdn0zRWsgv/l2OJUO5zdGdiv2VRFnAsxxhDgMzofPdWg==",
       "path": "runtime.ubuntu.16.10-x64.runtime.native.system.security.cryptography.openssl/4.3.2",
       "hashPath": "runtime.ubuntu.16.10-x64.runtime.native.system.security.cryptography.openssl.4.3.2.nupkg.sha512"
+    },
+    "Syncfusion.Licensing/29.1.33": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-86pl48kuJ+CR9MdclPV0vyqX/j8g7AYxBCZwJdtct35shlga4qAv6SWWzP7osPSUX/j3BBCtE49I8K5YBTj+Lg==",
+      "path": "syncfusion.licensing/29.1.33",
+      "hashPath": "syncfusion.licensing.29.1.33.nupkg.sha512"
+    },
+    "Syncfusion.SfProgressBar.WPF/29.1.33": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-lC9+qgMu5UQ5GC7wRrkqGkmdk3NzkWmERa8pOjsA3AwYo8X0eE16kCfvadoICecEFb65pqu8HJFX4ENv9Sj1sg==",
+      "path": "syncfusion.sfprogressbar.wpf/29.1.33",
+      "hashPath": "syncfusion.sfprogressbar.wpf.29.1.33.nupkg.sha512"
+    },
+    "Syncfusion.Shared.WPF/29.1.33": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-TaXm1Kyq4T9S+ZK5BY6ecBSUIGfqJ7SXXCAPWcUGWPU4zldusJqUZEPkQrLI2j+HumUFFLZpvyNxZTrqUrcpEA==",
+      "path": "syncfusion.shared.wpf/29.1.33",
+      "hashPath": "syncfusion.shared.wpf.29.1.33.nupkg.sha512"
     },
     "System.CodeDom/6.0.0": {
       "type": "package",

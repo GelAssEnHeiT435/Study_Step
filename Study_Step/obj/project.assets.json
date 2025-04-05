@@ -1197,6 +1197,48 @@
           }
         }
       },
+      "Syncfusion.Licensing/29.1.33": {
+        "type": "package",
+        "compile": {
+          "lib/net8.0/Syncfusion.Licensing.dll": {}
+        },
+        "runtime": {
+          "lib/net8.0/Syncfusion.Licensing.dll": {}
+        }
+      },
+      "Syncfusion.SfProgressBar.WPF/29.1.33": {
+        "type": "package",
+        "dependencies": {
+          "Syncfusion.Licensing": "29.1.33",
+          "Syncfusion.Shared.WPF": "29.1.33"
+        },
+        "compile": {
+          "lib/net8.0-windows7.0/Syncfusion.SfProgressBar.WPF.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net8.0-windows7.0/Syncfusion.SfProgressBar.WPF.dll": {
+            "related": ".xml"
+          }
+        }
+      },
+      "Syncfusion.Shared.WPF/29.1.33": {
+        "type": "package",
+        "dependencies": {
+          "Syncfusion.Licensing": "29.1.33"
+        },
+        "compile": {
+          "lib/net8.0-windows7.0/Syncfusion.Shared.WPF.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net8.0-windows7.0/Syncfusion.Shared.WPF.dll": {
+            "related": ".xml"
+          }
+        }
+      },
       "System.CodeDom/6.0.0": {
         "type": "package",
         "compile": {
@@ -4282,6 +4324,86 @@
         "runtimes/ubuntu.16.10-x64/native/System.Security.Cryptography.Native.OpenSsl.so"
       ]
     },
+    "Syncfusion.Licensing/29.1.33": {
+      "sha512": "86pl48kuJ+CR9MdclPV0vyqX/j8g7AYxBCZwJdtct35shlga4qAv6SWWzP7osPSUX/j3BBCtE49I8K5YBTj+Lg==",
+      "type": "package",
+      "path": "syncfusion.licensing/29.1.33",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE.txt",
+        "README.md",
+        "lib/MonoAndroid90/Syncfusion.Licensing.dll",
+        "lib/Xamarin.Mac/Syncfusion.Licensing.dll",
+        "lib/Xamarin.iOS10/Syncfusion.Licensing.dll",
+        "lib/net462/Syncfusion.Licensing.dll",
+        "lib/net8.0/Syncfusion.Licensing.dll",
+        "lib/net9.0/Syncfusion.Licensing.dll",
+        "lib/netstandard2.0/Syncfusion.Licensing.dll",
+        "lib/uap10.0/Syncfusion.Licensing.dll",
+        "syncfusion.licensing.29.1.33.nupkg.sha512",
+        "syncfusion.licensing.nuspec",
+        "syncfusion_logo.png"
+      ]
+    },
+    "Syncfusion.SfProgressBar.WPF/29.1.33": {
+      "sha512": "lC9+qgMu5UQ5GC7wRrkqGkmdk3NzkWmERa8pOjsA3AwYo8X0eE16kCfvadoICecEFb65pqu8HJFX4ENv9Sj1sg==",
+      "type": "package",
+      "path": "syncfusion.sfprogressbar.wpf/29.1.33",
+      "hasTools": true,
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE.txt",
+        "README.md",
+        "lib/net462/Design/Syncfusion.Design.Wpf.dll",
+        "lib/net462/Design/Syncfusion.SfProgressBar.WPF.DesignTools.dll",
+        "lib/net462/Design/Syncfusion.SfProgressBar.WPF.Expression.Design.dll",
+        "lib/net462/Design/Syncfusion.SfProgressBar.Wpf.VisualStudio.Design.dll",
+        "lib/net462/Design/Syncfusion.SfProgressBar.Wpf.dll.Design.dll",
+        "lib/net462/Syncfusion.SfProgressBar.WPF.dll",
+        "lib/net462/Syncfusion.SfProgressBar.WPF.xml",
+        "lib/net8.0-windows7.0/Design/Syncfusion.SfProgressBar.WPF.DesignTools.dll",
+        "lib/net8.0-windows7.0/Syncfusion.SfProgressBar.WPF.dll",
+        "lib/net8.0-windows7.0/Syncfusion.SfProgressBar.WPF.xml",
+        "lib/net9.0-windows7.0/Design/Syncfusion.SfProgressBar.WPF.DesignTools.dll",
+        "lib/net9.0-windows7.0/Syncfusion.SfProgressBar.WPF.dll",
+        "lib/net9.0-windows7.0/Syncfusion.SfProgressBar.WPF.xml",
+        "syncfusion.sfprogressbar.wpf.29.1.33.nupkg.sha512",
+        "syncfusion.sfprogressbar.wpf.nuspec",
+        "syncfusion_logo.png",
+        "tools/VisualStudioToolsManifest.xml"
+      ]
+    },
+    "Syncfusion.Shared.WPF/29.1.33": {
+      "sha512": "TaXm1Kyq4T9S+ZK5BY6ecBSUIGfqJ7SXXCAPWcUGWPU4zldusJqUZEPkQrLI2j+HumUFFLZpvyNxZTrqUrcpEA==",
+      "type": "package",
+      "path": "syncfusion.shared.wpf/29.1.33",
+      "hasTools": true,
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE.txt",
+        "README.md",
+        "lib/net462/Design/Syncfusion.Design.Wpf.dll",
+        "lib/net462/Design/Syncfusion.Shared.WPF.DesignTools.dll",
+        "lib/net462/Design/Syncfusion.Shared.Wpf.Expression.Design.dll",
+        "lib/net462/Design/Syncfusion.Shared.Wpf.VisualStudio.Design.dll",
+        "lib/net462/Design/Syncfusion.Shared.Wpf.dll.Design.dll",
+        "lib/net462/Syncfusion.Shared.WPF.dll",
+        "lib/net462/Syncfusion.Shared.WPF.xml",
+        "lib/net8.0-windows7.0/Design/Syncfusion.Shared.WPF.DesignTools.dll",
+        "lib/net8.0-windows7.0/Syncfusion.Shared.WPF.dll",
+        "lib/net8.0-windows7.0/Syncfusion.Shared.WPF.xml",
+        "lib/net9.0-windows7.0/Design/Syncfusion.Shared.WPF.DesignTools.dll",
+        "lib/net9.0-windows7.0/Syncfusion.Shared.WPF.dll",
+        "lib/net9.0-windows7.0/Syncfusion.Shared.WPF.xml",
+        "syncfusion.shared.wpf.29.1.33.nupkg.sha512",
+        "syncfusion.shared.wpf.nuspec",
+        "syncfusion_logo.png",
+        "tools/VisualStudioToolsManifest.xml"
+      ]
+    },
     "System.CodeDom/6.0.0": {
       "sha512": "CPc6tWO1LAer3IzfZufDBRL+UZQcj5uS207NHALQzP84Vp/z6wF0Aa0YZImOQY8iStY0A2zI/e3ihKNPfUm8XA==",
       "type": "package",
@@ -6633,6 +6755,7 @@
       "Microsoft.Extensions.Features >= 9.0.0",
       "MimeMapping >= 3.1.0",
       "Newtonsoft.Json >= 13.0.3",
+      "Syncfusion.SfProgressBar.WPF >= 29.1.33",
       "System.Net.Http >= 4.3.4"
     ]
   },
@@ -6719,6 +6842,10 @@
           "Newtonsoft.Json": {
             "target": "Package",
             "version": "[13.0.3, )"
+          },
+          "Syncfusion.SfProgressBar.WPF": {
+            "target": "Package",
+            "version": "[29.1.33, )"
           },
           "System.Net.Http": {
             "target": "Package",

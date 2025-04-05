@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.SignalR;
 using Microsoft.Win32;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using Study_Step.Commands;
 using Study_Step.Interfaces;
 using Study_Step.Models;
@@ -10,19 +11,19 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
+using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Threading;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
-using System.Windows.Shell;
-using static System.Net.WebRequestMethods;
 
 namespace Study_Step.ViewModels
 {
-    public class ViewModel: INotifyPropertyChanged
+    public class ViewModel : INotifyPropertyChanged
     {
         public static readonly HttpClient client = new HttpClient();
         public static string apiUrl = "http://localhost:5000/api/chat";
@@ -31,7 +32,7 @@ namespace Study_Step.ViewModels
         private readonly IFileService _fileService;
         private readonly DtoConverterService _dtoConverter;
 
-        public ViewModel(SignalRService signalRService, 
+        public ViewModel(SignalRService signalRService,
                          IFileService fileService,
                          DtoConverterService dtoConverter)
         {
@@ -88,7 +89,7 @@ namespace Study_Step.ViewModels
                 OnPropertyChanged(nameof(LastSeen));
             }
         }
-        public bool ChatIsActive 
+        public bool ChatIsActive
         {
             get => _ChatIsActive;
             set
@@ -126,7 +127,7 @@ namespace Study_Step.ViewModels
                 var jsonResponse = JsonConvert.DeserializeObject<UserChatsResponse>(responseBody); // Deserialize object to collection
 
                 Chats = new ObservableCollection<Chat>();
-                
+
                 foreach (var chat in jsonResponse.Chats)
                 {
                     Chat thisChat = _dtoConverter.GetChat(chat); // convert ChatDTO to Chat
@@ -177,8 +178,8 @@ namespace Study_Step.ViewModels
 
         #region Properties
 
-        public ObservableCollection<Message> Conversations 
-        {   get => mConversations;
+        public ObservableCollection<Message> Conversations
+        { get => mConversations;
             set
             {
                 mConversations = value;
@@ -194,19 +195,19 @@ namespace Study_Step.ViewModels
                 OnPropertyChanged(nameof(FilesListObject));
             }
         }
-        public string MessageText
+        public string? MessageText
         {
             get => _messageText;
             set
             {
-                _messageText = value;
+                _messageText = string.IsNullOrEmpty(value) ? null : value;
                 OnPropertyChanged(nameof(MessageText));
             }
         }
 
         private ObservableCollection<Message> mConversations;
         private ObservableCollection<FileModel> _filesList;
-        private string _messageText { get; set; }
+        private string? _messageText { get; set; }
 
         #endregion
 
@@ -227,7 +228,7 @@ namespace Study_Step.ViewModels
                 // Отображаем полученные чаты
                 foreach (var mes in messages)
                 {
-                    mes.IsOutside = mes.UserId != (int) Application.Current.Properties["Id"];
+                    mes.IsOutside = mes.UserId != (int)Application.Current.Properties["Id"];
                     Conversations.Add(mes);
                     ScrollToEnd?.Invoke();
                 }
@@ -250,99 +251,115 @@ namespace Study_Step.ViewModels
         #endregion
 
         #region Commands
-        public ICommand SendMesCommand => _sendMesCommand ??= new RelayCommand(async parameter =>
+        public ICommand SendMesCommand => _sendMesCommand ??= new RelayCommand(async _ =>
         {
             if (!ChatIsActive) { return; }
-
-            var content = new MultipartFormDataContent();
-
-            // add file to response
-            foreach (var file in FilesListObject)
-            {
-                var fileStream = System.IO.File.OpenRead(file.Path);
-                var fileName = Path.GetFileName(file.Path);
-                content.Add(new StreamContent(fileStream), "files", fileName);
-
-                // Serialize FileModel to JSON-object
-                string json = JsonConvert.SerializeObject(file);
-                var fileModelStream = new MemoryStream(Encoding.UTF8.GetBytes(json));
-                content.Add(new StreamContent(fileModelStream), "fileModels"); // Используем уникальное имя поля
-            }
-
-            List<FileModel> uploadedFiles = new List<FileModel>();
-
-            try 
-            {
-                var response = await client.PostAsync($"http://localhost:5000/api/fileupload/upload", content);
-
-                if (response.IsSuccessStatusCode) {
-                    var responseJson = await response.Content.ReadAsStringAsync();
-                    uploadedFiles = JsonConvert.DeserializeObject<List<FileModel>>(responseJson);
-                }
-            } 
-            catch (HttpRequestException ex) 
-            {
-                Debug.WriteLine(ex.Message);
-            }
-            finally
-            {
-                foreach (var streamContent in content.OfType<StreamContent>()) {
-                    streamContent.Dispose(); // close streams
-                }
-            }
 
             Message messageChat = new Message()
             {
                 UserId = (int)Application.Current.Properties["Id"],
                 ChatId = (int)Application.Current.Properties["ChatId"],
-                Text = MessageText,
+                Text = string.IsNullOrWhiteSpace(MessageText) ? null : MessageText,
                 SentAt = DateTime.UtcNow,
-                Files = uploadedFiles
+                Files = new ObservableCollection<FileModel>(FilesListObject.ToList()),
+                IsOutside = false
             };
+            Conversations.Add(messageChat);
+
+            ScrollToEnd?.Invoke();
+            MessageText = string.Empty;
+
+            // add file to response
+            foreach (FileModel file in messageChat.Files.ToList()) {
+                try {
+                    var buffer = new byte[81920];
+                    file.CancellationTokenSource = new CancellationTokenSource();
+
+                    await using var fileStream = File.OpenRead(file.Path);
+                    var content = new ProgressableStreamContent(fileStream, 81920, file.CancellationTokenSource.Token)
+                    {
+                        Progress = (sentBytes, totalBytes) =>
+                        {
+                            file.Progress = (int)((double)sentBytes / totalBytes * 100);
+                        }
+                    };
+
+                    var request = new HttpRequestMessage(HttpMethod.Post,
+                                                         $"http://localhost:5000/api/fileupload/upload")
+                    {
+                        Content = content
+                    };
+                    request.Headers.Add("X-FileName", WebUtility.UrlEncode(file.Name));
+                    request.Headers.Add("X-FileSize", file.Size.ToString());
+
+                    var response = await client.SendAsync(request,
+                                                          HttpCompletionOption.ResponseHeadersRead,
+                                                          file.CancellationTokenSource.Token);
+                    response.EnsureSuccessStatusCode();
+
+                    var responseJson = await response.Content.ReadAsStringAsync();
+                    var result = JsonConvert.DeserializeAnonymousType(responseJson, new { Path = "", Size = 0L });
+                    file.Path = result.Path;
+                    file.Status = SendingStatus.Success;
+                }
+                catch (OperationCanceledException) {
+                    file.Status = SendingStatus.Cancelled;
+                    Debug.WriteLine($"Отправка файла {file.Name} отменена");
+                }
+                catch (Exception ex) {
+                    messageChat.Files.Remove(file);
+                    Debug.WriteLine(ex);
+                }
+                finally {
+                    file.CancellationTokenSource?.Dispose();
+                    file.CancellationTokenSource = null;
+
+                    FilesListObject.Remove(file);
+                    if (string.IsNullOrWhiteSpace(messageChat.Text) & !messageChat.Files.Any()) {
+                        Conversations.Remove(messageChat);
+                    }   
+                }
+            }
 
             try
             {
                 MessageDTO messageObject = _dtoConverter.GetMessageDTO(messageChat);
                 await _signalRService.SendMessageAsync(Application.Current.Properties["RecieverId"].ToString(),
                                                    messageObject);
-                messageChat.IsOutside = false;
-                Conversations.Add(messageChat);
-
             }
             catch (HubException hex)
             {
                 Debug.WriteLine($"{hex.Message}");
             }
-            finally 
-            {
-                ScrollToEnd?.Invoke();
-
-                FilesListObject.Clear();
-                MessageText = string.Empty;
-            }
         });
         public ICommand ChooseFile => _chooseFile ??= new RelayCommand(parameter =>
         {
-            OpenFileDialog openFileDialog = new OpenFileDialog(); // Create Fialog Window to choose file
-            openFileDialog.Filter = "All files (*.*)|*.*"; // Set filter .txt
+            var openFileDialog = new OpenFileDialog
+            {
+                Multiselect = true, // Включаем множественный выбор
+                Filter = "All files (*.*)|*.*" // Фильтр файлов
+            };
 
-            // Показываем диалоговое окно и проверяем, был ли выбран файл
             if (openFileDialog.ShowDialog() == true)
             {
-                string filePath = openFileDialog.FileName; // Get file's path
-                var file = new FileInfo(filePath);
-
-                FileModel newFile = new FileModel()
+                foreach (var filePath in openFileDialog.FileNames) // Используем FileNames вместо FileName
                 {
-                    Name = file.Name,
-                    Extension = file.Extension,
-                    Size = file.Length,
-                    MimeType = MimeMapping.MimeUtility.GetMimeMapping(filePath),
-                    Path = filePath,
-                    CreatedAt = file.CreationTime.ToUniversalTime()
-                };
+                    var file = new FileInfo(filePath);
 
-                FilesListObject.Add(newFile);
+                    FileModel newFile = new FileModel()
+                    {
+                        Name = file.Name,
+                        Extension = file.Extension,
+                        Size = file.Length,
+                        MimeType = MimeMapping.MimeUtility.GetMimeMapping(filePath),
+                        Path = filePath,
+                        CreatedAt = file.CreationTime.ToUniversalTime(),
+                        Status = SendingStatus.Sending
+                    };
+
+                    FilesListObject.Add(newFile);
+                }
+                FilesListObject = new ObservableCollection<FileModel>(FilesListObject.Take(5));
             }
         });
 
@@ -358,6 +375,8 @@ namespace Study_Step.ViewModels
             DownloadItem item;
             if (parameter is FileModel file) // Situation starting download
             {
+                if (file.Status == SendingStatus.Sending) return;
+
                 item = _dtoConverter.GetDownloadItem(file);
                 DownloadAreaIsActive = !DownloadAreaIsActive; // Open popup
                 ActiveDownloads.Add(item);
@@ -380,7 +399,7 @@ namespace Study_Step.ViewModels
                 {
                     string? savePath = ((App)Application.Current).Configuration["AppSettings:SavePath"];
                     string tempPath = item.GetTempFile();
-                    if (System.IO.File.Exists(item.tempPath))
+                    if (File.Exists(item.tempPath))
                     {
                         item.BytesDownloaded = new FileInfo(tempPath).Length;
                     }
@@ -419,11 +438,10 @@ namespace Study_Step.ViewModels
 
                         while (true)
                         {
-                            // Проверка на отмену перед чтением
                             item.CancellationTokenSource.Token.ThrowIfCancellationRequested();
 
                             bytesRead = await stream.ReadAsync(buffer, 0, buffer.Length, item.CancellationTokenSource.Token);
-                            if (bytesRead == 0) break; // Завершение чтения, если ничего не прочитано
+                            if (bytesRead == 0) break; 
 
                             await fileStream.WriteAsync(buffer, 0, bytesRead);
                             item.BytesDownloaded += bytesRead;
@@ -434,7 +452,7 @@ namespace Study_Step.ViewModels
                     }
 
                     Debug.WriteLine(tempPath, item.SavePath);
-                    System.IO.File.Move(tempPath, item.SavePath, overwrite: true);
+                    File.Move(tempPath, item.SavePath, overwrite: true);
                         
                     item.Status = DownloadStatus.Completed;
                     item.DownloadTime = DateTime.Now;
@@ -443,12 +461,13 @@ namespace Study_Step.ViewModels
             }
             catch (OperationCanceledException)
             {
-                try { System.IO.File.Delete(item.GetTempFile()); } catch { }
+                item.Status = DownloadStatus.Cancelled;
+                try { File.Delete(item.GetTempFile()); } catch { }
             }
             catch (Exception)
             {
                 item.Status = DownloadStatus.Failed;
-                try { System.IO.File.Delete(item.GetTempFile()); } catch { }
+                try { File.Delete(item.GetTempFile()); } catch { }
             }
             finally
             {
@@ -461,6 +480,15 @@ namespace Study_Step.ViewModels
             }
         });
 
+        public ICommand CancelSendFileCommand => _cancelSendFileCommand ??= new RelayCommand(parameter => {
+            if (parameter is FileModel file) {
+                Debug.WriteLine("test");
+                file.CancellationTokenSource?.Cancel();
+                Conversations.LastOrDefault()?.Files?.Remove(file);
+            }
+        });
+
+        private ICommand _cancelSendFileCommand;
         private ICommand _downloadFile;
         private ICommand _deleteFile;
         private ICommand _chooseFile;
@@ -641,7 +669,7 @@ namespace Study_Step.ViewModels
         });
         public ICommand ShowInFolderCommand => _showInFolderCommand ??= new RelayCommand(parameter => {
             if (parameter is DownloadItem item) {
-                if (System.IO.File.Exists(item.SavePath)) {
+                if (File.Exists(item.SavePath)) {
                     Process.Start("explorer.exe", $"/select, \"{item.SavePath}\"");
                 }
             }
@@ -663,8 +691,7 @@ namespace Study_Step.ViewModels
         {
             string? savePath = ((App)Application.Current).Configuration["AppSettings:SavePath"];
             
-            if (System.IO.Directory.Exists(savePath)) {
-                Debug.WriteLine(savePath);
+            if (Directory.Exists(savePath)) {
                 Process.Start("explorer.exe", savePath);
             }
         });
@@ -704,4 +731,6 @@ namespace Study_Step.ViewModels
         protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null) =>
             PropertyChanged?.Invoke( this, new PropertyChangedEventArgs( propertyName ) );
     }
+
+    
 }

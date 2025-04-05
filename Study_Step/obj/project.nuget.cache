@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "pNUejITkvEk=",
+  "dgSpecHash": "Zk2RbJDzTnA=",
   "success": true,
   "projectFilePath": "D:\\my_works\\dotnetProjects\\Study_Step\\Study_Step\\Study_Step.csproj",
   "expectedPackageFiles": [
@@ -68,6 +68,9 @@
     "C:\\Users\\ACER\\.nuget\\packages\\runtime.ubuntu.14.04-x64.runtime.native.system.security.cryptography.openssl\\4.3.2\\runtime.ubuntu.14.04-x64.runtime.native.system.security.cryptography.openssl.4.3.2.nupkg.sha512",
     "C:\\Users\\ACER\\.nuget\\packages\\runtime.ubuntu.16.04-x64.runtime.native.system.security.cryptography.openssl\\4.3.2\\runtime.ubuntu.16.04-x64.runtime.native.system.security.cryptography.openssl.4.3.2.nupkg.sha512",
     "C:\\Users\\ACER\\.nuget\\packages\\runtime.ubuntu.16.10-x64.runtime.native.system.security.cryptography.openssl\\4.3.2\\runtime.ubuntu.16.10-x64.runtime.native.system.security.cryptography.openssl.4.3.2.nupkg.sha512",
+    "C:\\Users\\ACER\\.nuget\\packages\\syncfusion.licensing\\29.1.33\\syncfusion.licensing.29.1.33.nupkg.sha512",
+    "C:\\Users\\ACER\\.nuget\\packages\\syncfusion.sfprogressbar.wpf\\29.1.33\\syncfusion.sfprogressbar.wpf.29.1.33.nupkg.sha512",
+    "C:\\Users\\ACER\\.nuget\\packages\\syncfusion.shared.wpf\\29.1.33\\syncfusion.shared.wpf.29.1.33.nupkg.sha512",
     "C:\\Users\\ACER\\.nuget\\packages\\system.codedom\\6.0.0\\system.codedom.6.0.0.nupkg.sha512",
     "C:\\Users\\ACER\\.nuget\\packages\\system.collections\\4.3.0\\system.collections.4.3.0.nupkg.sha512",
     "C:\\Users\\ACER\\.nuget\\packages\\system.collections.concurrent\\4.3.0\\system.collections.concurrent.4.3.0.nupkg.sha512",
