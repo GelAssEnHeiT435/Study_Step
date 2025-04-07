@@ -10,6 +10,7 @@ namespace Study_Step_Server.Models
         public string Email { get; set; } // Почта пользователя
         public string Password { get; set; } // Хэшированное значение пароля в БД
 
+        public List<RefreshToken> RefreshTokens { get; set; }
     }
 
     internal class AuthUserConfiguration : IEntityTypeConfiguration<AuthUser>

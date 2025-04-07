@@ -143,7 +143,6 @@ D:\my_works\dotnetProjects\Study_Step\Study_Step_Server\obj\Debug\net8.0\staticw
 D:\my_works\dotnetProjects\Study_Step\Study_Step_Server\obj\Debug\net8.0\staticwebassets\msbuild.buildMultiTargeting.Study_Step_Server.props
 D:\my_works\dotnetProjects\Study_Step\Study_Step_Server\obj\Debug\net8.0\staticwebassets\msbuild.buildTransitive.Study_Step_Server.props
 D:\my_works\dotnetProjects\Study_Step\Study_Step_Server\obj\Debug\net8.0\staticwebassets.pack.json
-D:\my_works\dotnetProjects\Study_Step\Study_Step_Server\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
 D:\my_works\dotnetProjects\Study_Step\Study_Step_Server\obj\Debug\net8.0\Study_St.EEDDF327.Up2Date
 D:\my_works\dotnetProjects\Study_Step\Study_Step_Server\obj\Debug\net8.0\Study_Step_Server.dll
 D:\my_works\dotnetProjects\Study_Step\Study_Step_Server\obj\Debug\net8.0\refint\Study_Step_Server.dll
@@ -151,3 +150,4 @@ D:\my_works\dotnetProjects\Study_Step\Study_Step_Server\obj\Debug\net8.0\Study_S
 D:\my_works\dotnetProjects\Study_Step\Study_Step_Server\obj\Debug\net8.0\Study_Step_Server.genruntimeconfig.cache
 D:\my_works\dotnetProjects\Study_Step\Study_Step_Server\obj\Debug\net8.0\ref\Study_Step_Server.dll
 D:\my_works\dotnetProjects\Study_Step\Study_Step_Server\bin\Debug\net8.0\MimeMapping.dll
+D:\my_works\dotnetProjects\Study_Step\Study_Step_Server\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt

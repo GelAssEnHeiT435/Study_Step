@@ -33,23 +33,26 @@ namespace Study_Step
                 .AddJsonFile("Properties\\appsettings.json", optional: false, reloadOnChange: true);
 
             Configuration = builder.Build();
-            PresentationTraceSources.DataBindingSource.Switch.Level = SourceLevels.Warning;
+            
             Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("Ngo9BigBOggjHTQxAR8/V1NNaF5cXmBCekx3RHxbf1x1ZFZMYFxbQXFPIiBoS35Rc0VnWXtfdXRVQ2dYUUR+VEBU");
+            PresentationTraceSources.DataBindingSource.Switch.Level = SourceLevels.Warning;
             RenderOptions.ProcessRenderMode = RenderMode.SoftwareOnly;
 
             var serviceCollection = new ServiceCollection();
             ConfigureServices(serviceCollection);
             ServiceProvider = serviceCollection.BuildServiceProvider();
 
-            var loginWindow = ServiceProvider.GetRequiredService<AuthWindow>();
-            loginWindow.Show();
+            InitApplicationAsync().ConfigureAwait(false);
         }
 
         private void ConfigureServices(IServiceCollection services)
         {
             services.AddSingleton<SynchronizationContext>(SynchronizationContext.Current);
             // Регистрация сервисов и ViewModel
-            services.AddSingleton<SignalRService>(); 
+            
+            services.AddSingleton<ITokenStorage, SecureTokenStorage>();
+            services.AddSingleton<AuthService>();
+            services.AddSingleton<SignalRService>();
 
             services.AddSingleton<AuthViewModel>(); 
             services.AddSingleton<ViewModel>();
@@ -64,6 +67,26 @@ namespace Study_Step
             services.AddAutoMapper(typeof(ClientMapperProfile).Assembly);
             services.AddScoped<IFileService, FileService>();
             services.AddScoped<DtoConverterService>();
+        }
+
+        private async Task InitApplicationAsync()
+        {
+            var authServer = ServiceProvider.GetRequiredService<AuthService>();
+            bool isLoggedIn = await authServer.TryAutoLoginAsync();
+
+            // On UI-Stream
+            if (isLoggedIn)
+            {
+                var mainWindow = ServiceProvider.GetRequiredService<MainWindow>();
+                mainWindow.Show();
+            }
+            else
+            {
+                Debug.WriteLine("test1");
+                var loginWindow = ServiceProvider.GetRequiredService<AuthWindow>();
+                loginWindow.Show();
+                Debug.WriteLine("test2");
+            }
         }
     }
 

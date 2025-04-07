@@ -7,6 +7,8 @@ namespace Study_Step_Server.Data
     {
         public DbSet<AuthUser> AuthorizationUsers =>
             Set<AuthUser>();
+        public DbSet<RefreshToken> RefreshTokens =>
+            Set<RefreshToken>();
         public DbSet<User> Users =>
             Set<User>();
         public DbSet<Chat> Chats =>
@@ -54,6 +56,11 @@ namespace Study_Step_Server.Data
             .HasMany(p => p.Files) // Один родитель может иметь много детей
             .WithOne(c => c.Message)   // Каждый ребенок принадлежит одному родителю
             .HasForeignKey(c => c.MessageId); // Указываем внешний ключ в модели Child
+
+            modelBuilder.Entity<RefreshToken>()
+                .HasOne(rt => rt.User)
+                .WithMany(u => u.RefreshTokens)
+                .HasForeignKey(rt => rt.UserId);
         }
     }
 }

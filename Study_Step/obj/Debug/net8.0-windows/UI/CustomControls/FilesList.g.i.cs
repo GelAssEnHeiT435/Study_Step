@@ -56,7 +56,7 @@ namespace Study_Step.CustomControls {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/Study_Step;V1.0.0.0;component/ui/customcontrols/fileslist.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/Study_Step;component/ui/customcontrols/fileslist.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\..\..\UI\CustomControls\FilesList.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);

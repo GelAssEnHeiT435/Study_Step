@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.SignalR;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Win32;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -31,14 +32,17 @@ namespace Study_Step.ViewModels
         private readonly SignalRService _signalRService;
         private readonly IFileService _fileService;
         private readonly DtoConverterService _dtoConverter;
+        private readonly AuthService _authService;
 
         public ViewModel(SignalRService signalRService,
                          IFileService fileService,
-                         DtoConverterService dtoConverter)
+                         DtoConverterService dtoConverter,
+                         AuthService authService)
         {
             _signalRService = signalRService;
             _fileService = fileService;
             _dtoConverter = dtoConverter;
+            _authService = authService;
 
             // Add EventsListeners
             _signalRService.OnMessageReceived += MessageReceived;
@@ -726,6 +730,17 @@ namespace Study_Step.ViewModels
         #endregion
 
         #endregion
+
+        public ICommand LogoutCommand => _logoutCommand ??= new RelayCommand( async _ =>
+        {
+            await _authService.LogoutAsync();
+
+            AuthWindow auth = App.ServiceProvider.GetRequiredService<AuthWindow>();
+            Application.Current.MainWindow = auth;
+            Application.Current.Windows.OfType<MainWindow>().FirstOrDefault()?.Close();
+            auth.Show();
+        });
+        private ICommand _logoutCommand;
 
         public event PropertyChangedEventHandler? PropertyChanged;
         protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null) =>

@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Study_Step.Commands;
+using Study_Step.Interfaces;
 using Study_Step.Models;
 using Study_Step.Pages;
 using Study_Step.Services;
@@ -73,10 +74,17 @@ namespace Study_Step.ViewModels
         #endregion
 
         private readonly SignalRService _signalRService;
+        private readonly ITokenStorage _tokenStorage;
+        private readonly AuthService _authService;
         private readonly HttpClient _httpClient = new HttpClient();
 
-        public AuthViewModel(SignalRService signalRService) =>
+        public AuthViewModel(SignalRService signalRService, ITokenStorage tokenStorage,
+                             AuthService authService)
+        {
             _signalRService = signalRService;
+            _tokenStorage = tokenStorage;
+            _authService = authService;
+        }
 
         #region Commands
 
@@ -130,12 +138,15 @@ namespace Study_Step.ViewModels
                     Application.Current.Properties["Id"] = jsonResponse["id"].ToObject<int>();
                     Application.Current.Properties["Username"] = jsonResponse["name"].ToObject<string>();
                     string? AccessToken = jsonResponse["access_token"].ToObject<string>();
+                    string? RefreshToken = jsonResponse["refresh_token"].ToObject<string>();
 
+                    _authService.AccessToken = AccessToken;
+                    _tokenStorage.SaveRefreshToken(RefreshToken);
                     await _signalRService.ConnectAsync(AccessToken);
 
                     MainWindow main = App.ServiceProvider.GetRequiredService<MainWindow>();
                     Application.Current.MainWindow = main;
-                    Application.Current.Windows.OfType<AuthWindow>().FirstOrDefault(w => w.IsActive)?.Close();
+                    Application.Current.Windows.OfType<AuthWindow>().FirstOrDefault()?.Close();
                     main.Show();
                 }
                 else {

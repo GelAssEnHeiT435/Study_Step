@@ -117,7 +117,8 @@
                         <!--#region profile button -->
                         <Button x:Name="ProfileButton"
                                 Width="40" Height="40"
-                                Margin="5, 0">
+                                Margin="5, 0"
+                                Command="{Binding LogoutCommand}">
                             <Button.Template>
                                 <ControlTemplate TargetType="{x:Type Button}">
                                     <Border CornerRadius="15">
