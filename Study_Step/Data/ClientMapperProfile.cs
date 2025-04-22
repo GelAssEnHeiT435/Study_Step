@@ -31,10 +31,10 @@ namespace Study_Step.Data
 
             #region Converter Users
 
-            CreateMap<User, UserDTO>();
-
-            _ = CreateMap<UserDTO, User>()
-                .ForMember(dest => dest.Photo, opt => opt.MapFrom<ImageConvertResolver<UserDTO, User>>());
+            CreateMap<User, UserDTO>()
+                .ForMember(dest => dest.ContactPhoto, opt => opt.MapFrom<ByteImageConvertResolver<User, UserDTO>>());
+            CreateMap<UserDTO, User>()
+                .ForMember(dest => dest.bitmapPhoto, opt => opt.MapFrom<ImageConvertResolver<UserDTO, User>>());
 
             #endregion
 
@@ -47,7 +47,8 @@ namespace Study_Step.Data
 
             #region Converter Chat
 
-            CreateMap<Chat, ChatDTO>();
+            CreateMap<Chat, ChatDTO>()
+                .ForMember(dest => dest.ContactPhoto, opt => opt.MapFrom<ByteImageConvertResolver<Chat, ChatDTO>>());
             CreateMap<ChatDTO, Chat>()
                 .ForMember(dest => dest.bitmapPhoto, opt => opt.MapFrom<ImageConvertResolver<ChatDTO, Chat>>());
 

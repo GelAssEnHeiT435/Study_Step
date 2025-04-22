@@ -1,12 +1,14 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations.Schema;
-using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
 
 namespace Study_Step_Server.Models
 {
     public class Chat
     {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ChatId { get; set; }  // Уникальный идентификатор чата
         public string? Name { get; set; }  // Название чата (для группового чата)
         public string? LastMessage { get; set; }

@@ -65,8 +65,11 @@ namespace Study_Step_Server
                 });
 
             // Add SignalR
-            builder.Services.AddSignalR();   
-            
+            builder.Services.AddSignalR(options =>
+            {
+                options.MaximumReceiveMessageSize = 1024 * 1024 * 10; 
+            });
+
             builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             builder.Services.AddScoped<IUserChatRepository, UserChatRepository>();
             builder.Services.AddScoped<IUoW, UoW>();
@@ -100,8 +103,10 @@ namespace Study_Step_Server
                 {
                     ApplicationContext dbContext = scope.ServiceProvider.GetRequiredService<ApplicationContext>();
                     AuthService authService = scope.ServiceProvider.GetRequiredService<AuthService>();
-                    
+                    DtoConverterService dtoConverter = scope.ServiceProvider.GetRequiredService<DtoConverterService>();
+
                     AuthUser? user = await dbContext.AuthorizationUsers.FirstOrDefaultAsync(users => users.Email == loginModel.Email);
+                    User? returnUser = await dbContext.Users.FirstOrDefaultAsync(users => users.Email == loginModel.Email);
 
                     if (user == null || !authService.VerifyPassword(user?.Password, loginModel.Password)) return Results.Unauthorized();
 
@@ -134,8 +139,7 @@ namespace Study_Step_Server
 
                     var response = new
                     {
-                        id = user.Id,
-                        name = user.Name,
+                        user_object = dtoConverter.GetUserDTO(returnUser),
                         access_token = encodedAccessJwt,
                         refresh_token = refreshToken.Token,
                         expires_in = (int)TimeSpan.FromMinutes(15).TotalSeconds
@@ -156,6 +160,7 @@ namespace Study_Step_Server
                 {
                     ApplicationContext dbContext = scope.ServiceProvider.GetRequiredService<ApplicationContext>();
                     AuthService authService = scope.ServiceProvider.GetRequiredService<AuthService>();
+                    DtoConverterService dtoConverter = scope.ServiceProvider.GetRequiredService<DtoConverterService>();
 
                     var oldToken = await dbContext.RefreshTokens.Include(rt => rt.User)
                                          .FirstOrDefaultAsync(rt => rt.Token == oldRefreshToken);
@@ -197,10 +202,11 @@ namespace Study_Step_Server
                     dbContext.RefreshTokens.Add(newRefreshToken);
                     await dbContext.SaveChangesAsync();
 
+                    User? returnUser = await dbContext.Users.FirstOrDefaultAsync(users => users.Email == oldToken.User.Email);
+
                     return Results.Ok(new
                     {
-                        id = oldToken.User.Id,
-                        name = oldToken.User.Name,
+                        user_object = dtoConverter.GetUserDTO(returnUser),
                         access_token = encodedAccessJwt,
                         refresh_token = newRefreshToken.Token,
                         expires_in = 900

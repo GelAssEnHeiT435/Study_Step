@@ -1,7 +1,12 @@
-﻿namespace Study_Step_Server.Models
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace Study_Step_Server.Models
 {
     public class FileModel
     {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int FileModelId { get; set; }
         public string Name { get; set; }
         public string Extension { get; set; } // For example .jpg

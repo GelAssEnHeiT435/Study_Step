@@ -20,7 +20,6 @@ namespace Study_Step.Data.Resolvers
             byte[]? imageByte = source.GetType().GetProperty("ContactPhoto")?.GetValue(source) as byte[];
             
             if (imageByte != null && imageByte.Length == 0) { return null; }
-
             return _fileService.ConvertByteArrayToBitmapImage(imageByte);
         }
     }

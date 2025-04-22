@@ -38,6 +38,19 @@ namespace Study_Step.Services
             }
             return bitmapImage;
         }
+        public byte[]? ConvertBitmapImageToByteArray(BitmapImage? bitmapImage)
+        {
+            if (bitmapImage == null) return null;
+
+            BitmapEncoder encoder = new PngBitmapEncoder(); // или другой формат
+            encoder.Frames.Add(BitmapFrame.Create(bitmapImage));
+            using (var ms = new MemoryStream())
+            {
+                encoder.Save(ms);
+                return ms.ToArray();
+            }
+        }
+
         public BitmapImage? LoadImage(string? imagePath)
         {
             if (imagePath is null) { return null; }

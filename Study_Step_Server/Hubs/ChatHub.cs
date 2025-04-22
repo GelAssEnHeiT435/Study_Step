@@ -21,14 +21,19 @@ namespace Study_Step_Server.Hubs
         }
 
         [Authorize]
-        public async Task SendMessage(string receiver, MessageDTO message)
+        public async Task SendMessage(string receiver, ChatDTO chat, MessageDTO message)
         {
+            Console.WriteLine(receiver);
             Message messageObject = _dtoConverter.GetMessage(message);
+            Chat chatObject = _dtoConverter.GetChat(chat);
+            chatObject.Name = null;
+
             await _unitOfWork.Messages.AddAsync(messageObject);
+            await _unitOfWork.Chats.UpdateAsync(chatObject);
 
             if (Context.UserIdentifier is string userName) // получаем юзера из контекста и отправляем сообщение от его лица получателю
             {
-                await Clients.Users(receiver).SendAsync("ReceiveMessage", userName, message);
+                await Clients.Users(receiver).SendAsync("ReceiveMessage", userName, chat, message);
             }
         }
 

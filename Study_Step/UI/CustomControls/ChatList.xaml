@@ -6,6 +6,7 @@
              xmlns:local="clr-namespace:Study_Step.CustomControls" 
              xmlns:viewmodels="clr-namespace:Study_Step.ViewModels"
              xmlns:commands="clr-namespace:Study_Step.Commands"
+             xmlns:icons="clr-namespace:Study_Step.Data.UIConverters"
              mc:Ignorable="d" 
              MinWidth="406">
     <UserControl.Resources>
@@ -38,135 +39,107 @@
                                             CornerRadius="20"
                                             MinWidth="360">
                                         <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="auto"/>
+                                                <!-- Photo -->
+                                                <ColumnDefinition />
+                                                <!-- Contact name and message -->
+                                                <ColumnDefinition Width="auto"/>
+                                                <!-- Time -->
+                                            </Grid.ColumnDefinitions>
                                             <Grid.RowDefinitions>
-                                                <RowDefinition Height="auto"/> <!-- Container for photo, message, message time -->
-                                                <RowDefinition Height="auto"/> <!-- other... -->
+                                                <RowDefinition Height="auto"/>
+                                                <RowDefinition Height="auto"/>
                                             </Grid.RowDefinitions>
-                                            
-                                            <!--#region Contact details-->
-                                            <Grid Grid.Row="0">
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="auto"/> <!-- Photo -->
-                                                    <ColumnDefinition /> <!-- Contact name and message -->
-                                                    <ColumnDefinition Width="auto"/> <!-- Time -->
-                                                </Grid.ColumnDefinitions>
 
-                                                <Ellipse Width="50" Height="50">
-                                                    <Ellipse.Fill>
-                                                        <ImageBrush Stretch="UniformToFill"
-                                                                    ImageSource="{Binding bitmapPhoto,
-                                                                                          FallbackValue=D:\my_works\dotnetProjects\Study_Step\Study_Step\Assets\Media\5.jpg,
-                                                                                          TargetNullValue=D:\my_works\dotnetProjects\Study_Step\Study_Step\Assets\Media\5.jpg,
-                                                                                          UpdateSourceTrigger=PropertyChanged}">
-                                                            
-                                                        </ImageBrush>
-                                                    </Ellipse.Fill>
-                                                </Ellipse>
-                                                
-                                                <!--#region Contact Name and Message -->
-                                                <Grid Grid.Column="1"
-                                                      Margin="20,0">
-                                                    <Grid.RowDefinitions>
-                                                        <RowDefinition /> <!-- Name -->
-                                                        <RowDefinition /> <!-- Message -->
-                                                    </Grid.RowDefinitions>
+                                            <Ellipse Width="50" Height="50"
+                                                     Grid.Row="0" Grid.Column="0" 
+                                                     Grid.RowSpan="2">
+                                                <Ellipse.Fill>
+                                                    <ImageBrush Stretch="UniformToFill"
+                                                                ImageSource="{Binding bitmapPhoto,
+                                                                                      FallbackValue='D:/my_works/dotnetProjects/Study_Step/Study_Step/Assets/Media/5.jpg',
+                                                                                      TargetNullValue='D:/my_works/dotnetProjects/Study_Step/Study_Step/Assets/Media/5.jpg',
+                                                                                      UpdateSourceTrigger=PropertyChanged}">
 
-                                                    <TextBlock Text="{Binding Name}"
-                                                               FontSize="15">
-                                                        <TextBlock.Style>
-                                                            <Style TargetType="{x:Type TextBlock}">
+                                                    </ImageBrush>
+                                                </Ellipse.Fill>
+                                            </Ellipse>
+
+                                            <TextBlock Text="{Binding Name}" Margin="15, 0"
+                                                       FontSize="15" Grid.Row="0" Grid.Column="1">
+                                                <TextBlock.Style>
+                                                    <Style TargetType="{x:Type TextBlock}">
+                                                        <Setter Property="FontWeight" Value="SemiBold" />
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding IsMouseOver, 
+                                                                                                RelativeSource={RelativeSource 
+                                                                                                AncestorType={x:Type ToggleButton}}}"
+                                                                         Value="True">
+                                                                <Setter Property="FontWeight" Value="Bold" />
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </TextBlock.Style>
+                                            </TextBlock>
+
+                                            <TextBlock Text="{Binding LastMessage}" Margin="15, 0"
+                                                           Grid.Row="1" Grid.Column="1"
+                                                       VerticalAlignment="Center">
+                                                <TextBlock.Style>
+                                                    <Style TargetType="{x:Type TextBlock}">
+                                                        <Setter Property="FontWeight" Value="Normal" />
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding IsMouseOver, 
+                                                                                               RelativeSource={RelativeSource 
+                                                                                               AncestorType={x:Type ToggleButton}}}"
+                                                                         Value="True">
                                                                 <Setter Property="FontWeight" Value="SemiBold" />
-                                                                <Style.Triggers>
-                                                                    <DataTrigger Binding="{Binding IsMouseOver, 
-                                                                                                   RelativeSource={RelativeSource 
-                                                                                                   AncestorType={x:Type ToggleButton}}}"
-                                                                                 Value="True">
-                                                                        <Setter Property="FontWeight" Value="Bold" />
-                                                                    </DataTrigger>
-                                                                </Style.Triggers>
-                                                            </Style>
-                                                        </TextBlock.Style>
-                                                    </TextBlock>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </TextBlock.Style>
+                                            </TextBlock>
+
+                                            <TextBlock Text="{Binding TimeAgo}" Margin="5, 0"
+                                                       HorizontalAlignment="Right"
+                                                       Grid.Row="0" Grid.Column="2"/>
+
+                                            <Grid Margin="5, 0" 
+                                                  HorizontalAlignment="Right"
+                                                  VerticalAlignment="Center"
+                                                  Grid.Row="1" Grid.Column="2">
+
+                                                <Ellipse Width="25" Height="25" Fill="#49a078"
+                                                         HorizontalAlignment="Center"
+                                                         VerticalAlignment="Center"/>
+                                                
+                                                <TextBlock Text="{Binding UnreadCount}" 
+                                                           HorizontalAlignment="Center"
+                                                           VerticalAlignment="Center"
+                                                           FontWeight="SemiBold"/>
+                                                <Grid.Style>
+                                                    <Style TargetType="{x:Type Grid}">
+                                                        <Setter Property="Visibility" Value="Visible"/>
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding UnreadCount}" Value="0">
+                                                                <Setter Property="Visibility" Value="Hidden"/>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </Grid.Style>
+                                            </Grid>
 
 
-                                                    <TextBlock Text="{Binding LastMessage}"
-                                                               Grid.Row="1">
-                                                        <TextBlock.Style>
-                                                            <Style TargetType="{x:Type TextBlock}">
-                                                                <Setter Property="FontWeight" Value="Normal" />
-                                                                <Style.Triggers>
-                                                                    <DataTrigger Binding="{Binding IsMouseOver, 
-                                                                                                   RelativeSource={RelativeSource 
-                                                                                                   AncestorType={x:Type ToggleButton}}}"
-                                                                                 Value="True">
-                                                                        <Setter Property="FontWeight" Value="SemiBold" />
-                                                                    </DataTrigger>
-                                                                </Style.Triggers>
-                                                            </Style>
-                                                        </TextBlock.Style>
-                                                    </TextBlock>
-                                                    <!--#endregion-->
-                                                    
-                                                <!--#region Last Message Time -->
-                                                    <Grid Grid.Column="2">
-                                                        <TextBlock Text="{Binding LastMessageTime}"
-                                                                   HorizontalAlignment="Right">
-                                                            
-                                                        </TextBlock>
-                                                    </Grid>
-                                                <!--#endregion-->
-                                                    <Separator VerticalAlignment="Bottom"
-                                                               BorderBrush="Gray"
-                                                               BorderThickness=".5"
-                                                               Grid.Column="1"
-                                                               Grid.ColumnSpan="2"/>
-                                                    
-                                                </Grid>
-                                            </Grid>
-                                            <!--#endregion-->
-                                            
-                                            <!--#region Options -->
-                                            
-                                            <!-- Options Buttons -->
-                                            <Grid Grid.Row="1"
-                                                  Height="auto">
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="50"/>
-                                                    <ColumnDefinition />
-                                                </Grid.ColumnDefinitions>
-                                                <UniformGrid Grid.Column="1"
-                                                             Columns="4">
-                                                    <Button Style="{StaticResource IconButtonStyle}"
-                                                            Content="{StaticResource pinned}">
-                                                        <Button.Tag>
-                                                            <Size Width="20" Height="20" />
-                                                        </Button.Tag>
-                                                    </Button>
-                                                    <Button Style="{StaticResource IconButtonStyle}"
-                                                            Content="{StaticResource archive}">
-                                                        <Button.Tag>
-                                                            <Size Width="20" Height="20" />
-                                                        </Button.Tag>
-                                                    </Button>
-                                                    <Button Style="{StaticResource IconButtonStyle}"
-                                                            Content="{StaticResource mute}">
-                                                        <Button.Tag>
-                                                            <Size Width="20" Height="20" />
-                                                        </Button.Tag>
-                                                    </Button>
-                                                    <Button Style="{StaticResource IconButtonStyle}"
-                                                            Content="{StaticResource trash}">
-                                                        <Button.Tag>
-                                                            <Size Width="20" Height="20" />
-                                                        </Button.Tag>
-                                                    </Button>
-                                                </UniformGrid>
-                                            </Grid>
-                                            <!--#endregion-->
-                                            
+                                            <Separator VerticalAlignment="Bottom"
+                                                       BorderBrush="Gray"
+                                                       BorderThickness=".5"
+                                                       Margin="15, 0, 5, 0"
+                                                       Grid.Row="0" Grid.Column="1"
+                                                       Grid.ColumnSpan="2"/>
+
                                         </Grid>
                                     </Border>
-                                    
                                 </ControlTemplate>
                             </Setter.Value>
                         </Setter>

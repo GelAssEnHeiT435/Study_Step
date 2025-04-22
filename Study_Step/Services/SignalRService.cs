@@ -1,11 +1,6 @@
 ﻿using Microsoft.AspNetCore.SignalR.Client;
 using Study_Step.Models.DTO;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Threading;
+using System.Net.Http;
 
 namespace Study_Step.Services
 {
@@ -15,7 +10,7 @@ namespace Study_Step.Services
         private HubConnection _connection;
         private readonly SynchronizationContext _synchronizationContext;
 
-        public event Action<string, MessageDTO> OnMessageReceived;
+        public event Action<string, ChatDTO, MessageDTO> OnMessageReceived;
 
         public SignalRService(SynchronizationContext synchronizationContext)
         {
@@ -27,12 +22,11 @@ namespace Study_Step.Services
                 })
                 .Build();
 
-            _connection.On<string, MessageDTO>("ReceiveMessage", (sender, message) =>
+            _connection.On<string, ChatDTO, MessageDTO>("ReceiveMessage", (sender, chat, message) =>
             {
-                // Используем SynchronizationContext для вызова в UI-потоке
                 _synchronizationContext.Post(_ =>
                 {
-                    OnMessageReceived?.Invoke(sender, message); // Вызов события в UI-потоке
+                    OnMessageReceived?.Invoke(sender, chat, message);
                 }, null);
             });
         }
@@ -51,8 +45,8 @@ namespace Study_Step.Services
             await _connection.StopAsync();
 
 
-        public async Task SendMessageAsync(string reciever, MessageDTO message) => // Метод отправки сообщения пользователю через хаб
-            await _connection.InvokeAsync("SendMessage", reciever, message);
+        public async Task SendMessageAsync(string reciever, ChatDTO chat, MessageDTO message) => // Метод отправки сообщения пользователю через хаб
+            await _connection.InvokeAsync("SendMessage", reciever, chat, message);
 
         #endregion
     }

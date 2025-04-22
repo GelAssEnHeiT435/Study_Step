@@ -3,44 +3,48 @@
   "WorkspaceRootPath": "D:\\my_works\\dotnetProjects\\Study_Step\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{02F56035-7DC3-4949-8B54-6F8022BD01B1}|Study_Step_Server\\Study_Step_Server.csproj|d:\\my_works\\dotnetprojects\\study_step\\study_step_server\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{02F56035-7DC3-4949-8B54-6F8022BD01B1}|Study_Step_Server\\Study_Step_Server.csproj|solutionrelative:study_step_server\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{5D95692E-1FB1-43F9-9496-9CFE7EA5FEC6}|Study_Step\\Study_Step.csproj|d:\\my_works\\dotnetprojects\\study_step\\study_step\\services\\securetokenstorage.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{5D95692E-1FB1-43F9-9496-9CFE7EA5FEC6}|Study_Step\\Study_Step.csproj|solutionrelative:study_step\\services\\securetokenstorage.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{5D95692E-1FB1-43F9-9496-9CFE7EA5FEC6}|Study_Step\\Study_Step.csproj|d:\\my_works\\dotnetprojects\\study_step\\study_step\\services\\authservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{5D95692E-1FB1-43F9-9496-9CFE7EA5FEC6}|Study_Step\\Study_Step.csproj|solutionrelative:study_step\\services\\authservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{5D95692E-1FB1-43F9-9496-9CFE7EA5FEC6}|Study_Step\\Study_Step.csproj|d:\\my_works\\dotnetprojects\\study_step\\study_step\\viewmodels\\authviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{5D95692E-1FB1-43F9-9496-9CFE7EA5FEC6}|Study_Step\\Study_Step.csproj|solutionrelative:study_step\\viewmodels\\authviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{5D95692E-1FB1-43F9-9496-9CFE7EA5FEC6}|Study_Step\\Study_Step.csproj|d:\\my_works\\dotnetprojects\\study_step\\study_step\\ui\\windows\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{5D95692E-1FB1-43F9-9496-9CFE7EA5FEC6}|Study_Step\\Study_Step.csproj|solutionrelative:study_step\\ui\\windows\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{5D95692E-1FB1-43F9-9496-9CFE7EA5FEC6}|Study_Step\\Study_Step.csproj|d:\\my_works\\dotnetprojects\\study_step\\study_step\\viewmodels\\viewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{5D95692E-1FB1-43F9-9496-9CFE7EA5FEC6}|Study_Step\\Study_Step.csproj|solutionrelative:study_step\\viewmodels\\viewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{5D95692E-1FB1-43F9-9496-9CFE7EA5FEC6}|Study_Step\\Study_Step.csproj|d:\\my_works\\dotnetprojects\\study_step\\study_step\\services\\signalrservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{5D95692E-1FB1-43F9-9496-9CFE7EA5FEC6}|Study_Step\\Study_Step.csproj|solutionrelative:study_step\\services\\signalrservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{5D95692E-1FB1-43F9-9496-9CFE7EA5FEC6}|Study_Step\\Study_Step.csproj|d:\\my_works\\dotnetprojects\\study_step\\study_step\\app.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{5D95692E-1FB1-43F9-9496-9CFE7EA5FEC6}|Study_Step\\Study_Step.csproj|solutionrelative:study_step\\app.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{02F56035-7DC3-4949-8B54-6F8022BD01B1}|Study_Step_Server\\Study_Step_Server.csproj|d:\\my_works\\dotnetprojects\\study_step\\study_step_server\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{02F56035-7DC3-4949-8B54-6F8022BD01B1}|Study_Step_Server\\Study_Step_Server.csproj|solutionrelative:study_step_server\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{02F56035-7DC3-4949-8B54-6F8022BD01B1}|Study_Step_Server\\Study_Step_Server.csproj|d:\\my_works\\dotnetprojects\\study_step\\study_step_server\\hubs\\chathub.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{02F56035-7DC3-4949-8B54-6F8022BD01B1}|Study_Step_Server\\Study_Step_Server.csproj|solutionrelative:study_step_server\\hubs\\chathub.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{02F56035-7DC3-4949-8B54-6F8022BD01B1}|Study_Step_Server\\Study_Step_Server.csproj|d:\\my_works\\dotnetprojects\\study_step\\study_step_server\\authoptions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{02F56035-7DC3-4949-8B54-6F8022BD01B1}|Study_Step_Server\\Study_Step_Server.csproj|solutionrelative:study_step_server\\authoptions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{5D95692E-1FB1-43F9-9496-9CFE7EA5FEC6}|Study_Step\\Study_Step.csproj|d:\\my_works\\dotnetprojects\\study_step\\study_step\\viewmodels\\viewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5D95692E-1FB1-43F9-9496-9CFE7EA5FEC6}|Study_Step\\Study_Step.csproj|solutionrelative:study_step\\viewmodels\\viewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5D95692E-1FB1-43F9-9496-9CFE7EA5FEC6}|Study_Step\\Study_Step.csproj|d:\\my_works\\dotnetprojects\\study_step\\study_step\\viewmodels\\profileviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5D95692E-1FB1-43F9-9496-9CFE7EA5FEC6}|Study_Step\\Study_Step.csproj|solutionrelative:study_step\\viewmodels\\profileviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5D95692E-1FB1-43F9-9496-9CFE7EA5FEC6}|Study_Step\\Study_Step.csproj|d:\\my_works\\dotnetprojects\\study_step\\study_step\\models\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5D95692E-1FB1-43F9-9496-9CFE7EA5FEC6}|Study_Step\\Study_Step.csproj|solutionrelative:study_step\\models\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5D95692E-1FB1-43F9-9496-9CFE7EA5FEC6}|Study_Step\\Study_Step.csproj|d:\\my_works\\dotnetprojects\\study_step\\study_step\\services\\fileservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5D95692E-1FB1-43F9-9496-9CFE7EA5FEC6}|Study_Step\\Study_Step.csproj|solutionrelative:study_step\\services\\fileservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5D95692E-1FB1-43F9-9496-9CFE7EA5FEC6}|Study_Step\\Study_Step.csproj|d:\\my_works\\dotnetprojects\\study_step\\study_step\\models\\dto\\userdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5D95692E-1FB1-43F9-9496-9CFE7EA5FEC6}|Study_Step\\Study_Step.csproj|solutionrelative:study_step\\models\\dto\\userdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5D95692E-1FB1-43F9-9496-9CFE7EA5FEC6}|Study_Step\\Study_Step.csproj|d:\\my_works\\dotnetprojects\\study_step\\study_step\\services\\authservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5D95692E-1FB1-43F9-9496-9CFE7EA5FEC6}|Study_Step\\Study_Step.csproj|solutionrelative:study_step\\services\\authservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5D95692E-1FB1-43F9-9496-9CFE7EA5FEC6}|Study_Step\\Study_Step.csproj|d:\\my_works\\dotnetprojects\\study_step\\study_step\\app.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5D95692E-1FB1-43F9-9496-9CFE7EA5FEC6}|Study_Step\\Study_Step.csproj|solutionrelative:study_step\\app.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5D95692E-1FB1-43F9-9496-9CFE7EA5FEC6}|Study_Step\\Study_Step.csproj|d:\\my_works\\dotnetprojects\\study_step\\study_step\\viewmodels\\authviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5D95692E-1FB1-43F9-9496-9CFE7EA5FEC6}|Study_Step\\Study_Step.csproj|solutionrelative:study_step\\viewmodels\\authviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -50,134 +54,140 @@
       "DocumentGroups": [
         {
           "DockedWidth": 119,
-          "SelectedChildIndex": 3,
+          "SelectedChildIndex": 0,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "MainWindow.xaml",
-              "DocumentMoniker": "D:\\my_works\\dotnetProjects\\Study_Step\\Study_Step\\UI\\Windows\\MainWindow.xaml",
-              "RelativeDocumentMoniker": "Study_Step\\UI\\Windows\\MainWindow.xaml",
-              "ToolTip": "D:\\my_works\\dotnetProjects\\Study_Step\\Study_Step\\UI\\Windows\\MainWindow.xaml",
-              "RelativeToolTip": "Study_Step\\UI\\Windows\\MainWindow.xaml",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2025-04-07T20:33:37.901Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "AuthService.cs",
-              "DocumentMoniker": "D:\\my_works\\dotnetProjects\\Study_Step\\Study_Step\\Services\\AuthService.cs",
-              "RelativeDocumentMoniker": "Study_Step\\Services\\AuthService.cs",
-              "ToolTip": "D:\\my_works\\dotnetProjects\\Study_Step\\Study_Step\\Services\\AuthService.cs",
-              "RelativeToolTip": "Study_Step\\Services\\AuthService.cs",
-              "ViewState": "AgIAACkAAAAAAAAAAAAwwEYAAAANAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-06T20:36:01.864Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "App.xaml.cs",
-              "DocumentMoniker": "D:\\my_works\\dotnetProjects\\Study_Step\\Study_Step\\App.xaml.cs",
-              "RelativeDocumentMoniker": "Study_Step\\App.xaml.cs",
-              "ToolTip": "D:\\my_works\\dotnetProjects\\Study_Step\\Study_Step\\App.xaml.cs",
-              "RelativeToolTip": "Study_Step\\App.xaml.cs",
-              "ViewState": "AgIAAAsAAAAAAAAAAAAYwEgAAAAJAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-06T19:19:08.335Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "Program.cs",
-              "DocumentMoniker": "D:\\my_works\\dotnetProjects\\Study_Step\\Study_Step_Server\\Program.cs",
-              "RelativeDocumentMoniker": "Study_Step_Server\\Program.cs",
-              "ToolTip": "D:\\my_works\\dotnetProjects\\Study_Step\\Study_Step_Server\\Program.cs",
-              "RelativeToolTip": "Study_Step_Server\\Program.cs",
-              "ViewState": "AgIAAHIAAAAAAAAAAAAuwIQAAAAsAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-06T18:10:07.936Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "SecureTokenStorage.cs",
-              "DocumentMoniker": "D:\\my_works\\dotnetProjects\\Study_Step\\Study_Step\\Services\\SecureTokenStorage.cs",
-              "RelativeDocumentMoniker": "Study_Step\\Services\\SecureTokenStorage.cs",
-              "ToolTip": "D:\\my_works\\dotnetProjects\\Study_Step\\Study_Step\\Services\\SecureTokenStorage.cs",
-              "RelativeToolTip": "Study_Step\\Services\\SecureTokenStorage.cs",
-              "ViewState": "AgIAAAMAAAAAAAAAAAAAAA0AAAAFAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-05T20:40:58.067Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
               "Title": "SignalRService.cs",
               "DocumentMoniker": "D:\\my_works\\dotnetProjects\\Study_Step\\Study_Step\\Services\\SignalRService.cs",
               "RelativeDocumentMoniker": "Study_Step\\Services\\SignalRService.cs",
               "ToolTip": "D:\\my_works\\dotnetProjects\\Study_Step\\Study_Step\\Services\\SignalRService.cs",
               "RelativeToolTip": "Study_Step\\Services\\SignalRService.cs",
-              "ViewState": "AgIAABEAAAAAAAAAAAAQwDYAAAAMAAAAAAAAAA==",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAAB0AAAAZAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-05T19:48:38.974Z",
+              "WhenOpened": "2025-04-22T07:57:08.994Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 4,
+              "Title": "ProfileViewModel.cs",
+              "DocumentMoniker": "D:\\my_works\\dotnetProjects\\Study_Step\\Study_Step\\ViewModels\\ProfileViewModel.cs",
+              "RelativeDocumentMoniker": "Study_Step\\ViewModels\\ProfileViewModel.cs",
+              "ToolTip": "D:\\my_works\\dotnetProjects\\Study_Step\\Study_Step\\ViewModels\\ProfileViewModel.cs",
+              "RelativeToolTip": "Study_Step\\ViewModels\\ProfileViewModel.cs",
+              "ViewState": "AgIAABIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-22T07:43:49.048Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "UserDTO.cs",
+              "DocumentMoniker": "D:\\my_works\\dotnetProjects\\Study_Step\\Study_Step\\Models\\DTO\\UserDTO.cs",
+              "RelativeDocumentMoniker": "Study_Step\\Models\\DTO\\UserDTO.cs",
+              "ToolTip": "D:\\my_works\\dotnetProjects\\Study_Step\\Study_Step\\Models\\DTO\\UserDTO.cs",
+              "RelativeToolTip": "Study_Step\\Models\\DTO\\UserDTO.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-22T07:25:26.638Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "User.cs",
+              "DocumentMoniker": "D:\\my_works\\dotnetProjects\\Study_Step\\Study_Step\\Models\\User.cs",
+              "RelativeDocumentMoniker": "Study_Step\\Models\\User.cs",
+              "ToolTip": "D:\\my_works\\dotnetProjects\\Study_Step\\Study_Step\\Models\\User.cs",
+              "RelativeToolTip": "Study_Step\\Models\\User.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAmAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-22T07:25:18.818Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "FileService.cs",
+              "DocumentMoniker": "D:\\my_works\\dotnetProjects\\Study_Step\\Study_Step\\Services\\FileService.cs",
+              "RelativeDocumentMoniker": "Study_Step\\Services\\FileService.cs",
+              "ToolTip": "D:\\my_works\\dotnetProjects\\Study_Step\\Study_Step\\Services\\FileService.cs",
+              "RelativeToolTip": "Study_Step\\Services\\FileService.cs",
+              "ViewState": "AgIAABsAAAAAAAAAAAAowDEAAAAkAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-22T07:04:07.183Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
               "Title": "ChatHub.cs",
               "DocumentMoniker": "D:\\my_works\\dotnetProjects\\Study_Step\\Study_Step_Server\\Hubs\\ChatHub.cs",
               "RelativeDocumentMoniker": "Study_Step_Server\\Hubs\\ChatHub.cs",
               "ToolTip": "D:\\my_works\\dotnetProjects\\Study_Step\\Study_Step_Server\\Hubs\\ChatHub.cs",
               "RelativeToolTip": "Study_Step_Server\\Hubs\\ChatHub.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAwAAAAAAAAAAAAAACUAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-05T19:46:49.216Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "AuthOptions.cs",
-              "DocumentMoniker": "D:\\my_works\\dotnetProjects\\Study_Step\\Study_Step_Server\\AuthOptions.cs",
-              "RelativeDocumentMoniker": "Study_Step_Server\\AuthOptions.cs",
-              "ToolTip": "D:\\my_works\\dotnetProjects\\Study_Step\\Study_Step_Server\\AuthOptions.cs",
-              "RelativeToolTip": "Study_Step_Server\\AuthOptions.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-05T19:41:02.523Z"
+              "WhenOpened": "2025-04-22T06:35:04.449Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 3,
-              "Title": "AuthViewModel.cs",
-              "DocumentMoniker": "D:\\my_works\\dotnetProjects\\Study_Step\\Study_Step\\ViewModels\\AuthViewModel.cs",
-              "RelativeDocumentMoniker": "Study_Step\\ViewModels\\AuthViewModel.cs",
-              "ToolTip": "D:\\my_works\\dotnetProjects\\Study_Step\\Study_Step\\ViewModels\\AuthViewModel.cs",
-              "RelativeToolTip": "Study_Step\\ViewModels\\AuthViewModel.cs",
-              "ViewState": "AgIAAHMAAAAAAAAAAAAwwJIAAAAUAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-05T17:31:54.937Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
               "Title": "ViewModel.cs",
               "DocumentMoniker": "D:\\my_works\\dotnetProjects\\Study_Step\\Study_Step\\ViewModels\\ViewModel.cs",
               "RelativeDocumentMoniker": "Study_Step\\ViewModels\\ViewModel.cs",
               "ToolTip": "D:\\my_works\\dotnetProjects\\Study_Step\\Study_Step\\ViewModels\\ViewModel.cs",
               "RelativeToolTip": "Study_Step\\ViewModels\\ViewModel.cs",
-              "ViewState": "AgIAAOwBAAAAAAAAAAAYwN0CAAAlAAAAAAAAAA==",
+              "ViewState": "AgIAAOgAAAAAAAAAAAAIwD8BAAAIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-14T18:55:42.074Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-03-14T18:55:42.074Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "AuthService.cs",
+              "DocumentMoniker": "D:\\my_works\\dotnetProjects\\Study_Step\\Study_Step\\Services\\AuthService.cs",
+              "RelativeDocumentMoniker": "Study_Step\\Services\\AuthService.cs",
+              "ToolTip": "D:\\my_works\\dotnetProjects\\Study_Step\\Study_Step\\Services\\AuthService.cs",
+              "RelativeToolTip": "Study_Step\\Services\\AuthService.cs",
+              "ViewState": "AgIAACMAAAAAAAAAAAAowDoAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-19T20:49:39.855Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "AuthViewModel.cs",
+              "DocumentMoniker": "D:\\my_works\\dotnetProjects\\Study_Step\\Study_Step\\ViewModels\\AuthViewModel.cs",
+              "RelativeDocumentMoniker": "Study_Step\\ViewModels\\AuthViewModel.cs",
+              "ToolTip": "D:\\my_works\\dotnetProjects\\Study_Step\\Study_Step\\ViewModels\\AuthViewModel.cs",
+              "RelativeToolTip": "Study_Step\\ViewModels\\AuthViewModel.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAI4AAAAUAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-19T19:43:28.207Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Program.cs",
+              "DocumentMoniker": "D:\\my_works\\dotnetProjects\\Study_Step\\Study_Step_Server\\Program.cs",
+              "RelativeDocumentMoniker": "Study_Step_Server\\Program.cs",
+              "ToolTip": "D:\\my_works\\dotnetProjects\\Study_Step\\Study_Step_Server\\Program.cs",
+              "RelativeToolTip": "Study_Step_Server\\Program.cs",
+              "ViewState": "AgIAADoAAAAAAAAAAAAgwEUAAABGAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-19T19:42:36.243Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "App.xaml.cs",
+              "DocumentMoniker": "D:\\my_works\\dotnetProjects\\Study_Step\\Study_Step\\App.xaml.cs",
+              "RelativeDocumentMoniker": "Study_Step\\App.xaml.cs",
+              "ToolTip": "D:\\my_works\\dotnetProjects\\Study_Step\\Study_Step\\App.xaml.cs",
+              "RelativeToolTip": "Study_Step\\App.xaml.cs",
+              "ViewState": "AgIAADEAAAAAAAAAAAAiwFYAAAAjAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-06T19:19:08.335Z"
             }
           ]
         }

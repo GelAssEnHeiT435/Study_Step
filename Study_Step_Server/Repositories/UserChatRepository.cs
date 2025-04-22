@@ -11,10 +11,11 @@ namespace Study_Step_Server.Repositories
     {
         public UserChatRepository(ApplicationContext context) : base(context) { }
 
-        public async Task<IEnumerable<Chat>> GetChatsByUserIdAsync(int userId)
+        public async Task<List<Chat>> GetChatsByUserIdAsync(int userId)
         {
             return await _dbSet.Include(uc => uc.Chat) 
-                               .Where(uc => uc.UserId == userId) 
+                                   .ThenInclude(c => c.Messages)
+                               .Where(uc => uc.UserId == userId && uc.Chat.Messages.Any()) 
                                .OrderByDescending(uc => uc.Chat.LastMessageTime)
                                .Select(uc => uc.Chat) 
                                .ToListAsync();
@@ -29,10 +30,9 @@ namespace Study_Step_Server.Repositories
                                 .FirstOrDefaultAsync();
         }
 
-        public async Task<IEnumerable<UserChat?>> GetLinksByChatIdsAsync(IEnumerable<ChatDTO?> dtoChats)
+        public async Task<List<UserChat>> GetLinksByChatIdsAsync(List<Chat?> chats)
         {
-            var chatIds = dtoChats.Select(chat => chat.ChatId).ToList();
-
+            var chatIds = chats.Select(chat => chat.ChatId).ToList();
             return await _dbSet
                 .Where(uc => chatIds.Contains(uc.ChatId)) 
                 .ToListAsync(); 

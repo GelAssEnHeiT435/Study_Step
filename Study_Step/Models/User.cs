@@ -6,7 +6,7 @@ namespace Study_Step.Models
     {
         public int UserId { get; set; }
         public string Username { get; set; }
-        public BitmapImage Photo { get; set; }
+        public BitmapImage bitmapPhoto { get; set; }
         public string Email { get; set; }
         public UserStatus? Status { get; set; }  // Статус пользователя (онлайн, оффлайн)
         public DateTime? LastLogin { get; set; }  // Время последнего входа

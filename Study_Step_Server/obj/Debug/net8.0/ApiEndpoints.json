@@ -1,6 +1,37 @@
 [
   {
     "ContainingType": "Study_Step_Server.Controllers.ChatController",
+    "Method": "CheckChatExists",
+    "RelativePath": "api/Chat/check_chat",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "clientId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "companionId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "Study_Step_Server.Models.DTO.ChatDTO",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "Study_Step_Server.Controllers.ChatController",
     "Method": "GetChats",
     "RelativePath": "api/Chat/getallchats",
     "HttpMethod": "GET",
@@ -15,7 +46,7 @@
     ],
     "ReturnTypes": [
       {
-        "Type": "Study_Step_Server.Models.DTO.UserChatsResponse",
+        "Type": "System.Collections.Generic.List\u00601[[Study_Step_Server.Models.DTO.ChatDTO, Study_Step_Server, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -115,7 +146,7 @@
   },
   {
     "ContainingType": "Study_Step_Server.Program\u002B\u003C\u003Ec__DisplayClass0_0",
-    "Method": "\u003CMain\u003Eb__4",
+    "Method": "\u003CMain\u003Eb__5",
     "RelativePath": "login",
     "HttpMethod": "POST",
     "IsController": false,
@@ -137,7 +168,7 @@
   },
   {
     "ContainingType": "Study_Step_Server.Program\u002B\u003C\u003Ec__DisplayClass0_0",
-    "Method": "\u003CMain\u003Eb__7",
+    "Method": "\u003CMain\u003Eb__8",
     "RelativePath": "logout",
     "HttpMethod": "POST",
     "IsController": false,
@@ -153,7 +184,7 @@
   },
   {
     "ContainingType": "Study_Step_Server.Program\u002B\u003C\u003Ec__DisplayClass0_0",
-    "Method": "\u003CMain\u003Eb__5",
+    "Method": "\u003CMain\u003Eb__6",
     "RelativePath": "refresh",
     "HttpMethod": "POST",
     "IsController": false,
@@ -169,7 +200,7 @@
   },
   {
     "ContainingType": "Study_Step_Server.Program\u002B\u003C\u003Ec__DisplayClass0_0",
-    "Method": "\u003CMain\u003Eb__6",
+    "Method": "\u003CMain\u003Eb__7",
     "RelativePath": "register",
     "HttpMethod": "POST",
     "IsController": false,

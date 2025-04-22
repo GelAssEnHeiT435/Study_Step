@@ -10,5 +10,7 @@ namespace Study_Step_Server.Models.DTO
         public string? LastMessage { get; set; }
         public DateTime? LastMessageTime { get; set; }
         public ChatType Type { get; set; }  // Тип чата (личный, групповой)
+
+        public List<UserChatDTO> UserChats { get; set; } // Участники чата
     }
 }

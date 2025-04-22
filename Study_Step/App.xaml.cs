@@ -34,7 +34,7 @@ namespace Study_Step
 
             Configuration = builder.Build();
             
-            Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("Ngo9BigBOggjHTQxAR8/V1NNaF5cXmBCekx3RHxbf1x1ZFZMYFxbQXFPIiBoS35Rc0VnWXtfdXRVQ2dYUUR+VEBU");
+            Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("Ngo9BigBOggjHTQxAR8/V1NNaF5cXmBCe0x3QXxbf1x1ZFFMZFRbQXZPIiBoS35Rc0VnWHtfdnBcRWNUUkNyVEBU");
             PresentationTraceSources.DataBindingSource.Switch.Level = SourceLevels.Warning;
             RenderOptions.ProcessRenderMode = RenderMode.SoftwareOnly;
 
@@ -49,7 +49,8 @@ namespace Study_Step
         {
             services.AddSingleton<SynchronizationContext>(SynchronizationContext.Current);
             // Регистрация сервисов и ViewModel
-            
+
+            services.AddSingleton<UserSessionService>();
             services.AddSingleton<ITokenStorage, SecureTokenStorage>();
             services.AddSingleton<AuthService>();
             services.AddSingleton<SignalRService>();
@@ -82,10 +83,8 @@ namespace Study_Step
             }
             else
             {
-                Debug.WriteLine("test1");
                 var loginWindow = ServiceProvider.GetRequiredService<AuthWindow>();
                 loginWindow.Show();
-                Debug.WriteLine("test2");
             }
         }
     }

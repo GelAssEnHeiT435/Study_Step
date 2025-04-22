@@ -52,7 +52,11 @@ namespace Study_Step
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {
             ViewModel viewModel = (ViewModel)DataContext;
-            if (e.Key == Key.Escape) { viewModel.ChatIsActive = false; }
+            if (e.Key == Key.Escape) { 
+                viewModel.ChatIsActive = false;
+                viewModel.CurrentChat = null;
+                viewModel.Conversations = null;
+            }
         }
 
         private void ScrollTo() =>

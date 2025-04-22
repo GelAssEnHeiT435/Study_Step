@@ -14,6 +14,7 @@ namespace Study_Step.Interfaces
     {
         byte[]? ConvertFileToByteArray(string imagePath);
         BitmapImage? ConvertByteArrayToBitmapImage(byte[]? byteArray);
+        byte[]? ConvertBitmapImageToByteArray(BitmapImage? bitmapImage);
         BitmapImage? LoadImage(string? imagePath);
         void SaveFile(FileModelDTO file);
     }

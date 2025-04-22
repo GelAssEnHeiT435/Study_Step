@@ -208,7 +208,10 @@ namespace Study_Step_Server.Migrations
                         .HasColumnType("integer");
 
                     b.Property<int>("UserChatId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("UserChatId"));
 
                     b.HasKey("UserId", "ChatId");
 
@@ -246,7 +249,7 @@ namespace Study_Step_Server.Migrations
             modelBuilder.Entity("Study_Step_Server.Models.RefreshToken", b =>
                 {
                     b.HasOne("Study_Step_Server.Models.AuthUser", "User")
-                        .WithMany()
+                        .WithMany("RefreshTokens")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -271,6 +274,11 @@ namespace Study_Step_Server.Migrations
                     b.Navigation("Chat");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Study_Step_Server.Models.AuthUser", b =>
+                {
+                    b.Navigation("RefreshTokens");
                 });
 
             modelBuilder.Entity("Study_Step_Server.Models.Chat", b =>

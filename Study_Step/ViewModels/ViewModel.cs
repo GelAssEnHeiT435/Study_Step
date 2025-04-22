@@ -4,6 +4,7 @@ using Microsoft.Win32;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Study_Step.Commands;
+using Study_Step.CustomControls;
 using Study_Step.Interfaces;
 using Study_Step.Models;
 using Study_Step.Models.DTO;
@@ -21,24 +22,29 @@ using System.Threading;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
+using System.Windows.Threading;
 
 namespace Study_Step.ViewModels
 {
     public class ViewModel : INotifyPropertyChanged
     {
         public static readonly HttpClient client = new HttpClient();
+        private static readonly DispatcherTimer _timer = new();
         public static string apiUrl = "http://localhost:5000/api/chat";
 
         private readonly SignalRService _signalRService;
         private readonly IFileService _fileService;
         private readonly DtoConverterService _dtoConverter;
         private readonly AuthService _authService;
+        private readonly UserSessionService _userSession;
 
         public ViewModel(SignalRService signalRService,
                          IFileService fileService,
                          DtoConverterService dtoConverter,
-                         AuthService authService)
+                         AuthService authService,
+                         UserSessionService userSession)
         {
+            _userSession = userSession;
             _signalRService = signalRService;
             _fileService = fileService;
             _dtoConverter = dtoConverter;
@@ -53,6 +59,10 @@ namespace Study_Step.ViewModels
 
             ChatIsActive = false;
             DownloadAreaIsActive = false;
+
+            _timer.Interval = TimeSpan.FromSeconds(60);
+            _timer.Tick += (s, e) => UpdateAllChats();
+            _timer.Start();
         }
 
         // General settings of application
@@ -110,37 +120,40 @@ namespace Study_Step.ViewModels
 
         #endregion
 
-        #endregion   
+        #endregion
 
         // Show chat list
         #region Chat List
+
         #region Properties
+
         public ObservableCollection<Chat> Chats { get; set; }
+        public Chat? CurrentChat { get; set; }
+
         #endregion
 
         #region Logics
-        public async void LoadChats()
+        private async void LoadChats()
         {
-            string json = JsonConvert.SerializeObject(Application.Current.Properties["Id"]); // Convert User's Id to JSON-Object
-            var content = new StringContent(json, Encoding.UTF8, "application/json"); // Create HTTP-Request
-            HttpResponseMessage response = await client.GetAsync(apiUrl + $"/getallchats?userId={Application.Current.Properties["Id"]}"); // Send Request to Server
+            HttpResponseMessage response = await client.GetAsync(apiUrl + $"/getallchats?userId={_userSession.CurrentUser.UserId}"); // Send Request to Server
 
             if (response.IsSuccessStatusCode)
             {
                 string responseBody = await response.Content.ReadAsStringAsync(); // Read body response
-                var jsonResponse = JsonConvert.DeserializeObject<UserChatsResponse>(responseBody); // Deserialize object to collection
+                var jsonResponse = JsonConvert.DeserializeObject<IEnumerable<ChatDTO>>(responseBody); // Deserialize object to collection
 
                 Chats = new ObservableCollection<Chat>();
 
-                foreach (var chat in jsonResponse.Chats)
+                foreach (var chat in jsonResponse)
                 {
                     Chat thisChat = _dtoConverter.GetChat(chat); // convert ChatDTO to Chat
-                    foreach (var uc in jsonResponse.UserChats) // Get User's Id to send messages
+                    foreach (var uc in thisChat.UserChats) // Get User's Id to send messages
                     {
-                        if (uc.UserId != (int)Application.Current.Properties["Id"] && chat.ChatId == uc.ChatId) {
+                        if (uc.UserId != _userSession.CurrentUser.UserId && chat.ChatId == uc.ChatId) {
                             thisChat.UserId_InChat = uc.UserId;
                         }
                     }
+                    UpdateMessage(thisChat);
                     Chats.Add(thisChat);
                 }
             }
@@ -150,9 +163,17 @@ namespace Study_Step.ViewModels
             }
             OnPropertyChanged(nameof(Chats));
         }
+
+        private void UpdateChatList(Chat updatedChat)
+        {
+            Chat? removeChat = Chats.FirstOrDefault(chat => chat.ChatId == updatedChat.ChatId);
+            if (updatedChat != null
+                && Chats.Any(chat => chat.ChatId == updatedChat.ChatId)) // If chat not exists, then add to start list
+                Chats.Remove(removeChat);
+            Chats.Insert(0, updatedChat);
+        }
         #endregion
 
-        // Команды для отображения информации о чате при его выборе
         #region Commands
         private ICommand _getSelectedChatCommand;
         public ICommand GetSelectedChatCommand => _getSelectedChatCommand ??= new RelayCommand(parameter =>
@@ -161,18 +182,50 @@ namespace Study_Step.ViewModels
             {
                 // Отображение заголовка чата с передачей данных
                 ChatIsActive = true;
-
-                ContactName = chat.Name;
-                bitmapPhoto = chat.bitmapPhoto;
-
-                // загрузка сообщений конкретного чата
-                Application.Current.Properties["ChatId"] = chat.ChatId;
-                Application.Current.Properties["RecieverId"] = chat.UserId_InChat;
+                CurrentChat = chat;
+                CurrentChat.UnreadCount = 0;
+                ContactName = CurrentChat.Name;
+                bitmapPhoto = CurrentChat.bitmapPhoto;
                 FilesListObject = new ObservableCollection<FileModel>();
 
                 LoadChatConversation(chat.ChatId);
             }
         });
+        #endregion
+
+        #region Timer
+
+        private void UpdateAllChats() {
+            foreach (var chat in Chats)
+                UpdateMessage(chat);
+        }
+
+        private void UpdateMessage(Chat chat)
+        {
+            DateTime utcTime = chat.LastMessageTime;
+            DateTime localTime = utcTime.ToLocalTime();
+            chat.TimeAgo = FormatTimeAgo(localTime);
+        }
+
+        private string FormatTimeAgo(DateTime time)
+        {
+            var span = DateTime.Now - time;
+            if (span.TotalSeconds < 60) return "только что";
+            if (span.TotalMinutes < 60) return $"{(int)span.TotalMinutes} {Pluralize(span.Minutes, "минуту", "минуты", "минут")} назад";
+            if (span.TotalHours < 24) return $"{(int)span.TotalHours} {Pluralize(span.Hours, "час", "часа", "часов")} назад";
+            if (time.Date == DateTime.Today.AddDays(-1)) return $"вчера в {time:HH:mm}";
+            return $"{time:dd.MM.yyyy} в {time:HH:mm}";
+        }
+        private string Pluralize(int number, string form1, string form2, string form5)
+        {
+            number = Math.Abs(number);
+            int n1 = number % 10;
+            int n2 = number % 100;
+
+            return (n1 == 1 && n2 != 11) ? form1 :
+                   (n1 >= 2 && n1 <= 4 && (n2 < 10 || n2 >= 20)) ? form2 : form5;
+        }
+
         #endregion
 
         #endregion
@@ -182,32 +235,24 @@ namespace Study_Step.ViewModels
 
         #region Properties
 
-        public ObservableCollection<Message> Conversations
-        { get => mConversations;
-            set
-            {
+        public ObservableCollection<Message>? Conversations { 
+            get => mConversations;
+            set {
                 mConversations = value;
                 OnPropertyChanged(nameof(Conversations));
-            }
-        }
-        public ObservableCollection<FileModel> FilesListObject
-        {
+            }}
+        public ObservableCollection<FileModel> FilesListObject {
             get => _filesList;
-            set
-            {
+            set {
                 _filesList = value;
                 OnPropertyChanged(nameof(FilesListObject));
-            }
-        }
-        public string? MessageText
-        {
+            }}
+        public string? MessageText {
             get => _messageText;
-            set
-            {
+            set {
                 _messageText = string.IsNullOrEmpty(value) ? null : value;
                 OnPropertyChanged(nameof(MessageText));
-            }
-        }
+            }}
 
         private ObservableCollection<Message> mConversations;
         private ObservableCollection<FileModel> _filesList;
@@ -218,8 +263,6 @@ namespace Study_Step.ViewModels
         #region Logics
         private async void LoadChatConversation(int Id)
         {
-            string json = JsonConvert.SerializeObject(Id); // Convert Id to JSON-Object
-            var content = new StringContent(json, Encoding.UTF8, "application/json"); // Create HTTP-Request
             HttpResponseMessage response = await client.GetAsync(apiUrl + $"/messages?chatId={Id}"); // Send request to server
 
             if (response.IsSuccessStatusCode) {
@@ -232,7 +275,7 @@ namespace Study_Step.ViewModels
                 // Отображаем полученные чаты
                 foreach (var mes in messages)
                 {
-                    mes.IsOutside = mes.UserId != (int)Application.Current.Properties["Id"];
+                    mes.IsOutside = mes.UserId != _userSession.CurrentUser.UserId;
                     Conversations.Add(mes);
                     ScrollToEnd?.Invoke();
                 }
@@ -242,14 +285,33 @@ namespace Study_Step.ViewModels
                 Console.WriteLine("Ошибка при получении чатов");
             }
         }
-        private void MessageReceived(string sender, MessageDTO message)
+        private void MessageReceived(string sender, ChatDTO chat, MessageDTO message)
         {
             Message messageObject = _dtoConverter.GetMessage(message);
+            Chat chatObject = _dtoConverter.GetChat(chat);
 
-            messageObject.IsOutside = true; // changing the sender's side
-            Conversations.Add(messageObject);
+            UpdateChatList(chatObject);
 
-            ScrollToEnd?.Invoke();
+            Chat recieverChat = Chats.FirstOrDefault(x => x.ChatId == chatObject.ChatId);
+
+            recieverChat.LastMessage = chatObject.LastMessage;
+            recieverChat.LastMessageTime = chatObject.LastMessageTime;
+            UpdateMessage(recieverChat);
+            
+            if (CurrentChat != null && CurrentChat.ChatId == chatObject.ChatId) // if a chat is open with the person who sent the message
+            {
+                messageObject.IsOutside = true; // changing the sender's side
+                Conversations.Add(messageObject);
+                ScrollToEnd?.Invoke();
+            }
+            else if (CurrentChat == null || CurrentChat.ChatId != chatObject.ChatId) // If a chat with another person is open or the chat is not open
+            {
+                recieverChat.UnreadCount++;
+            }
+            else // If the chats are not open
+            {
+                // TODO: add notify system
+            }
         }
 
         #endregion
@@ -257,12 +319,11 @@ namespace Study_Step.ViewModels
         #region Commands
         public ICommand SendMesCommand => _sendMesCommand ??= new RelayCommand(async _ =>
         {
-            if (!ChatIsActive) { return; }
-
+            UpdateChatList(CurrentChat);
             Message messageChat = new Message()
             {
-                UserId = (int)Application.Current.Properties["Id"],
-                ChatId = (int)Application.Current.Properties["ChatId"],
+                UserId = _userSession.CurrentUser.UserId,
+                ChatId = CurrentChat.ChatId,
                 Text = string.IsNullOrWhiteSpace(MessageText) ? null : MessageText,
                 SentAt = DateTime.UtcNow,
                 Files = new ObservableCollection<FileModel>(FilesListObject.ToList()),
@@ -328,8 +389,25 @@ namespace Study_Step.ViewModels
             try
             {
                 MessageDTO messageObject = _dtoConverter.GetMessageDTO(messageChat);
-                await _signalRService.SendMessageAsync(Application.Current.Properties["RecieverId"].ToString(),
-                                                   messageObject);
+
+                if (messageChat.Text == null && messageChat.Files.Any())
+                    CurrentChat.LastMessage = "файл";
+                else
+                    CurrentChat.LastMessage = messageChat.Text;
+                
+                CurrentChat.LastMessageTime = messageChat.SentAt;
+                ChatDTO chatObject = _dtoConverter.GetChatDTO(CurrentChat);
+
+                var userDto = _userSession.GetCurrentUserDTO();
+                chatObject.ContactPhoto = userDto.ContactPhoto;
+                chatObject.Name = userDto.Username;
+
+                Debug.WriteLine($"chatObject: {JsonConvert.SerializeObject(chatObject)}");
+                Debug.WriteLine($"messageObject: {JsonConvert.SerializeObject(messageObject)}");
+
+                await _signalRService.SendMessageAsync(CurrentChat.UserId_InChat.ToString(), chatObject, messageObject);
+
+                UpdateMessage(CurrentChat);
             }
             catch (HubException hex)
             {
@@ -532,7 +610,7 @@ namespace Study_Step.ViewModels
 
                 foreach (var user in jsonResponse) // Show users
                 {
-                    if (user.UserId == (int)Application.Current.Properties["Id"]) continue;
+                    if (user.UserId == _userSession.CurrentUser.UserId) continue;
                     User userForList = _dtoConverter.GetUser(user);
                     users.Add(userForList);
                 }
@@ -557,9 +635,11 @@ namespace Study_Step.ViewModels
             {
                 if (user != null)
                 {
-                    ProfileViewModel profileViewModel = new ProfileViewModel {
+                    ProfileViewModel profileViewModel = new ProfileViewModel(_dtoConverter, _userSession)
+                    {
                         statusThumbsUser = user
                     };
+                    profileViewModel.OpenChatRequested += GetSelectedChatCommand.Execute;
                     UserProfile profile_window = new UserProfile(); // Create User's profile
 
                     profile_window.DataContext = profileViewModel; // Set DataContext
@@ -745,7 +825,5 @@ namespace Study_Step.ViewModels
         public event PropertyChangedEventHandler? PropertyChanged;
         protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null) =>
             PropertyChanged?.Invoke( this, new PropertyChangedEventArgs( propertyName ) );
-    }
-
-    
+    }    
 }

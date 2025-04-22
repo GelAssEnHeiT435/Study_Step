@@ -7,6 +7,8 @@ namespace Study_Step_Server.Models
 {
     public class Message
     {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int MessageId { get; set; }  // Уникальный идентификатор сообщения
         public int? UserId { get; set; }  // Идентификатор отправителя
         public int? ChatId { get; set; }  // Идентификатор чата

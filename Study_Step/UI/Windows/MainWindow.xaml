@@ -39,8 +39,8 @@
                     <Ellipse Height="40" Width="40">
                         <Ellipse.Fill>
                             <ImageBrush ImageSource="{Binding bitmapPhoto,
-                                                              FallbackValue='D:\\my_works\dotnetProjects\Study_Step\Study_Step\Assets\Media\5.jpg',
-                                                              TargetNullValue='D:\\my_works\dotnetProjects\Study_Step\Study_Step\Assets\Media\5.jpg',
+                                                              FallbackValue='D:/my_works/dotnetProjects/Study_Step/Study_Step/Assets/Media/5.jpg',
+                                                              TargetNullValue='D:/my_works/dotnetProjects/Study_Step/Study_Step/Assets/Media/5.jpg',
                                                               UpdateSourceTrigger=PropertyChanged}"
                                         Stretch="UniformToFill"/>
                         </Ellipse.Fill>

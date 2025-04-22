@@ -28,7 +28,7 @@
                  HorizontalAlignment="Center">
                 <Ellipse.Fill>
                     <ImageBrush Stretch="UniformToFill"
-                            ImageSource="{Binding Path=statusThumbsUser.Photo,
+                            ImageSource="{Binding Path=statusThumbsUser.bitmapPhoto,
                                                   FallbackValue='D:/my_works/dotnetProjects/Study_Step/Study_Step/Assets/Media/5.jpg',
                                                   TargetNullValue='D:/my_works/dotnetProjects/Study_Step/Study_Step/Assets/Media/5.jpg',
                                                   UpdateSourceTrigger=PropertyChanged}"/>

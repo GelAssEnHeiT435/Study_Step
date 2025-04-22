@@ -4,6 +4,7 @@ using Newtonsoft.Json.Linq;
 using Study_Step.Commands;
 using Study_Step.Interfaces;
 using Study_Step.Models;
+using Study_Step.Models.DTO;
 using Study_Step.Pages;
 using Study_Step.Services;
 using System;
@@ -76,14 +77,18 @@ namespace Study_Step.ViewModels
         private readonly SignalRService _signalRService;
         private readonly ITokenStorage _tokenStorage;
         private readonly AuthService _authService;
+        private readonly UserSessionService _userSession;
+        private readonly DtoConverterService _dtoConverter;
         private readonly HttpClient _httpClient = new HttpClient();
 
         public AuthViewModel(SignalRService signalRService, ITokenStorage tokenStorage,
-                             AuthService authService)
+                             AuthService authService, UserSessionService userSession, DtoConverterService dtoConverterService)
         {
             _signalRService = signalRService;
             _tokenStorage = tokenStorage;
             _authService = authService;
+            _userSession = userSession;
+            _dtoConverter = dtoConverterService;
         }
 
         #region Commands
@@ -135,8 +140,8 @@ namespace Study_Step.ViewModels
                     string responseContent = await response.Content.ReadAsStringAsync();
                     JObject? jsonResponse = JsonConvert.DeserializeObject<JObject>(responseContent);
 
-                    Application.Current.Properties["Id"] = jsonResponse["id"].ToObject<int>();
-                    Application.Current.Properties["Username"] = jsonResponse["name"].ToObject<string>();
+                    UserDTO? currentUser = jsonResponse["user_object"].ToObject<UserDTO>();
+                    _userSession.CurrentUser = _dtoConverter.GetUser(currentUser);
                     string? AccessToken = jsonResponse["access_token"].ToObject<string>();
                     string? RefreshToken = jsonResponse["refresh_token"].ToObject<string>();
 

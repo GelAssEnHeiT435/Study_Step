@@ -114,7 +114,7 @@
                                      Margin="15, 5">
                                 <Ellipse.Fill>
                                     <ImageBrush Stretch="UniformToFill"
-                                                ImageSource="{Binding Photo,
+                                                ImageSource="{Binding bitmapPhoto,
                                                                       FallbackValue='D:/my_works/dotnetProjects/Study_Step/Study_Step/Assets/Media/5.jpg',
                                                                       TargetNullValue='D:/my_works/dotnetProjects/Study_Step/Study_Step/Assets/Media/5.jpg',
                                                                       UpdateSourceTrigger=PropertyChanged}">

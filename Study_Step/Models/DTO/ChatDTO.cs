@@ -10,5 +10,7 @@ namespace Study_Step.Models.DTO
         public byte[]? ContactPhoto { get; set; }
         public string? LastMessage { get; set; }
         public DateTime? LastMessageTime { get; set; }
+
+        public List<UserChatDTO> UserChats { get; set; }
     }
 }

@@ -13,6 +13,7 @@
         <icons:WordExtensionConverter x:Key="WordExtensionConverter"/>
         <icons:ExcelExtensionConverter x:Key="ExcelExtensionConverter"/>
         <icons:PowerPointExtensionConverter x:Key="PowerPointExtensionConverter"/>
+        
 
         <Style x:Key="MessageTextStyle" TargetType="{x:Type TextBlock}">
             <Setter Property="FontSize" Value="15" />
