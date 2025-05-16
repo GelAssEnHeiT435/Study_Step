@@ -2,23 +2,21 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Win32;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using Study_Step.Commands;
-using Study_Step.CustomControls;
 using Study_Step.Interfaces;
 using Study_Step.Models;
 using Study_Step.Models.DTO;
 using Study_Step.Services;
+using Study_Step.UI.Windows;
+using Syncfusion.Windows.Shared;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
-using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Runtime.CompilerServices;
 using System.Text;
-using System.Threading;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
@@ -30,7 +28,6 @@ namespace Study_Step.ViewModels
     {
         public static readonly HttpClient client = new HttpClient();
         private static readonly DispatcherTimer _timer = new();
-        public static string apiUrl = "http://localhost:5000/api/chat";
 
         private readonly SignalRService _signalRService;
         private readonly IFileService _fileService;
@@ -51,11 +48,18 @@ namespace Study_Step.ViewModels
             _authService = authService;
 
             // Add EventsListeners
-            _signalRService.OnMessageReceived += MessageReceived;
+            _signalRService.AddNewUserEvent += AddNewUser;
+            _signalRService.OnMessageReceivedEvent += MessageReceived;
+            _signalRService.OnUpdateIdEvent += UpdateIdLastSendMes;
+            _signalRService.DeletionMessageEvent += DeletionMessage;
+            _signalRService.EditableMessageEvent += EditableMessage;
+            _signalRService.ReadingMessageEvent += ReadingMessage;
 
             LoadChats();
             LoadUserList();
             LoadDownloadedArea();
+
+            UserPhoto = _userSession.CurrentUser?.bitmapPhoto;
 
             ChatIsActive = false;
             DownloadAreaIsActive = false;
@@ -75,6 +79,14 @@ namespace Study_Step.ViewModels
         #endregion
 
         #region Properties
+
+        public BitmapImage? UserPhoto {
+            get => _userPhoto;
+            set{
+                _userPhoto = value;
+                OnPropertyChanged(nameof(UserPhoto));
+            }
+        }
 
         public string ContactName
         {
@@ -113,6 +125,7 @@ namespace Study_Step.ViewModels
             }
         }
 
+        private BitmapImage? _userPhoto;
         private string _contactName;
         private BitmapImage _bitmapPhoto;
         private string _lastSeen;
@@ -122,7 +135,6 @@ namespace Study_Step.ViewModels
 
         #endregion
 
-        // Show chat list
         #region Chat List
 
         #region Properties
@@ -135,7 +147,7 @@ namespace Study_Step.ViewModels
         #region Logics
         private async void LoadChats()
         {
-            HttpResponseMessage response = await client.GetAsync(apiUrl + $"/getallchats?userId={_userSession.CurrentUser.UserId}"); // Send Request to Server
+            HttpResponseMessage response = await client.GetAsync($"http://localhost:5000/api/chat/getallchats?userId={_userSession.CurrentUser.UserId}"); // Send Request to Server
 
             if (response.IsSuccessStatusCode)
             {
@@ -154,6 +166,7 @@ namespace Study_Step.ViewModels
                         }
                     }
                     UpdateMessage(thisChat);
+                    Debug.WriteLine(thisChat.UnreadCount);
                     Chats.Add(thisChat);
                 }
             }
@@ -166,31 +179,48 @@ namespace Study_Step.ViewModels
 
         private void UpdateChatList(Chat updatedChat)
         {
-            Chat? removeChat = Chats.FirstOrDefault(chat => chat.ChatId == updatedChat.ChatId);
-            if (updatedChat != null
-                && Chats.Any(chat => chat.ChatId == updatedChat.ChatId)) // If chat not exists, then add to start list
-                Chats.Remove(removeChat);
-            Chats.Insert(0, updatedChat);
+            var existingChat = Chats.FirstOrDefault(chat => chat.ChatId == updatedChat.ChatId);
+
+            if (existingChat != null)
+            {
+                Chats = new ObservableCollection<Chat>(Chats.OrderByDescending(c => c.LastMessageTime));
+                OnPropertyChanged(nameof(Chats));
+            }
+            else
+            {
+                Chats.Insert(0, updatedChat);
+            }
         }
+
         #endregion
 
         #region Commands
-        private ICommand _getSelectedChatCommand;
-        public ICommand GetSelectedChatCommand => _getSelectedChatCommand ??= new RelayCommand(parameter =>
+        
+        public ICommand GetSelectedChatCommand => _getSelectedChatCommand ??= new RelayCommand(async parameter =>
         {
             if (parameter is Chat chat) // получение имени и фото пользователя при выборе чата
             {
                 // Отображение заголовка чата с передачей данных
                 ChatIsActive = true;
                 CurrentChat = chat;
-                CurrentChat.UnreadCount = 0;
+
+                Chat? choosenChat = Chats.Where(c => c.IsChoosen).FirstOrDefault();
+                if (choosenChat != null)
+                    choosenChat.IsChoosen = false;
+                CurrentChat.IsChoosen = true;
+
                 ContactName = CurrentChat.Name;
                 bitmapPhoto = CurrentChat.bitmapPhoto;
                 FilesListObject = new ObservableCollection<FileModel>();
 
+                CurrentChat.UnreadCount = 0;
+                await _signalRService.ReadMessageAsync(CurrentChat.UserId_InChat.ToString(), CurrentChat.ChatId);
+
                 LoadChatConversation(chat.ChatId);
             }
         });
+        private ICommand _getSelectedChatCommand;
+
         #endregion
 
         #region Timer
@@ -209,7 +239,7 @@ namespace Study_Step.ViewModels
 
         private string FormatTimeAgo(DateTime time)
         {
-            var span = DateTime.Now - time;
+            var span = DateTime.Now.ToLocalTime() - time;
             if (span.TotalSeconds < 60) return "только что";
             if (span.TotalMinutes < 60) return $"{(int)span.TotalMinutes} {Pluralize(span.Minutes, "минуту", "минуты", "минут")} назад";
             if (span.TotalHours < 24) return $"{(int)span.TotalHours} {Pluralize(span.Hours, "час", "часа", "часов")} назад";
@@ -230,7 +260,6 @@ namespace Study_Step.ViewModels
 
         #endregion
 
-        // Functions for chats
         #region ChatConversation
 
         #region Properties
@@ -258,12 +287,18 @@ namespace Study_Step.ViewModels
         private ObservableCollection<FileModel> _filesList;
         private string? _messageText { get; set; }
 
+
+        private Message? _selectedMessage { get; set; }
+        private Chat? _selectedChat { get; set; }
+        private bool _isEditMode;
+
         #endregion
 
         #region Logics
+
         private async void LoadChatConversation(int Id)
         {
-            HttpResponseMessage response = await client.GetAsync(apiUrl + $"/messages?chatId={Id}"); // Send request to server
+            HttpResponseMessage response = await client.GetAsync($"http://localhost:5000/api/chat/messages?userId={_userSession.CurrentUser?.UserId}&chatId={Id}"); // Send request to server
 
             if (response.IsSuccessStatusCode) {
                 string responseBody = await response.Content.ReadAsStringAsync(); // Read response
@@ -272,7 +307,6 @@ namespace Study_Step.ViewModels
 
                 Conversations = new ObservableCollection<Message>();
 
-                // Отображаем полученные чаты
                 foreach (var mes in messages)
                 {
                     mes.IsOutside = mes.UserId != _userSession.CurrentUser.UserId;
@@ -285,41 +319,11 @@ namespace Study_Step.ViewModels
                 Console.WriteLine("Ошибка при получении чатов");
             }
         }
-        private void MessageReceived(string sender, ChatDTO chat, MessageDTO message)
+
+        private async void SendNewMessage()
         {
-            Message messageObject = _dtoConverter.GetMessage(message);
-            Chat chatObject = _dtoConverter.GetChat(chat);
+            if (MessageText.IsNullOrWhiteSpace() && FilesListObject.Count == 0) return;
 
-            UpdateChatList(chatObject);
-
-            Chat recieverChat = Chats.FirstOrDefault(x => x.ChatId == chatObject.ChatId);
-
-            recieverChat.LastMessage = chatObject.LastMessage;
-            recieverChat.LastMessageTime = chatObject.LastMessageTime;
-            UpdateMessage(recieverChat);
-            
-            if (CurrentChat != null && CurrentChat.ChatId == chatObject.ChatId) // if a chat is open with the person who sent the message
-            {
-                messageObject.IsOutside = true; // changing the sender's side
-                Conversations.Add(messageObject);
-                ScrollToEnd?.Invoke();
-            }
-            else if (CurrentChat == null || CurrentChat.ChatId != chatObject.ChatId) // If a chat with another person is open or the chat is not open
-            {
-                recieverChat.UnreadCount++;
-            }
-            else // If the chats are not open
-            {
-                // TODO: add notify system
-            }
-        }
-
-        #endregion
-
-        #region Commands
-        public ICommand SendMesCommand => _sendMesCommand ??= new RelayCommand(async _ =>
-        {
-            UpdateChatList(CurrentChat);
             Message messageChat = new Message()
             {
                 UserId = _userSession.CurrentUser.UserId,
@@ -333,87 +337,228 @@ namespace Study_Step.ViewModels
 
             ScrollToEnd?.Invoke();
             MessageText = string.Empty;
+            FilesListObject.Clear();
 
             // add file to response
-            foreach (FileModel file in messageChat.Files.ToList()) {
-                try {
-                    var buffer = new byte[81920];
-                    file.CancellationTokenSource = new CancellationTokenSource();
-
-                    await using var fileStream = File.OpenRead(file.Path);
-                    var content = new ProgressableStreamContent(fileStream, 81920, file.CancellationTokenSource.Token)
-                    {
-                        Progress = (sentBytes, totalBytes) =>
-                        {
-                            file.Progress = (int)((double)sentBytes / totalBytes * 100);
-                        }
-                    };
-
-                    var request = new HttpRequestMessage(HttpMethod.Post,
-                                                         $"http://localhost:5000/api/fileupload/upload")
-                    {
-                        Content = content
-                    };
-                    request.Headers.Add("X-FileName", WebUtility.UrlEncode(file.Name));
-                    request.Headers.Add("X-FileSize", file.Size.ToString());
-
-                    var response = await client.SendAsync(request,
-                                                          HttpCompletionOption.ResponseHeadersRead,
-                                                          file.CancellationTokenSource.Token);
-                    response.EnsureSuccessStatusCode();
-
-                    var responseJson = await response.Content.ReadAsStringAsync();
-                    var result = JsonConvert.DeserializeAnonymousType(responseJson, new { Path = "", Size = 0L });
-                    file.Path = result.Path;
-                    file.Status = SendingStatus.Success;
+            foreach (FileModel file in messageChat.Files.ToList())
+            {
+                try
+                {
+                    await _fileService.SendFileAsync(file);
                 }
-                catch (OperationCanceledException) {
+                catch (OperationCanceledException)
+                {
                     file.Status = SendingStatus.Cancelled;
-                    Debug.WriteLine($"Отправка файла {file.Name} отменена");
+                    return;
                 }
-                catch (Exception ex) {
+                catch (Exception ex)
+                {
                     messageChat.Files.Remove(file);
                     Debug.WriteLine(ex);
+                    return;
                 }
-                finally {
+                finally
+                {
                     file.CancellationTokenSource?.Dispose();
                     file.CancellationTokenSource = null;
 
-                    FilesListObject.Remove(file);
-                    if (string.IsNullOrWhiteSpace(messageChat.Text) & !messageChat.Files.Any()) {
+                    if (string.IsNullOrWhiteSpace(messageChat.Text) & !messageChat.Files.Any())
+                    {
                         Conversations.Remove(messageChat);
-                    }   
+                    }
                 }
             }
 
             try
             {
-                MessageDTO messageObject = _dtoConverter.GetMessageDTO(messageChat);
-
                 if (messageChat.Text == null && messageChat.Files.Any())
                     CurrentChat.LastMessage = "файл";
                 else
                     CurrentChat.LastMessage = messageChat.Text;
-                
+
                 CurrentChat.LastMessageTime = messageChat.SentAt;
                 ChatDTO chatObject = _dtoConverter.GetChatDTO(CurrentChat);
+                MessageDTO messageObject = _dtoConverter.GetMessageDTO(messageChat);
 
                 var userDto = _userSession.GetCurrentUserDTO();
                 chatObject.ContactPhoto = userDto.ContactPhoto;
                 chatObject.Name = userDto.Username;
 
-                Debug.WriteLine($"chatObject: {JsonConvert.SerializeObject(chatObject)}");
-                Debug.WriteLine($"messageObject: {JsonConvert.SerializeObject(messageObject)}");
+                UpdateChatList(CurrentChat);
 
                 await _signalRService.SendMessageAsync(CurrentChat.UserId_InChat.ToString(), chatObject, messageObject);
-
-                UpdateMessage(CurrentChat);
             }
             catch (HubException hex)
             {
                 Debug.WriteLine($"{hex.Message}");
             }
+        }
+
+        private async void SendEditableMessage()
+        {
+            if (new HashSet<FileModel>(_selectedMessage.Files).SetEquals(FilesListObject) && 
+                _selectedMessage.Text == MessageText) return;
+            if (string.IsNullOrWhiteSpace(MessageText) && !FilesListObject.Any()) return;
+
+            _selectedMessage.Text = MessageText;
+            _selectedMessage.Files = new ObservableCollection<FileModel>(FilesListObject.ToList());
+
+            MessageText = string.Empty;
+            FilesListObject.Clear();
+
+            foreach (FileModel file in _selectedMessage.Files.Where(m => m.MessageId == 0).ToList()) {
+                try
+                {
+                    await _fileService.SendFileAsync(file);
+                }
+                catch (OperationCanceledException)
+                {
+                    file.Status = SendingStatus.Cancelled;
+                    return;
+                }
+                catch (Exception ex)
+                {
+                    _selectedMessage.Files.Remove(file);
+                    Debug.WriteLine(ex);
+                    return;
+                }
+                finally
+                {
+                    file.CancellationTokenSource?.Dispose();
+                    file.CancellationTokenSource = null;
+                }
+            }
+
+            Message? lastMessage = Conversations?.LastOrDefault();
+            if (lastMessage?.MessageId == _selectedMessage.MessageId)
+            {
+                if (_selectedMessage.Text == null && _selectedMessage.Files.Any())
+                    CurrentChat.LastMessage = "файл";
+                else
+                    CurrentChat.LastMessage = _selectedMessage.Text;
+            }
+            ChatDTO chatDTO = _dtoConverter.GetChatDTO(CurrentChat);
+            MessageDTO messageDTO = _dtoConverter.GetMessageDTO(_selectedMessage);
+
+            var userDto = _userSession.GetCurrentUserDTO();
+            chatDTO.ContactPhoto = userDto.ContactPhoto;
+            chatDTO.Name = userDto.Username;
+
+            try
+            {
+                _signalRService.EditMessageAsync(CurrentChat.UserId_InChat.ToString(), chatDTO, messageDTO);
+            }
+            catch (HubException hex)
+            {
+                Debug.WriteLine(hex.Message);
+            }
+            finally
+            {
+                _selectedMessage = null;
+                _isEditMode = false;
+            }
+        }
+
+        #endregion
+
+        #region ReceiverLogic
+
+        private void MessageReceived(string sender, ChatDTO chat, MessageDTO message)
+        {
+            Message messageObject = _dtoConverter.GetMessage(message);
+            Chat chatObject = _dtoConverter.GetChat(chat);
+
+            UpdateChatList(chatObject);
+
+            Chat recieverChat = Chats.FirstOrDefault(x => x.ChatId == chatObject.ChatId);
+
+            recieverChat.LastMessage = chatObject.LastMessage;
+            recieverChat.LastMessageTime = chatObject.LastMessageTime;
+            UpdateMessage(recieverChat);
+
+            if (CurrentChat != null && CurrentChat.ChatId == recieverChat.ChatId) // if a chat is open with the person who sent the message
+            {
+                messageObject.IsOutside = true; // changing the sender's side
+                Conversations.Add(messageObject);
+                ScrollToEnd?.Invoke();
+            }
+            else if (CurrentChat == null || CurrentChat.ChatId != recieverChat.ChatId) // If a chat with another person is open or the chat is not open
+            {
+                recieverChat.UnreadCount++;
+            }
+            else // If the chats are not open
+            {
+                // TODO: add notify system
+            }
+        }
+
+        private void UpdateIdLastSendMes(string sender, ChatDTO chat, MessageDTO message)
+        {
+            Message messageObject = _dtoConverter.GetMessage(message);
+            Chat chatObject = _dtoConverter.GetChat(chat);
+
+            Message? mes = Conversations?.Where(m => m.UserId == int.Parse(sender)).LastOrDefault();
+            if (int.Parse(sender) == _userSession.CurrentUser.UserId && mes != null)
+            {
+                mes.MessageId = messageObject.MessageId;
+                mes.Files = messageObject.Files;
+            }
+            UpdateMessage(CurrentChat);
+        }
+
+        private void DeletionMessage(ChatDTO chatDTO, MessageDTO messageDTO)
+        {
+            Chat chat = _dtoConverter.GetChat(chatDTO);
+            if (CurrentChat != null && CurrentChat.ChatId == chatDTO.ChatId)
+            {
+                Message? message = Conversations?.Where(m => m.MessageId == messageDTO.MessageId).FirstOrDefault();
+                if (message != null)
+                    Conversations?.Remove(message);
+            }
+            Chat? extChat = Chats.Where(c => c.ChatId == chatDTO.ChatId).FirstOrDefault();
+            extChat.LastMessage = chat.LastMessage;
+            extChat.LastMessageTime = chat.LastMessageTime;
+            UpdateMessage(extChat);
+            UpdateChatList(extChat);
+        }
+
+        private void EditableMessage(ChatDTO chatDTO, MessageDTO messageDTO)
+        {
+            Chat chat = _dtoConverter.GetChat(chatDTO);
+            Message message = _dtoConverter.GetMessage(messageDTO);
+            if (CurrentChat != null && CurrentChat.ChatId == chatDTO.ChatId)
+            {
+                Message? thisMessage = Conversations?.Where(m => m.MessageId == messageDTO.MessageId).FirstOrDefault();
+                if (message != null)
+                {
+                    thisMessage.Text = message.Text;
+                    thisMessage.Files = message.Files;
+                }
+            }
+            Chat? extChat = Chats.Where(c => c.ChatId == chatDTO.ChatId).FirstOrDefault();
+            extChat.LastMessage = chat.LastMessage;
+            extChat.LastMessageTime = chat.LastMessageTime;
+        }
+
+        private void ReadingMessage(int chatId)
+        {
+            if (CurrentChat != null && Conversations != null && CurrentChat.ChatId == chatId)
+            {
+                foreach(Message message in Conversations.Where(m => !m.isRead))
+                    message.isRead = true;
+            }
+        }
+
+        #endregion
+
+        #region Commands
+
+        public ICommand SendMesCommand => _sendMesCommand ??= new RelayCommand(_ =>
+        {
+            if (_isEditMode) SendEditableMessage();
+            else SendNewMessage();
         });
+
         public ICommand ChooseFile => _chooseFile ??= new RelayCommand(parameter =>
         {
             var openFileDialog = new OpenFileDialog
@@ -424,7 +569,7 @@ namespace Study_Step.ViewModels
 
             if (openFileDialog.ShowDialog() == true)
             {
-                foreach (var filePath in openFileDialog.FileNames) // Используем FileNames вместо FileName
+                foreach (var filePath in openFileDialog.FileNames) 
                 {
                     var file = new FileInfo(filePath);
 
@@ -543,8 +688,8 @@ namespace Study_Step.ViewModels
             }
             catch (OperationCanceledException)
             {
-                item.Status = DownloadStatus.Cancelled;
-                try { File.Delete(item.GetTempFile()); } catch { }
+                if (item.Status == DownloadStatus.Cancelled)
+                    try { File.Delete(item.GetTempFile()); } catch {}
             }
             catch (Exception)
             {
@@ -555,7 +700,6 @@ namespace Study_Step.ViewModels
             {
                 if (item.Status != DownloadStatus.Paused)
                 {
-                    Debug.WriteLine(item.Status);
                     ActiveDownloads.Remove(item);
                     _parallelLimiter.Release();
                 }
@@ -564,23 +708,65 @@ namespace Study_Step.ViewModels
 
         public ICommand CancelSendFileCommand => _cancelSendFileCommand ??= new RelayCommand(parameter => {
             if (parameter is FileModel file) {
-                Debug.WriteLine("test");
                 file.CancellationTokenSource?.Cancel();
                 Conversations.LastOrDefault()?.Files?.Remove(file);
             }
         });
+
+        public ICommand DeleteMessageCommand => _deleteMessageCommand ??= new RelayCommand(async _ =>
+        {
+            Message? lastMessage = Conversations?.LastOrDefault();
+            Conversations?.Remove(_selectedMessage);
+
+            if (lastMessage?.MessageId == _selectedMessage.MessageId)
+            {
+                Message? newlastMessage = Conversations?.LastOrDefault();
+                CurrentChat.LastMessageTime = newlastMessage.SentAt;
+
+                if (newlastMessage.Text == null && newlastMessage.Files.Any())
+                    CurrentChat.LastMessage = "файл";
+                else
+                    CurrentChat.LastMessage = newlastMessage.Text;
+
+                UpdateMessage(CurrentChat);
+                UpdateChatList(CurrentChat);
+            }
+
+            ChatDTO chatDTO = _dtoConverter.GetChatDTO(CurrentChat);
+            MessageDTO messageDTO = _dtoConverter.GetMessageDTO(_selectedMessage);
+
+            var userDto = _userSession.GetCurrentUserDTO();
+            chatDTO.ContactPhoto = userDto.ContactPhoto;
+            chatDTO.Name = userDto.Username;
+
+            try
+            {
+                await _signalRService.DeleteMessageAsync(CurrentChat.UserId_InChat.ToString(), chatDTO,
+                                                         messageDTO, _isDeleteForAll);
+            }
+            catch (HubException hex)
+            {
+                Debug.WriteLine($"{hex.Message}");
+            }
+            finally
+            {
+                _selectedMessage = null;
+                CloseDeletionWindowCommand.Execute(null);
+            }
+        });
+
 
         private ICommand _cancelSendFileCommand;
         private ICommand _downloadFile;
         private ICommand _deleteFile;
         private ICommand _chooseFile;
         private ICommand _sendMesCommand;
+        private ICommand _deleteMessageCommand;
 
         #endregion
 
         #endregion
 
-        // Logic for search users
         #region DropDownListSearch
 
         #region Properties
@@ -600,7 +786,7 @@ namespace Study_Step.ViewModels
         #region Logics
         public async void LoadUserList()
         {
-            HttpResponseMessage response = await client.GetAsync(apiUrl + $"/selectuser"); // Send requers to server
+            HttpResponseMessage response = await client.GetAsync($"http://localhost:5000/api/chat/selectuser"); // Send requers to server
 
             if (response.IsSuccessStatusCode) {
                 string responseBody = await response.Content.ReadAsStringAsync();
@@ -620,6 +806,13 @@ namespace Study_Step.ViewModels
             {
                 Console.WriteLine("Ошибка при получении пользователей");
             }
+        }
+
+        public void AddNewUser(UserDTO userDTO)
+        {
+            User user = _dtoConverter.GetUser(userDTO);
+            if (user != null && !users.Any(u => u.UserId == user.UserId))
+                users.Add(user);
         }
         #endregion
 
@@ -748,7 +941,12 @@ namespace Study_Step.ViewModels
         });
         public ICommand OpenFileCommand => _openFileCommand ??= new RelayCommand(parameter => {
             if (parameter is DownloadItem item) {
-                Process.Start(new ProcessStartInfo(item.SavePath) { UseShellExecute = true });
+                try {
+                    Process.Start(new ProcessStartInfo(item.SavePath) { UseShellExecute = true });
+                }
+                catch (Win32Exception) {
+                    DownloadHistory.Remove(item);
+                }
             }
         });
         public ICommand ShowInFolderCommand => _showInFolderCommand ??= new RelayCommand(parameter => {
@@ -806,6 +1004,101 @@ namespace Study_Step.ViewModels
         private ICommand _openFileCommand;
         private ICommand _cancelDownloadCommand;
         private ICommand _openDownloadedAreaCommand;
+
+        #endregion
+
+        #endregion
+
+        #region OptionalPopup
+
+        #region Properties
+
+        public bool IsDeleteForAll
+        {
+            get => _isDeleteForAll;
+            set
+            {
+                _isDeleteForAll = value;
+                OnPropertyChanged(nameof(IsDeleteForAll));
+            }
+        }
+        private bool _isDeleteForAll;
+
+        #endregion
+
+        #region Commands
+
+        public ICommand OpenOptChatCommand => _openOptChatCommand ??= new RelayCommand( parameter =>
+        {
+            if (parameter is Chat thisChat)
+            {
+                foreach (var chat in Chats.Where(c => c.ChatId != thisChat.ChatId)) {
+                    chat.IsPopupOpen = false;
+                }
+                thisChat.IsPopupOpen = true;
+                _selectedChat = thisChat;
+
+                CommandManager.InvalidateRequerySuggested();
+            }
+        });
+
+        public ICommand OpenOptMessageCommand => _openOptMessageCommand ??= new RelayCommand(parameter =>
+        {
+            if (parameter is Message thisMessage)
+            {
+                foreach (var mes in Conversations.Where(m => m.MessageId != thisMessage.MessageId)) {
+                    mes.IsPopupOpen = false;
+                }
+                thisMessage.IsPopupOpen = true;
+                _selectedMessage = thisMessage;
+
+                CommandManager.InvalidateRequerySuggested();
+            }
+        });
+        
+        public ICommand OpenDeletionWindowCommand => _openDeletionWindowCommand ??= new RelayCommand(_ =>
+        {
+            _selectedMessage.IsPopupOpen = false;
+            DeletionWindow dWindow = App.ServiceProvider.GetRequiredService<DeletionWindow>();
+            dWindow.Owner = App.ServiceProvider.GetRequiredService<MainWindow>();
+            dWindow.ShowDialog();
+        });
+
+        public ICommand EditMessageCommand => _editMessageCommand ??= new RelayCommand(_ =>
+        {
+            _isEditMode = true;
+            _selectedMessage.IsPopupOpen = false;
+            MessageText = _selectedMessage?.Text;
+            FilesListObject = new ObservableCollection<FileModel>(_selectedMessage?.Files);
+        });
+
+        public ICommand DeleteChatCommand => _deleteChatCommand ??= new RelayCommand(async _ =>
+        {
+            ChatIsActive = false;
+            OnPropertyChanged(nameof(ChatIsActive));
+
+            HttpResponseMessage response = await client.DeleteAsync($"http://localhost:5000/api/chat/deletechat?" +
+                                                                    $"userId={_userSession.CurrentUser.UserId}&" +
+                                                                    $"chatId={_selectedChat?.ChatId}");
+            if (response.IsSuccessStatusCode)
+                Chats.Remove(_selectedChat);
+            else
+                Debug.WriteLine(response.RequestMessage);
+
+            CurrentChat = null;
+            Conversations = null;
+        });
+
+        public ICommand CloseDeletionWindowCommand => _closeDeletionWindowCommand ??= new RelayCommand(_ =>{   
+            Application.Current.Windows.OfType<DeletionWindow>().FirstOrDefault()?.Close();
+        });
+
+        private ICommand _openOptMessageCommand;
+        private ICommand _openOptChatCommand;
+        private ICommand _openDeletionWindowCommand;
+        private ICommand _closeDeletionWindowCommand;
+        private ICommand _editMessageCommand;
+        private ICommand _deleteChatCommand;
 
         #endregion
 

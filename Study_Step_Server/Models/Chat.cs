@@ -14,9 +14,11 @@ namespace Study_Step_Server.Models
         public string? LastMessage { get; set; }
         public DateTime? LastMessageTime { get; set; }
         public ChatType? Type { get; set; }  // Тип чата (личный, групповой)
-        
+
         public ICollection<UserChat> UserChats { get; set; } // Участники чата
-        public ICollection<Message> Messages { get; set; } // сообщения, имеющие отношение к конкретному чату
+        public ICollection<Message>? Messages { get; set; } // сообщения, имеющие отношение к конкретному чату
+        public ICollection<DeletedMessage>? DeletedMessages { get; set; }
+        public ICollection<DeletedChat>? DeletedChats { get; set; }
     }
 
     internal class ChatConfiguration : IEntityTypeConfiguration<Chat>

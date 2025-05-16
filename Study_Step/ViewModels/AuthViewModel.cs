@@ -10,6 +10,7 @@ using Study_Step.Services;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Net.Http;
 using System.Runtime.CompilerServices;
@@ -148,6 +149,7 @@ namespace Study_Step.ViewModels
                     _authService.AccessToken = AccessToken;
                     _tokenStorage.SaveRefreshToken(RefreshToken);
                     await _signalRService.ConnectAsync(AccessToken);
+                    
 
                     MainWindow main = App.ServiceProvider.GetRequiredService<MainWindow>();
                     Application.Current.MainWindow = main;
@@ -177,25 +179,27 @@ namespace Study_Step.ViewModels
 
             // Преобразуем объект пользователя в JSON строку и формируем HTTP-запрос
             string json = JsonConvert.SerializeObject(user);
-            var content = new StringContent(json, Encoding.UTF8, "application/json"); 
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+            Debug.WriteLine(json);
 
             try {
                 HttpResponseMessage response = await _httpClient.PostAsync("http://localhost:5000/register", content); // Отправляем запрос на сервер
 
                 if (response.IsSuccessStatusCode) { // Проверяем статус ответа
                     string responseContent = await response.Content.ReadAsStringAsync();
-                    var jsonResponse = JsonConvert.DeserializeObject<JObject>(responseContent);
+                    JObject? jsonResponse = JsonConvert.DeserializeObject<JObject>(responseContent);
+                    
 
-                    Application.Current.Properties["Id"] = jsonResponse["id"].ToObject<int>();
-                    Application.Current.Properties["Username"] = jsonResponse["name"].ToObject<string>();
-                    string AccessToken = jsonResponse["access_token"].ToObject<string>();
+                    UserDTO? currentUser = jsonResponse["user_object"].ToObject<UserDTO>();
+                    _userSession.CurrentUser = _dtoConverter.GetUser(currentUser);
+                    string? AccessToken = jsonResponse["access_token"].ToObject<string>();
+                    string? RefreshToken = jsonResponse["refresh_token"].ToObject<string>();
 
                     await _signalRService.ConnectAsync(AccessToken);
+                    await _signalRService.NotifyNewUser(_userSession.GetCurrentUserDTO());
+                    await _signalRService.DisconnectAsync();
 
-                    MainWindow main = App.ServiceProvider.GetRequiredService<MainWindow>();
-                    Application.Current.MainWindow = main;
-                    Application.Current.Windows.OfType<AuthWindow>().FirstOrDefault(w => w.IsActive)?.Close();
-                    main.Show();
+                    NavigateToSignInPage();
                 }
                 else {
                     string error = await response.Content.ReadAsStringAsync();

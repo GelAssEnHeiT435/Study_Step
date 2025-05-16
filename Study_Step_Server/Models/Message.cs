@@ -18,6 +18,7 @@ namespace Study_Step_Server.Models
         public User Sender { get; set; }
         public Chat Chat { get; set; }
         public ICollection<FileModel>? Files { get; set; }
+        public ICollection<MessageRead>? ReadByUsers { get; set; }
     }
 
     internal class MessageConfiguration : IEntityTypeConfiguration<Message>

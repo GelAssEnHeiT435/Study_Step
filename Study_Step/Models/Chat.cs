@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
@@ -32,8 +33,6 @@ namespace Study_Step.Models
         private string _timeAgo;
         private string? _lastMessage;
 
-        public List<UserChat> UserChats { get; set; }
-        public int? UserId_InChat { get; set; }
         public int UnreadCount
         {
             get => _unreadCount;
@@ -44,6 +43,32 @@ namespace Study_Step.Models
             }
         }
         private int _unreadCount = 0;
+
+        public bool IsChoosen
+        {
+            get => _isChoosen;
+            set
+            {
+                _isChoosen = value;
+                OnPropertyChanged(nameof(IsChoosen));
+            }
+        }
+        private bool _isChoosen;
+
+        public bool IsPopupOpen
+        {
+            get => _isPopupOpen;
+            set
+            {
+                _isPopupOpen = value;
+                OnPropertyChanged(nameof(IsPopupOpen));
+            }
+        }
+        private bool _isPopupOpen = false;
+
+
+        public int? UserId_InChat { get; set; }
+        public List<UserChat> UserChats { get; set; }
 
         public event PropertyChangedEventHandler? PropertyChanged;
         protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null) =>

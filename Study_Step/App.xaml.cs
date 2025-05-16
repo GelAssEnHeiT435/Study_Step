@@ -13,6 +13,7 @@ using System.IO;
 using System.Diagnostics;
 using System.Windows.Interop;
 using System.Windows.Media;
+using Study_Step.UI.Windows;
 
 namespace Study_Step
 {
@@ -34,7 +35,7 @@ namespace Study_Step
 
             Configuration = builder.Build();
             
-            Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("Ngo9BigBOggjHTQxAR8/V1NNaF5cXmBCe0x3QXxbf1x1ZFFMZFRbQXZPIiBoS35Rc0VnWHtfdnBcRWNUUkNyVEBU");
+            Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("Ngo9BigBOggjHTQxAR8/V1NNaF1cWWhPYVJzWmFZfVtgd19DY1ZRQGYuP1ZhSXxWdkBiX39ddXBVTmhbWU19XUs=");
             PresentationTraceSources.DataBindingSource.Switch.Level = SourceLevels.Warning;
             RenderOptions.ProcessRenderMode = RenderMode.SoftwareOnly;
 
@@ -58,8 +59,9 @@ namespace Study_Step
             services.AddSingleton<AuthViewModel>(); 
             services.AddSingleton<ViewModel>();
 
-            services.AddTransient<AuthWindow>(); 
-            services.AddTransient<MainWindow>();
+            services.AddSingleton<AuthWindow>(); 
+            services.AddSingleton<MainWindow>();
+            services.AddTransient<DeletionWindow>();
 
             services.AddTransient<RegisterPage>(); 
             services.AddTransient<SignInPage>();

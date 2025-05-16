@@ -12,5 +12,6 @@ namespace Study_Step_Server.Models.DTO
         public ChatType Type { get; set; }  // Тип чата (личный, групповой)
 
         public List<UserChatDTO> UserChats { get; set; } // Участники чата
+        public int UnreadCount { get; set; }
     }
 }

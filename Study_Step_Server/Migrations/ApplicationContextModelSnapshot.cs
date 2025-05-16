@@ -72,6 +72,70 @@ namespace Study_Step_Server.Migrations
                     b.ToTable("Chats");
                 });
 
+            modelBuilder.Entity("Study_Step_Server.Models.DeletedChat", b =>
+                {
+                    b.Property<int>("DeletedChatId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("DeletedChatId"));
+
+                    b.Property<int>("ChatId")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime>("DeletedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("DeletedChatId");
+
+                    b.HasIndex("ChatId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("DeletedChats");
+                });
+
+            modelBuilder.Entity("Study_Step_Server.Models.DeletedMessage", b =>
+                {
+                    b.Property<int>("DeletedMessageId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("DeletedMessageId"));
+
+                    b.Property<int>("ChatId")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime>("DeletedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("timestamp with time zone")
+                        .HasDefaultValueSql("NOW()");
+
+                    b.Property<bool>("IsDeletedForEveryone")
+                        .HasColumnType("boolean");
+
+                    b.Property<int>("MessageId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("DeletedMessageId");
+
+                    b.HasIndex("ChatId");
+
+                    b.HasIndex("DeletedAt");
+
+                    b.HasIndex("MessageId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("DeletedMessages");
+                });
+
             modelBuilder.Entity("Study_Step_Server.Models.FileModel", b =>
                 {
                     b.Property<int>("FileModelId")
@@ -141,6 +205,24 @@ namespace Study_Step_Server.Migrations
                     b.ToTable("Messages");
                 });
 
+            modelBuilder.Entity("Study_Step_Server.Models.MessageRead", b =>
+                {
+                    b.Property<int>("MessageId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime>("ReadAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("MessageId", "UserId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("ReadMessages");
+                });
+
             modelBuilder.Entity("Study_Step_Server.Models.RefreshToken", b =>
                 {
                     b.Property<int>("Id")
@@ -207,6 +289,9 @@ namespace Study_Step_Server.Migrations
                     b.Property<int>("ChatId")
                         .HasColumnType("integer");
 
+                    b.Property<DateTime?>("LastReadTime")
+                        .HasColumnType("timestamp with time zone");
+
                     b.Property<int>("UserChatId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer");
@@ -218,6 +303,52 @@ namespace Study_Step_Server.Migrations
                     b.HasIndex("ChatId");
 
                     b.ToTable("UserChats");
+                });
+
+            modelBuilder.Entity("Study_Step_Server.Models.DeletedChat", b =>
+                {
+                    b.HasOne("Study_Step_Server.Models.Chat", "Chat")
+                        .WithMany("DeletedChats")
+                        .HasForeignKey("ChatId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Study_Step_Server.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Chat");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Study_Step_Server.Models.DeletedMessage", b =>
+                {
+                    b.HasOne("Study_Step_Server.Models.Chat", "Chat")
+                        .WithMany("DeletedMessages")
+                        .HasForeignKey("ChatId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Study_Step_Server.Models.Message", "Message")
+                        .WithMany()
+                        .HasForeignKey("MessageId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Study_Step_Server.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Chat");
+
+                    b.Navigation("Message");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Study_Step_Server.Models.FileModel", b =>
@@ -244,6 +375,25 @@ namespace Study_Step_Server.Migrations
                     b.Navigation("Chat");
 
                     b.Navigation("Sender");
+                });
+
+            modelBuilder.Entity("Study_Step_Server.Models.MessageRead", b =>
+                {
+                    b.HasOne("Study_Step_Server.Models.Message", "Message")
+                        .WithMany("ReadByUsers")
+                        .HasForeignKey("MessageId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Study_Step_Server.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Message");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Study_Step_Server.Models.RefreshToken", b =>
@@ -283,6 +433,10 @@ namespace Study_Step_Server.Migrations
 
             modelBuilder.Entity("Study_Step_Server.Models.Chat", b =>
                 {
+                    b.Navigation("DeletedChats");
+
+                    b.Navigation("DeletedMessages");
+
                     b.Navigation("Messages");
 
                     b.Navigation("UserChats");
@@ -291,6 +445,8 @@ namespace Study_Step_Server.Migrations
             modelBuilder.Entity("Study_Step_Server.Models.Message", b =>
                 {
                     b.Navigation("Files");
+
+                    b.Navigation("ReadByUsers");
                 });
 
             modelBuilder.Entity("Study_Step_Server.Models.User", b =>

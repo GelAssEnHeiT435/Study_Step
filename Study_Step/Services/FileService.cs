@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -64,16 +65,38 @@ namespace Study_Step.Services
             return bitmap;
         }
 
-        public void SaveFile(FileModelDTO file)
+        public async Task SendFileAsync(FileModel file)
         {
-            //try
-            //{
-            //    string uniqueFileName = $"{file.Name}"; 
-            //    string filePath = Path.Combine(_baseDirectory, uniqueFileName); // Create path
+            var buffer = new byte[81920];
+            file.CancellationTokenSource = new CancellationTokenSource();
 
-            //    File.WriteAllBytes(filePath, file.FileBytes); // Save File
-            //}
-            //catch (Exception ex) { }
+            using HttpClient client = new HttpClient();
+            await using var fileStream = File.OpenRead(file.Path);
+            var content = new ProgressableStreamContent(fileStream, 81920, file.CancellationTokenSource.Token)
+            {
+                Progress = (sentBytes, totalBytes) =>
+                {
+                    file.Progress = (int)((double)sentBytes / totalBytes * 100);
+                }
+            };
+
+            var request = new HttpRequestMessage(HttpMethod.Post,
+                                                 $"http://localhost:5000/api/fileupload/upload")
+            {
+                Content = content
+            };
+            request.Headers.Add("X-FileName", WebUtility.UrlEncode(file.Name));
+            request.Headers.Add("X-FileSize", file.Size.ToString());
+
+            var response = await client.SendAsync(request,
+                                                  HttpCompletionOption.ResponseHeadersRead,
+                                                  file.CancellationTokenSource.Token);
+            response.EnsureSuccessStatusCode();
+
+            var responseJson = await response.Content.ReadAsStringAsync();
+            var result = JsonConvert.DeserializeAnonymousType(responseJson, new { Path = "", Size = 0L });
+            file.Path = result.Path;
+            file.Status = SendingStatus.Success;
         }
     }
 }

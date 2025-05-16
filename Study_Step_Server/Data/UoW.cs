@@ -12,6 +12,8 @@ public class UoW : IUoW
     private IUserRepository _user;
     private IChatRepository _chat;
     private IFileRepository _file;
+    private IDeletedMessageRepository _deletedMessage;
+    private IDeletedChatRepository _deletedChat;
 
     public UoW(ApplicationContext context)
     {
@@ -23,6 +25,8 @@ public class UoW : IUoW
     public IUserRepository Users => _user ??= new UserRepository(_context);
     public IChatRepository Chats => _chat ??= new ChatRepository(_context);
     public IFileRepository Files => _file ??= new FileRepository(_context);
+    public IDeletedMessageRepository DeletedMessages => _deletedMessage ??= new DeletedMessageRepository(_context);
+    public IDeletedChatRepository DeletedChats => _deletedChat ??= new DeletedChatRepository(_context);
 
     public async Task<int> SaveChangesAsync()
     {

@@ -54,6 +54,7 @@ namespace Study_Step
             ViewModel viewModel = (ViewModel)DataContext;
             if (e.Key == Key.Escape) { 
                 viewModel.ChatIsActive = false;
+                viewModel.CurrentChat.IsChoosen = false;
                 viewModel.CurrentChat = null;
                 viewModel.Conversations = null;
             }

@@ -7,6 +7,7 @@ public interface IUoW : IDisposable
     IUserRepository Users { get; }
     IChatRepository Chats { get; }
     IFileRepository Files { get; }
+    IDeletedMessageRepository DeletedMessages { get; }
+    IDeletedChatRepository DeletedChats { get; }
     Task<int> SaveChangesAsync();
-
 }

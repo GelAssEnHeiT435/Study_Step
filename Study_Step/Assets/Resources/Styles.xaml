@@ -95,4 +95,39 @@
             </Setter.Value>
         </Setter>
     </Style>
+
+    <Style x:Key="MoreOptButtonStyle" TargetType="{x:Type Button}">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="BorderBrush" Value="Black"/>
+        <Setter Property="Height" Value="40"/>
+        <Setter Property="Width" Value="40"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border BorderThickness="{TemplateBinding BorderThickness}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            Background="{TemplateBinding Background}"
+                            Width="{TemplateBinding Width}"
+                            Height="{TemplateBinding Height}"
+                            CornerRadius="30">
+                        <Viewbox Stretch="Uniform"
+                                 Width="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Tag.Width}"
+                                 Height="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Tag.Height}">
+                            <Path Data="{TemplateBinding Content}"
+                                  Fill="{TemplateBinding Foreground}"
+                                  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}" 
+                                  Style="{StaticResource defaultPath}"/>
+                        </Viewbox>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="#E0DFDE"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
 </ResourceDictionary>

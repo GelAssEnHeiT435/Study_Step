@@ -2,8 +2,6 @@
 using Study_Step_Server.Models;
 using Study_Step_Server.Data;
 using Microsoft.EntityFrameworkCore;
-using Study_Step_Server.Models.DTO;
-using System.Linq;
 
 namespace Study_Step_Server.Repositories
 {
@@ -13,12 +11,23 @@ namespace Study_Step_Server.Repositories
 
         public async Task<List<Chat>> GetChatsByUserIdAsync(int userId)
         {
-            return await _dbSet.Include(uc => uc.Chat) 
-                                   .ThenInclude(c => c.Messages)
-                               .Where(uc => uc.UserId == userId && uc.Chat.Messages.Any()) 
-                               .OrderByDescending(uc => uc.Chat.LastMessageTime)
-                               .Select(uc => uc.Chat) 
-                               .ToListAsync();
+            var deletedChatIds = await _context.DeletedChats
+                .Where(dc => dc.UserId == userId)
+                .Select(dc => dc.ChatId)
+                .ToListAsync();
+
+            var deletedMessageIds = await _context.DeletedMessages
+                .Where(dm => dm.UserId == userId || dm.IsDeletedForEveryone)
+                .Select(dm => dm.MessageId)
+                .Distinct()
+                .ToListAsync();
+
+            return await _context.UserChats
+                .Where(uc => uc.UserId == userId && !deletedChatIds.Contains(uc.ChatId))
+                .Select(uc => uc.Chat)
+                .Where(c => c.Messages.Any(m => !deletedMessageIds.Contains(m.MessageId)))
+                .OrderByDescending(c => c.LastMessageTime)
+                .ToListAsync();
         }
 
         public async Task<User?> FindSecondUserAsync(int chatId, int userId)

@@ -10,6 +10,9 @@
     <Compile Update="UI\CustomControls\DownloadArea.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="UI\CustomControls\OptionalPopup.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="UI\Windows\AuthWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -34,12 +37,18 @@
     <Compile Update="UI\Pages\SignInPage.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="UI\Windows\DeletionWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="UI\Windows\UserProfile.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>
     <Page Update="UI\CustomControls\DownloadArea.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="UI\CustomControls\OptionalPopup.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="UI\Windows\AuthWindow.xaml">
@@ -58,6 +67,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="UI\CustomControls\StatusThumbs.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="UI\Windows\DeletionWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="UI\Windows\MainWindow.xaml">

@@ -18,7 +18,6 @@ namespace Study_Step_Server.Models
 
         public ICollection<UserChat>? UserChats { get; set; }
         public ICollection<Message>? Messages { get; set; }
-
     }
     internal class UserConfiguration : IEntityTypeConfiguration<User>
     {

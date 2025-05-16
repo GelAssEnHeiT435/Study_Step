@@ -7,7 +7,7 @@
         xmlns:local="clr-namespace:Study_Step" 
         xmlns:customcontrols="clr-namespace:Study_Step.CustomControls" 
         xmlns:viewmodels="clr-namespace:Study_Step.ViewModels"
-        xmlns:icons="clr-namespace:Study_Step.Data.UIConverters"
+        xmlns:icons="clr-namespace:Study_Step.Data.UIConverters" xmlns:models="clr-namespace:Study_Step.Models"
         mc:Ignorable="d"
         Title="StudyStep" 
         AllowsTransparency="True"
@@ -131,7 +131,7 @@
                                                      HorizontalAlignment="Center">
                                                 <Ellipse.Fill>
                                                     <ImageBrush Stretch="UniformToFill"
-                                                                ImageSource="{Binding Path=bitmapPhoto,
+                                                                ImageSource="{Binding Path=UserPhoto,
                                                                                       FallbackValue='D:/my_works/dotnetProjects/Study_Step/Study_Step/Assets/Media/5.jpg',
                                                                                       TargetNullValue='D:/my_works/dotnetProjects/Study_Step/Study_Step/Assets/Media/5.jpg',
                                                                                       UpdateSourceTrigger=PropertyChanged}"/>
@@ -183,7 +183,7 @@
                                 <Size Width="20" Height="20" />
                             </Button.Tag>
                             <Button.Style>
-                                <Style TargetType="Button" BasedOn="{StaticResource IconButtonStyle}">
+                                <Style TargetType="{x:Type Button}" BasedOn="{StaticResource IconButtonStyle}">
                                     <Style.Triggers>
                                         <Trigger Property="IsMouseOver" Value="True">
                                             <Setter Property="Background" Value="#FF7373"/>
@@ -252,6 +252,7 @@
                     <customcontrols:DropDownListSearch Height="50"/>
 
                 </Border>
+
                 <!-- #endregion -->
                 
                 <!--#region ChatList -->

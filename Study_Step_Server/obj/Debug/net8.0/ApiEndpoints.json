@@ -32,6 +32,33 @@
   },
   {
     "ContainingType": "Study_Step_Server.Controllers.ChatController",
+    "Method": "DeleteChat",
+    "RelativePath": "api/Chat/deletechat",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "userId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "chatId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Void",
+        "MediaTypes": [],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "Study_Step_Server.Controllers.ChatController",
     "Method": "GetChats",
     "RelativePath": "api/Chat/getallchats",
     "HttpMethod": "GET",
@@ -64,6 +91,11 @@
     "IsController": true,
     "Order": 0,
     "Parameters": [
+      {
+        "Name": "userId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
       {
         "Name": "chatId",
         "Type": "System.Int32",

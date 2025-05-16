@@ -12,5 +12,6 @@ namespace Study_Step.Models.DTO
         public DateTime? LastMessageTime { get; set; }
 
         public List<UserChatDTO> UserChats { get; set; }
+        public int UnreadCount { get; set; }
     }
 }

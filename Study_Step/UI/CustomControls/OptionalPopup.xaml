@@ -1,0 +1,88 @@
+﻿<UserControl x:Class="Study_Step.CustomControls.OptionalPopup"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Study_Step.CustomControls"
+             xmlns:viewmodels="clr-namespace:Study_Step.ViewModels"
+             xmlns:commands="clr-namespace:Study_Step.Commands"
+             xmlns:conv="clr-namespace:Study_Step.Data.UIConverters"
+             x:Name="Root"
+             mc:Ignorable="d">
+    <UserControl.Resources>
+        <Style x:Key="PopupButtonStyle" TargetType="{x:Type Button}">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Height" Value="auto"/>
+            <Setter Property="Width" Value="auto"/>
+            <Setter Property="Margin" Value="2"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border CornerRadius="5">
+                            <Grid Margin="4">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="20"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Viewbox Stretch="Uniform"
+                                         Width="17" Height="17"
+                                         Grid.Column="0">
+                                    <Path Data="{Binding Icon}"
+                                          Fill="{TemplateBinding Foreground}"
+                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}" 
+                                          Style="{StaticResource defaultPath}"/>
+                                </Viewbox>
+
+                                <TextBlock Text="{Binding Text}"
+                                           VerticalAlignment="Center"
+                                           HorizontalAlignment="Left"
+                                           FontSize="14" Grid.Column="1"
+                                           Margin="5, 0"
+                                           FontWeight="SemiBold"/>
+                            </Grid>
+                            <Border.Style>
+                                <Style TargetType="{x:Type Border}">
+                                    <Setter Property="Background" Value="{Binding Background, RelativeSource={RelativeSource TemplatedParent}}"/>
+                                    <Setter Property="Width" Value="{Binding Width, RelativeSource={RelativeSource TemplatedParent}}"/>
+                                    <Setter Property="Height" Value="{Binding Height, RelativeSource={RelativeSource TemplatedParent}}"/>
+                                    <Style.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="Background" Value="#E0DFDE"/>
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Border.Style>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
+
+    <Popup x:Name="OptPopup"
+           IsOpen="{Binding IsOpen, ElementName=Root, Mode=TwoWay}" 
+           PlacementTarget="{Binding PlacementTarget, ElementName=Root}"
+           Placement="{Binding Placement, ElementName=Root}"
+           HorizontalOffset="{Binding HorizontalOffset, ElementName=Root}"
+           VerticalOffset="{Binding VerticalOffset, ElementName=Root}"
+           Width="{Binding Width, ElementName=Root}" Height="auto"
+           AllowsTransparency="True" StaysOpen="False">
+        <Border Background="White" 
+                BorderBrush="#DDD" 
+                BorderThickness="1" 
+                CornerRadius="5">
+            <ItemsControl ItemsSource="{Binding Buttons, ElementName=Root}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Button Content="{Binding Text}"
+                                Command="{Binding Command}"
+                                CommandParameter="{Binding CommandParameter}"
+                                Style="{StaticResource PopupButtonStyle}"/>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </Border>
+    </Popup>
+</UserControl> 

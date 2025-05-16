@@ -10,6 +10,7 @@ namespace Study_Step_Server.Models
         public int UserChatId { get; set; }
         public int UserId { get; set; }
         public int ChatId { get; set; }
+        public DateTime? LastReadTime { get; set; }
 
         public User User { get; set; }
         public Chat Chat { get; set; }

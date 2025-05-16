@@ -8,5 +8,6 @@
         public string? Text { get; set; }
         public DateTime SentAt { get; set; }
         public List<FileModelDTO>? Files { get; set; }
+        public bool isRead { get; set; }
     }
 }

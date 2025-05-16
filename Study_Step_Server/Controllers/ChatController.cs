@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Study_Step_Server.Models;
 using Study_Step_Server.Models.DTO;
-using Study_Step_Server.Data;
 using Study_Step_Server.Interfaces;
 using Study_Step_Server.Services;
 
@@ -34,30 +32,49 @@ namespace Study_Step_Server.Controllers
             List<ChatDTO> dtoChats = _dtoConverter.GetChatListDTO(users_chats).ToList();
             IEnumerable<UserChatDTO> ucDto = _dtoConverter.GetUserChatListDTO(userChatsByChatIds);
 
-            foreach(var chat in dtoChats) 
+            foreach (var chat in dtoChats)
             {
+                // Получаем последнее неудалённое сообщение для этого пользователя
+                var lastValidMessage = await _unitOfWork.Messages.GetLastUndeletedMessageAsync(chat.ChatId, userId);
+
+                if (lastValidMessage != null)
+                {
+                    if (lastValidMessage.Text == null && lastValidMessage.Files.Any())
+                        chat.LastMessage = "файл";
+                    else
+                        chat.LastMessage = lastValidMessage.Text;
+                    chat.LastMessageTime = lastValidMessage.SentAt;
+                }
+
                 if (chat.Type == ChatType.Individual)
                 {
-                    User? secondUser = await _unitOfWork.UserChats.FindSecondUserAsync(chat.ChatId, userId); // find second user in chat
+                    User? secondUser = await _unitOfWork.UserChats.FindSecondUserAsync(chat.ChatId, userId);
                     if (secondUser != null)
                     {
                         chat.ContactPhoto = _fileService.ConvertFileToByteArray(secondUser.ContactPhoto);
-                        chat.Name = secondUser.Username;  // Устанавливаем имя второго пользователя как название чата
+                        chat.Name = secondUser.Username;
                     }
-                } 
+                }
                 chat.UserChats = ucDto.Where(c => c.ChatId == chat.ChatId).ToList();
+                chat.UnreadCount = await _unitOfWork.Messages.GetUnreadMessagesCount(chat.ChatId, userId);
             }
 
-            return dtoChats;
+            return dtoChats.OrderByDescending(c => c.LastMessageTime).ToList();
         }
         #endregion
 
         #region get all messages
         [HttpGet("messages")]
-        public async Task<IEnumerable<MessageDTO>> GetMessage([FromQuery] int chatId)
+        public async Task<IEnumerable<MessageDTO>> GetMessage([FromQuery] int userId,
+                                                              [FromQuery] int chatId)
         {
-            var messages = await _unitOfWork.Messages.GetMessagesByChatIdAsync(chatId);
-            return _dtoConverter.GetMessageListDTO(messages);
+            var messages = await _unitOfWork.Messages.GetMessagesByChatIdAsync(userId, chatId);
+            IEnumerable<MessageDTO> mesList = _dtoConverter.GetMessageListDTO(messages);
+
+            foreach (var message in mesList) 
+                message.isRead = await _unitOfWork.Messages.isReadMessageByIdAsync(message.MessageId);
+                
+            return mesList;
         }
         #endregion
 
@@ -100,6 +117,14 @@ namespace Study_Step_Server.Controllers
             };
             await _unitOfWork.Chats.AddAsync(newChat);
             return Ok(_dtoConverter.GetChatDTO(newChat));
+        }
+
+        [HttpDelete("deletechat")]
+        public async Task DeleteChat([FromQuery] int userId,
+                                     [FromQuery] int chatId)
+        {
+            await _unitOfWork.DeletedChats.DeleteChatForUserAsync(userId, chatId);
+            await _unitOfWork.DeletedMessages.DeleteChatsMessagesAsync(userId, chatId);
         }
     }
 }

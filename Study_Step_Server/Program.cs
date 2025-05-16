@@ -221,7 +221,8 @@ namespace Study_Step_Server
                 {
                     ApplicationContext dbContext = scope.ServiceProvider.GetRequiredService<ApplicationContext>();
                     AuthService authService = scope.ServiceProvider.GetRequiredService<AuthService>();
-                    
+                    DtoConverterService dtoConverter = scope.ServiceProvider.GetRequiredService<DtoConverterService>();
+
                     AuthUser? user = await dbContext.AuthorizationUsers.FirstOrDefaultAsync(users => users.Email == loginModel.Email);
                     if (user != null) return Results.Unauthorized();
                     
@@ -242,26 +243,44 @@ namespace Study_Step_Server
                     dbContext.Users.Add(person);
                     await dbContext.SaveChangesAsync();
 
-                    AuthUser? newuser = await dbContext.AuthorizationUsers.FirstOrDefaultAsync(users => users.Email == loginModel.Email);
+                    AuthUser? newuser = await dbContext.AuthorizationUsers
+                                                       .FirstOrDefaultAsync(users => users.Email == loginModel.Email);
 
                     var claims = new List<Claim>
                     {
-                        new Claim( ClaimTypes.NameIdentifier, newuser.Id.ToString() )
+                        new Claim(ClaimTypes.NameIdentifier, newuser.Id.ToString()),
+                        new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()) // unique Token's ID
                     };
 
-                    var jwt = new JwtSecurityToken(
+                    // Generate JWT-Token for control user's activity
+                    var accessToken = new JwtSecurityToken(
                             issuer: AuthOptions.ISSUER,
                             audience: AuthOptions.AUDIENCE,
                             claims: claims,
-                            expires: DateTime.UtcNow.Add(TimeSpan.FromMinutes(2)),
-                            signingCredentials: new SigningCredentials(AuthOptions.GetSymmetricSecurityKey(), SecurityAlgorithms.HmacSha256));
-                    var encodedJwt = new JwtSecurityTokenHandler().WriteToken(jwt);
-                    
+                            expires: DateTime.UtcNow.AddMinutes(2),
+                            signingCredentials: new SigningCredentials(AuthOptions.GetSymmetricSecurityKey(),
+                                                                       SecurityAlgorithms.HmacSha256));
+                    var encodedAccessJwt = new JwtSecurityTokenHandler().WriteToken(accessToken);
+
+                    // Generate RefreshToken for automatic log in
+                    var refreshToken = new RefreshToken()
+                    {
+                        Token = authService.GenerateSecureToken(32),
+                        UserId = newuser.Id,
+                        ExpiryDate = DateTime.UtcNow.AddDays(7),
+                        Created = DateTime.UtcNow
+                    };
+                    dbContext.RefreshTokens.Add(refreshToken);
+                    dbContext.SaveChanges();
+
+                    User? returnUser = await dbContext.Users.FirstOrDefaultAsync(users => users.Email == loginModel.Email);
+
                     var response = new
                     {
-                        id = newuser.Id,
-                        name = newuser.Name,
-                        access_token = encodedJwt
+                        user_object = dtoConverter.GetUserDTO(returnUser),
+                        access_token = encodedAccessJwt,
+                        refresh_token = refreshToken.Token,
+                        expires_in = (int)TimeSpan.FromMinutes(15).TotalSeconds
                     };
 
                     return Results.Json(response);

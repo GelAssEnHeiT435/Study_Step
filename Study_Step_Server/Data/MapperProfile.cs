@@ -51,6 +51,13 @@ namespace Study_Step_Server.Data
             CreateMap<ChatDTO, Chat>();
 
             #endregion
+
+            #region DeletedMessage
+
+            CreateMap<DeletedMessage, DeletedMessageDTO>();
+            CreateMap<DeletedMessageDTO, DeletedMessage>();
+
+            #endregion
         }
     }
 }
